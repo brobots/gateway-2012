@@ -1,0 +1,750 @@
+Battery & Power Control,  Intrinsics,   RNT,       B,         A,   alive()                  /&Periodically calling this function will reset the timer used to put the controller to sleep after long periods of keyboard inactivity.
+Battery & Power Control,  Intrinsics,   RNT,       B,         B,   powerOff()               /&Immediately powers off the controller.
+Battery & Power Control,  Intrinsics,   RNT,       B,         I,   setPowerDownDelay(minutes)/&OBSOLETE function. Sets the number of minutes used for the sleep timer.\n\n\rReplaced with the variable 'nPowerDownDelayMinutes'.
+
+Battery & Power Control,  Variables,    RNT,       B,         A,   bNoPowerDownOnACAdaptor  /&Boolean variable. When true, and controller is connected to an AC adaptor, the sleep timer will be disabled.
+Battery & Power Control,  Variables,    NT,        B,         A,   bNxtRechargable          /&Boolean variable. Indicates whether the NXT is currently using a rechargeable battery pack.
+Battery & Power Control,  Variables,    NT,        B,         A,   externalBattery          /&Instantaneous battery voltage (in millivolts) for external 12V battery used to power HiTechnic controllers.\n\n\rA value of -1 is returned if the external battery cannot be read. Only the HiTechnic Motor Controller has battery monitoring capabilities. The HiTechnic Servo Controller cannot moniotr battery. So at least one Motor Controller is required for the battery moniotiring capability.
+Battery & Power Control,  Variables,    NT,        B,         A,   externalBatteryAvg       /&Average battery voltage (in millivolts) for external 12V battery used to power HiTechnic controllers.\n\n\rA value of -1 is returned if the external battery cannot be read. Only the HiTechnic Motor Controller has battery monitoring capabilities. The HiTechnic Servo Controller cannot moniotr battery. So at least one Motor Controller is required for the battery moniotiring capability.\n\r
+Battery & Power Control,  Variables,    NT,        B,         S,   LowVoltageBatteryCountLimits/&The NXT will generate a "low voltage" pop up menu on its display when "N" consecutive battery voltage samples are at a low voltage. "N" is the "LowVoltageBatteryCountsLimits" variable.\n\n\rIf the value is zero then the pop up window is disabled.
+Battery & Power Control,  Variables,    RNTA,      B,         A,   nAvgBatteryLevel         /&The average battery level in millivolts. A value of 9458 represent 9.458 volts.\n\n\rIt's the average of 20 recent samples and smoothes out sudden voltage transients.
+Battery & Power Control,  Variables,    F,         B,         A,   nBackupBatteryLevel      /&FRC backup battery level (in millivolts; 9500 is 9.5 volts).
+Battery & Power Control,  Variables,    F,         B,         A,   nBatteryLevel            /&FRC main battery level (in millivolts; 9500 is 9.5 volts).
+Battery & Power Control,  Variables,    RNTA,      B,         A,   nImmediateBatteryLevel   /&The last sampled battery level in millivolts. A value of 9458 represent 9.458 volts.
+Battery & Power Control,  Variables,    RNT,       B,         A,   nPowerDownDelayMinutes   /&Specifies the number of minutes of inactivity (i.e. no buttons pressed) used by the sleep timer for automatic power off of controller.\n\n\rValues outside the range 0 to 255 are truncated to an unsigned byte value.\n\n\rValue 255 is special and indicates that the "value should not be updated". This allows the ROBOTC IDE to download a value to the firmware without actually causing an update.\n\n\rThe controller automatically powers off to conserve batteries. If you have a long running program, you may find that it will power off in the middle of operation. Calling the "alive()" function within your program will reset the power off timer to prevent this.
+Battery & Power Control,  Variables,    NT,        B,         I,   nPowerDownDelayMinutesDefault/&
+Battery & Power Control,  Variables,    R,         B,         S,   nShutdownVoltage         /&Specifies the low voltage at which the RCX controller should automatically power off.
+
+Bluetooth,                Intrinsics,   NT,        B,         A,   btConnect(nPort, sFriendlyName)/&Attempts to connect BT device with specified "sFriendlyName" on port 'nPort'. \n\n\rPort should be in the range 1 to 3.
+Bluetooth,                Intrinsics,   NT,        B,         A,   btDisconnect(nPort)      /&This function will disconnect a single existing Bluetooth connection on the NXT. 'nPort' ranges from 0 to 3.\n\n\rPort 0 is used if ths is a 'slave' Bluetooth device. Ports 1 to 3 are used when this is a 'master' Bluetooth device and are for the three possible slaves.
+Bluetooth,                Intrinsics,   NT,        B,         A,   btDisconnectAll()        /&This function disconnects all existing Bluetooth connections on the NXT.
+Bluetooth,                Intrinsics,   NT,        B,         A,   btFactoryReset()         /&This command will reset the NXT's bluetooth module to the default factory settings.\n\n\rAll existing connections are disconnected. The "My Contacts" list is emptied. Any existing paired connections are lost.\n\n\rThis command is used for restoring the NXT Bluetooth operation to its original condition. It's really only needed because its possible the Bluetooth hardware gets confused and in an inconsistent state and this is a method of "last resort" to recover.
+Bluetooth,                Intrinsics,   ,          B,         I,   BTOpcdFcn(function)      /&Internal Macro
+Bluetooth,                Intrinsics,   NT,        B,         A,   btRemoveDevice(sFriendlyName)/&Removes a device with the specified "sFriendlyName"  from the "My Contacts" list.\n\n\rRemoving a device will erase the "paired connection" for the device.
+Bluetooth,                Intrinsics,   NT,        B,         A,   btRequestLinkQuality(nPort)/&Requests the current BT link quality from a specific port. The function returns immediately before the link quality has been retrieved.\n\n\rThe NXT CPU will send a message to the Bluetooth module requesting the data. The data is then returned to the NXT CPU within a few 100 milliseconds.
+Bluetooth,                Intrinsics,   NT,        B,         A,   btSearch()               /&Begins a search for BT devices and adds new entries to the "My Contacts" lists.\n\n\rThe search can take up to 30 seconds to perform. 'btSearch' function returns immediately. Application code should continuously check the status to wait for the search to complete.
+Bluetooth,                Intrinsics,   NT,        B,         I,   btSendMessage(nPort, nXmitLength, nXmitBuffer, bWaitForReply)/&Internal only.\n\n\r"Raw" send of a Fantom command over the BT link. The application program is responsible for the (complicated) proper formating of the message.
+Bluetooth,                Intrinsics,   NT,        B,         A,   btStopSearch()           /&This function terminates an existing search on the NXT.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdBTCheckStatus(nStream)/&Used to check the status of the BT.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdBTPurgeRcvBuffer()   /&Used to purge data from the BT input buffer.\n\n\rNormally application program would not need to use this command.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdMessageAddToQueue(nQueueID, pData, nLength)/&Adds the message at 'pData' to queue 'nQueueID'. 'nLength' is the length of the message.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdMessageGetSize(nQueueID)/&Returns the size of the message at the head of queue 'nQueueID'. \n\n\rA non-zero value indicates that a message is available in the NXT's queue of received messages. A zero value indicates that the queue is empty.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdMessageRead(pData, nLengthToRead, nQueueID)/&Reads a Bluetooth message from 'nQueueID'.\n\n\rThe message data is stored in the buffer at 'pData'. 'nLengthToRead' is the maximum number of bytes to read -- it is used to prevent overwriting beyond the length of the buffer at 'pData'.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdMessageWriteToBluetooth(nStream, pData, nLength, nQueueID)/&Writes a Bluetooth message to 'nQueueID'. \n\n\rThe message will be written to the specified 'port' or 'nStream' which should be in the range of 0 to 3. This command is only useful when multiple ports are simultaneously open on the NXT; a configuration that is not recommended because of the much slower communications when multiple ports are in use.\n\n\rThe message data is taken from the buffer at 'pData'. 'nLength' is the number of bytes in the message; the maximum length is 58 bytes.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdMessageWriteToBluetooth(pData, nLength, nQueueID)/&Writes a Bluetooth message to 'nQueueID'. \n\n\rThe message will be written to the currently open stream; the ROBOTC firmware will automatically determine the 'port' or 'stream' to use. This allows the same function call to be used at both slave (port is always 0) or master (port is one of 1 to 3) devices.\n\n\rThe message data is taken from the buffer at 'pData'. 'nLength' is the number of bytes in the message; the maximum length is 58 bytes.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdRawSendToBluetooth(nStream, pData, nLength)/&Sends "raw bytes" out on  the indicated stream.
+Bluetooth,                Intrinsics,   NT,        B,         A,   cCmdRawSendToBluetooth(pData, nLength)/&Sends "raw bytes" over the current bluettooth stream.
+Bluetooth,                Intrinsics,   NT,        B,         A,   getBTAddress(btAddr)     /&Retrieves the Bluetooth address of the NXT.
+Bluetooth,                Intrinsics,   NT,        B,         A,   getDefaultPIN(passCode)  /&Function retrieves the default BT passcode stored in flash.\n\n\rImmediately after firmware download, the default is set to "1234". ROBOTC has a function that will let you redefine the default port; either for a single power on session or on a permanent basis.
+Bluetooth,                Intrinsics,   NT,        B,         A,   getDeviceAddr(nResult, nHandle, sAddr)/&Gets the Device Address for the BT device in the contacts/connection list indicated by 'hHandle'
+Bluetooth,                Intrinsics,   NT,        B,         A,   getDeviceClass(nHandle, sCOD)/&Gets the Device Class for the BT device in the contacts/connection list indicated by 'hHandle'
+Bluetooth,                Intrinsics,   NT,        B,         A,   getDeviceName(nHandle, sName)/&Gets the Device Name for the BT device in the contacts/connection list indicated by 'hHandle'
+Bluetooth,                Intrinsics,   NT,        B,         A,   getDeviceStatus(nHandle, nStatus)/&Gets the Device Status for the BT device in the contacts/connection list indicated by 'hHandle'
+Bluetooth,                Intrinsics,   NT,        B,         A,   getFirstDevice(nResult, nHandle)/&Returns a 'handle' to the first device in the BT 'contacts' list.
+Bluetooth,                Intrinsics,   NT,        B,         A,   getFriendlyName(sName)   /&Copies the "friendly name" for a NXT to a string variable.
+Bluetooth,                Intrinsics,   NT,        B,         A,   getNextDevice(nResult, nHandle)/&Returns a 'handle' to the next device in the BT 'contacts' list.
+Bluetooth,                Intrinsics,   NT,        B,         A,   getPortName(nResult, nPort, sPortName)/&Gets the name of the device connected on port 'nPort'
+Bluetooth,                Intrinsics,   NT,        B,         A,   getSessionPIN(passCode)  /&Function retrieves the "session" BT passcode stored in RAM. Upon power up, the default passcode is copied to the "session" passcode. Whenever firmware needs a BT passcode, it uses the current setting of the "session" passcode.\n\n\rF/W needs passcode for initializing the manual entry passcode. Also needs passcode if the "use default (i.e. session) passcode without entering manually" variable is set.
+Bluetooth,                Intrinsics,   NT,        B,         A,   nxtReadRawBluetooth(pData, nMaxBufferSize)/&Function used to read "raw" data bytes from the bluetooth module. 'pData' is the location of buffer where bytes should be stored and 'nMaxBufferSize' is the size of this buffer. The returned value is the number of bytes that was actually read.\n\n\rThe data is retrieved from the currently open 'port' or 'stream'.\n\n\rA typical use of this advanced function is for communicating with devices -- like a BT enabled GPS receiver -- that do not follow the LEGO defined "Fantom" messaging protocol.\n\n\rRaw data transmission should only be used when there is a single BT connection on the NXT.\n\n\rThe function "setBluetoothRawDataMode()" needs to be called to setup raw transmission.
+Bluetooth,                Intrinsics,   NT,        B,         I,   nxtWriteRawBluetooth(nStream, pData, nLength)/&Function used to write "raw" data bytes from the bluetooth module. 'pData' is the location of buffer where bytes should be stored and 'nMaxBufferSize' is the size of this buffer. The returned value is the number of bytes that was actually read.\n\n\rThe data is sent to the specified 'nSstream'.\n\n\rA typical use of this advanced function is for communicating with devices -- like a BT enabled GPS receiver -- that do not follow the LEGO defined "Fantom" messaging protocol.\n\n\rRaw data transmission should only be used when there is a single BT connection on the NXT.\n\n\rThe function "setBluetoothRawDataMode()" needs to be called to setup raw transmission.
+Bluetooth,                Intrinsics,   NT,        B,         A,   nxtWriteRawBluetooth(pData, nLength)/&Function used to write "raw" data bytes from the bluetooth module. 'pData' is the location of buffer where bytes should be stored and 'nMaxBufferSize' is the size of this buffer. The returned value is the number of bytes that was actually read.\n\n\rThe data is sent to the currently open 'port' or 'stream'.\n\n\rA typical use of this advanced function is for communicating with devices -- like a BT enabled GPS receiver -- that do not follow the LEGO defined "Fantom" messaging protocol.\n\n\rRaw data transmission should only be used when there is a single BT connection on the NXT.\n\n\rThe function "setBluetoothRawDataMode()" needs to be called to setup raw transmission.
+Bluetooth,                Intrinsics,   NT,        B,         A,   resetSessionPIN()        /&Function resets the default BT passcode stored in RAM to the default value stored in flash.
+Bluetooth,                Intrinsics,   RNT,       B,         I,   sendMessageNew(nMessageID) /&Internal function.
+Bluetooth,                Intrinsics,   RNT,       B,         I,   sendMessageOld(nMessageID) /&Internal function.
+Bluetooth,                Intrinsics,   NT,        B,         A,   setBluetoothOff()        /&This function turns the Bluetooth module OFF.\n\n\rSetting BT off will disconnect any existing connections.
+Bluetooth,                Intrinsics,   NT,        B,         A,   setBluetoothOn()         /&This function turns the Bluetooth module ON.
+Bluetooth,                Intrinsics,   NT,        B,         A,   setBluetoothRawDataMode()/&This function sets the NXT Bluetooth configuration to "raw data transmission" mode. When in "raw mode" the LEGO defined higher level protocol (i.e. Fantom messages) is disabled and the application program can directly 'read' and 'write' bytes over an existing Bluetooth connection.\n\n\r"raw mode" can only be exited by the NXT firmware when an application program terminates execution.
+Bluetooth,                Intrinsics,   NT,        B,         A,   setBluetoothVisibility(bBluetoothVisible)/&This functions makes the NXT 'visible' or 'invisible' to search requests from other bluetooth devices.\n\n\rConnections can still be made to an 'invisible' device as long as the far end device already knows the BT address of the device.
+Bluetooth,                Intrinsics,   NT,        B,         A,   setBluetoothVisibility(nResult, bBluetoothVisible)/&Sets whether the NXT BT is visiible or invisible to searches from other Bluetooth devices
+Bluetooth,                Intrinsics,   NT,        B,         A,   setDefaultPIN(nResult, sPIN) /&Sets a default PIN to use for Bluetooth connections (future)
+Bluetooth,                Intrinsics,   NT,        B,         A,   setDefaultPIN(passCode)  /&Function sets the default BT passcode stored in flash.\n\n\rImmediately after firmware download, the default is set to "1234". This function allows you to change the default. The new default value is "permanent"; it is retained until the firmware is reloaded.
+Bluetooth,                Intrinsics,   NT,        B,         A,   setFriendlyName(nResult, sFriendlyName) /&Sets the "friendly name" that a NXT will be known by. Displayed on the top status line of the NXT LCD.
+Bluetooth,                Intrinsics,   NT,        B,         B,   setFriendlyName(sFriendlyName)/&This function is used to set the "friendly name" of the NXT.\n\n\rThis is the name displayed centered on the top line of the NXT's LCD display.
+Bluetooth,                Intrinsics,   NT,        B,         A,   setSessionPIN(passCode)  /&Function sets the "session" BT passcode stored in RAM. Upon power up, the default passcode is copied to the "session" passcode. Whenever firmware needs a BT passcode, it uses the current setting of the "session" passcode.\n\n\rFirmware needs a passcode for initializing the manual entry passcode. Also needs passcode if the "use default (i.e. session) passcode without entering manually" variable is set.
+Bluetooth,                Intrinsics,   NT,        B,         A,   transferFile(nPort, sFileName) /&Transfers the file 'sFileName' from this NXT to the NXT connected to port 'nPort'
+Bluetooth,                Intrinsics,   NT,				 A,         S,   btGetMyContactsEntry(nIndexInList, nInfo) /&No information available
+
+Bluetooth,                Variables,    NT,        B,         B,   bBTBusy                  /&Read-only boolean variable that indicates whether Bluetooth is currently busy processing a command.
+Bluetooth,                Variables,    NT,        B,         S,   bBTDebugTrace            /&Boolean variable for advanced users.\n\n\rEnables output of a debug trace of Bluetooth activity to the "Debug Stream" debugger output window.
+Bluetooth,                Variables,    NT,        B,         B,   bBTHasProgressSounds     /&Boolean variable that enables or disables sound feedback on Bluetooth connect / disconnect and failure activities.\n\n\rDepending on whether a connection is "paired" connect and disconnect activities can occur silently. This variable will enable audible output to inform you of these actions.
+Bluetooth,                Variables,    NT,        B,         A,   bBTOptimizePerformance   /&Boolean variable used to indicate whether Bluetooth transmission performance should be optimized. Optimized performance may not be compatible with other devices not programmed via ROBOTC.
+Bluetooth,                Variables,    NT,        B,         S,   bBTRawMode               /&Read-only variable that can be used to test whether NXT Bluetooth is currently in "raw data transmission mode". \n\n\rWhen in "raw mode" the LEGO defined higher level protocol (i.e. Fantom messages) is disabled and the application program can directly 'read' and 'write' bytes over an existing Bluetooth connection.
+Bluetooth,                Variables,    NT,        B,         B,   bBTSkipPswdPrompt        /&Boolean variable used to indicate whether manual entry of Bluetooth password should be disabled. \n\n\rIf set, then the default value stored in  RAM (see the set/get session passcode functions will always be used.\n\n\rPassword entry using the NXT buttons and LCD can be awkward. This is a convenient way to bypass this entry if you're always going to use the same passcode.
+Bluetooth,                Variables,    NT,        B,         B,   bBTVisble                /&Read-only boolean variable that indicates whether Bluetooth is 'visible' (true) or 'invisible' (false)
+Bluetooth,                Variables,    NT,        B,         I,   kDefaultBTQueue          /&Constant used for the default messaging queue (i.e. 0).
+Bluetooth,                Variables,    NT,        B,         A,   nBluetoothCmdStatus      /&Gets the status/progress of the last BT issued 'command'.\n\n\rCan be used to check whether the command is still in progress. Once completed the status contains the success or fail status of the command.
+Bluetooth,                Variables,    NT,        B,         A,   nBluetoothState          /&Gets the current BT state.
+Bluetooth,                Variables,    NT,        B,         A,   nBTAvailOutSize          /&No information available
+Bluetooth,                Variables,    NT,        B,         A,   nBTCurrentStreamIndex    /&Read-only variable containing the current active stream index. Value 0 is used for slave bluetooth devices. Value 1 to 3 is used for the three possible devices that can be connected on a master BT device. Value -1 is used if BT if there are no current BT connections. This variable is useful for checking if there is a current BT connection and whether the device is master or slave.
+Bluetooth,                Variables,    NT,        B,         S,   nBTLinkQuality[]         /&This array (range 0 to 3) returns the last polled link quality of one of the BT connections. The value ranges from 0 to 255. You must first call the "btRequestLinkQuality(nPort)" function to poll the link quality from the NXT.
+Bluetooth,                Variables,    NT,        B,         A,   nBTStreamSwitchDelay     /&Integer variable containing the delay interval used when switching Bluetooth from DATA to CMD mode.
+Bluetooth,                Variables,    NT,        B,         A,   nLastBTCommand           /&Gets the last command processed by the Bluetooth firmware.
+Bluetooth,                Variables,    NT,				 A,         S,   kMaxMyContacts           /&No information available
+
+Buttons,                  Variables,    NT,        B,         A,   kNoButton                /&Constant. Value of 'nNxtButtonPressed'when no button is pressed.
+Buttons,                  Variables,    NT,        B,         A,   nNxtButtonPressed        /&Contains the number (0 to 3) of the button that is currently depressed.\n\n\r-1 indicates no button is currently pressed.\n\n\rNote that only one button press can be recognized at a time. This is a limitation in the NXT hardware. It is unable to recognize multiple button presses.
+Buttons,                  Variables,    NT,        B,         A,   nNxtButtonTask           /&The variable serves two purposes. A negative value (default is  -1) indicates that the standard firmware processing of NXT buttons should be used. Values in the range of 0 or higher indicates that application program will process buttons.\n\n\rIf the value is in the range 0 to 9 (i.e. a valid task number) then this task will be started (or restarted) whenever a button press is detected.\n\n\r
+Buttons,                  Variables,    NT,        B,         A,   nNxtButtonTransition     /&No information available
+Buttons,                  Variables,    NT,        B,         A,   nNxtExitClicks           /&Holds the number of 'clicks' of the EXIT button required to abort a program. Default value is one for compatibility with standard firmware.\n\n\rThis variable allows end user programs to use the EXIT button. If you set the variable to 'N' (where 'N' is greater than 1) then the first 'N-1' consecutive clicks of the EXIT button can be handled by the application program. On the N-th consecutive click the firmware will automatically EXIT (i.e. end)  your program.\n\n\rHaving the firmware perform the check ensures that, even if there is an error in your program, you can always EXIT your program. But it also easily allows your program to have access to the EXIT button.\n\n\rNOTE: With the standard NXT-G firmware, the EXIT button is not accessible to your program!
+Buttons,                  Variables,    NT,        B,         S,   nNxtRemoteButton         /&This is an internal variable used by ROBOTC's "NXT Remote Desktop" feature. It should not be used by the non-experienced users.\n\n\rWhen the value is non-negative it allows simulation of pressing one of the four NXT buttons and will override the actual state of which button is pushed.
+Buttons,                  Variables,    R,         B,         S,   nOffButtonTask           /&Internal use only.
+Buttons,                  Variables,    R,         B,         S,   nRunButtonTask           /&Internal use only.
+
+Camera,                   Intrinsics,   NTV1F,     B,         I,   GetCameraConfig(config)  /&Internal procedure used to setup the camera configuration. This function is automatically called by the compiler. It is triggered by the presense of "#pragma camera(....)" statements in the source program.
+Camera,                   Intrinsics,   NTV1F,     B,         B,   GetTrackingParms(myData) /&Obtains detailed information about the camera and copies to the 'myData' variable. The robot is constantly received tracking "packets" from the camera. The function will obtain the last complete packet received and copy it to a user variable. Once copied, the user program can work with these variables.
+Camera,                   Intrinsics,   NTV1F,     B,         I,   ResetCameraConfigurationToDefault() /&Advanced function to return the internal parameters used to set up the camera.
+Camera,                   Intrinsics,   NTV1F,     B,         I,   SetCameraConfig(config)  /&Internal procedure used to setup the camera configuration. This function is automatically called by the compiler. It is triggered by the presense of "#pragma camera(....)" statements in the source program.
+Camera,                   Intrinsics,   NTV1F,     B,         A,   SetTrackingParms(config) /&No information available
+Camera,                   Intrinsics,   NTV1F,     B,         B,   StartCamera()            /&Starts the CMUCAM operation. The compiler automatically generates this code as part of the main task prolog whenever "#pragam camera(....) statements are detected in the program.
+Camera,                   Intrinsics,   NTV1F,     B,         B,   StopCamera()             /&Stops the CMUCAM operation. The compiler automatically generates this code as part of the main task epilog whenever "#pragam camera(....) statements are detected in the program.
+
+Camera,                   Variables,    NTV1F,     B,         A,   bStreamCameraIOToPC      /&Internal variabl to indicate that camera data is not processed within the robot firmware but is simply "streamed" (or redirected) to the communications port to the PC.
+Camera,                   Variables,    NTV1F,     B,         B,   nCameraConfidence        /&This is an indication of the "confidence" of the tracking data. A value of zero indicates that the tracking data (horizontal and vertical) is not valid -- i.e. the color being traced was not found anywhere in the camera image.\n\n\rA high value indicates that pixels matching the tracked color were concentrrated in a single region rather than spread out throughout the camera image.\n\r
+Camera,                   Variables,    NTV1F,     B,         B,   nCameraHorizontal        /&The horizontal position of the tracked color blob.  A value of zero is the center position of the camera view. \n\n\rThis value is the "weighted average" veritcal position of the pixels that matched the tracked color.
+Camera,                   Variables,    NTV1F,     B,         B,   nCameraStatus            /&nCameraFields[amTrackingStatus] is the current status of the camera. It indicates the "health" of the camera and can be one of the values:\n\r  camStatusInactive                        Camera is not active\n\r  camStatusNoResponse                 Camera is not responding\n\r  camStatusSettingRegisters           ROBOTC firmwware is initializing the internal cameraregisters.\n\r  camStatusSettingResolution         ROBOTC firmwware is initializing the camera resolution\n\r  camStatusDownloadingConfig       ROBOTC firmwware is initializing the camera color tracking\n\r  camStatusTracking                        Camera is tracking coloirs and reporting results to ROBOTC firmware\n\r  camStatusShutdown                      ROBOTC firmware is shutting down the camera.
+Camera,                   Variables,    NTV1F,     B,         B,   nCameraTrackingPackets   /&The number of tracking packets that have been received from the camera.\n\n\rThis field is incremented by one every time ROBOTC receives a "color tracking packet" from the camera. The packet is several bytes and reports the location of the tracked color within the camera's scanned image.\n\r
+Camera,                   Variables,    NTV1F,     B,         B,   nCameraVertical          /&The vertical position of the tracked color blob. A value of zero is the center position of the camera view.\n\n\rThis value is the "weighted average" veritcal position of the pixels that matched the tracked color.
+Camera,                   Variables,    NTV1F,     B,         A,   trackingData             /&No information available
+
+Datalog,                  Intrinsics,   RNT,       B,         A,   AddToDatalog(data)       /&Adds an entry to the datalog.
+Datalog,                  Intrinsics,   RNT,       B,         A,   AddToDatalog(nDataPtIndex, nDataValue) /&Adds an entry to the datalog with user specified "data point" type.
+Datalog,                  Intrinsics,   RNT,       B,         I,   AddToDatalogEnhanced(nFlags, data)/&
+Datalog,                  Intrinsics,   RNT,       B,         A,   CreateDatalog(size)      /&OBSOLETE function. Replaced with the variable "nDatalogSize".\n\n\rCreates a datalog of the specified size and initializes contents to empty (i.e no entries).
+Datalog,                  Intrinsics,   NT,        B,         A,   SaveNxtDatalog()         /&Saves the existing datalog from RAM memory into a NXT file named "DATAnnnn.rdt" where 'nnnn' is numeric and increases by one on every save.
+Datalog,                  Intrinsics,   RNT,       B,         I,   UploadDatalog(nStart, nSize) /&Internal.\n\n\rUsed by ROBOTC IDE to upload datalog from controller to PC.
+
+Datalog,                  Variables,    NT,        B,         A,   bHideDataFiles           /&Boolean flag to indicate whether data files should be hidden or shown in the NXT GUI
+Datalog,                  Variables,    RNT,       B,         A,   nDatalogSize             /&The current size allocated to the datalog. This represents the maximum amount of data thatcan be stored in the datalog. Once the datalog has been filled, subsequent calls to "AddToDatalog" simply discard the data.\n\n\rWriting any value to this variable will clear existing entries from the datalog.\n\n\rNOTE:  The datalog is not automatically cleared when a program starts running.
+Datalog,                  Variables,    NT,        B,         A,   nMaxDataFiles            /&Maximum number of saved datalog files (DATAnnnn.RDT) allowed on a NXT. If you try to store additional files, then the oldest previous datalog file is deeted
+Datalog,                  Variables,    NT,        B,         A,   nMaxDataFileSize         /&Maximum size (in 100 byte units) of all datalog files saved on the NXT. If you exceed this value with a new file, then older datalog files are deleted to make space.
+Datalog,                  Variables,    RNT,       B,         A,   nUsedDatalogBytes        /&The number of bytes currently containing data in the datalog.
+
+Robot Algebra,            Setup,        NT,        D,         B,   initializeRobot(robot)   /&This command prepares your robot before starting a sequence of moves. It tells the program what robot is doing the moves.\n\rYou should use the model that corresponds to the robot you are using.\n\n\rThe default model is the "RMRobotEducator" model.
+Robot Algebra,            Setup,        NT,        D,         B,   movesEnd()               /&This command indicates the sequence of moves is over and displays that on the robot screen.
+Robot Algebra,            Setup,        NT,        D,         B,   movesStart(waitForRoutine, waitForParam) /&This command should be called right before you are about to start your first movement.\n\rThis command will indicate that the sequence of moves is about to start, and will wait for your starting command.\n\rThere are 4 options for a starting command:\n\n\r(1) press the touch sensor (WFTouch), this is the default\n\r(2) make a loud noise (WFLoud)\n\r(3) wait for a set number of seconds (WFTime)\n\r(4) just move right into the routine (WFNothing).
+Robot Algebra,            Setup,        NT,        D,         B,   setMoveMode(timingMoveMode, typeMoveMode) /&This command provides different options for analyzing the different moves in a sequence of moves.\n\rThe timing mode can be set to have all the moves execute one after the other (MMContinuousMoves – the default)\n\ror to execute only one move at a time followed by a pause and wait for you to hit the touch sensor before moving onto the next move (MMOneMoveAtATime).\n\n\rThe type mode can be set to execute all move types (MMAllMoveTypes – the default),\n\rto execute only straight moves (MMStraightsOnly), to execute only turning moves (MMTurnsOnly),\n\ror to execute only a specific type of turn (MMPointTurnsOnly or MMSwingTurnsOnly).
+Robot Algebra,            Setup,        NT,        D,         I,   useStepThroughMode()     /&Deprecated Functions - Use the "setMoveMode" function.
+Robot Algebra,            Movements,    NT,        D,         B,   straightBackward(mRot, mRotPerSec) /&Both wheels rotate forward at the same speed and the robot moves straight backward.\n\n\rmRot - Number of Rotations to Travel\n\rmRotPerSecond - Numer of Rotations to Travel Per Second
+Robot Algebra,            Movements,    NT,        D,         B,   straightForward(mRot, mRotPerSec) /&Both wheels rotate forward at the same speed and the robot moves straight forward.\n\n\rmRot - Number of Rotations to Travel\n\rmRotPerSecond - Numer of Rotations to Travel Per Second
+Robot Algebra,            Movements,    NT,        D,         B,   turnPointLeft(mRot, mRotPerSec) /&Both wheels rotate at the same speed, but the right wheel rotates forward and the left wheel\n\rrotates backward, so the robot turns to its left around its center. This makes a sharp turn in place.\n\n\rmRot - Number of Rotations to Travel\n\rmRotPerSecond - Numer of Rotations to Travel Per Second
+Robot Algebra,            Movements,    NT,        D,         B,   turnPointRight(mRot, mRotPerSec) /&Both wheels rotate at the same speed, but the left wheel rotates forward and the right wheel\n\rrotates backward, so the robot turns to its right around its center. This makes a sharp turn in place.\n\n\rmRot - Number of Rotations to Travel\n\rmRotPerSecond - Numer of Rotations to Travel Per Second
+Robot Algebra,            Movements,    NT,        D,         B,   turnSwingLeftBackward(mRot, mRotPerSec) /&The left wheel rotates backward and the right wheel does not move, so the\n\rrobot pivots around the left wheel as it turns backward. This makes a wider turn.\n\n\rmRot - Number of Rotations to Travel\n\rmRotPerSecond - Numer of Rotations to Travel Per Second
+Robot Algebra,            Movements,    NT,        D,         B,   turnSwingLeftForward(mRot, mRotPerSec) /&The right wheel rotates forward and the left wheel does not move, so the\n\rrobot pivots around the left wheel as it turns forward. This makes a wider turn.\n\n\rmRot - Number of Rotations to Travel\n\rmRotPerSecond - Numer of Rotations to Travel Per Second
+Robot Algebra,            Movements,    NT,        D,         B,   turnSwingRightBackward(mRot, mRotPerSec) /&The right wheel rotates backward and the left wheel does not move, so the\n\rrobot pivots around the left wheel as it turns backward. This makes a wider turn.\n\n\rmRot - Number of Rotations to Travel\n\rmRotPerSecond - Numer of Rotations to Travel Per Second
+Robot Algebra,            Movements,    NT,        D,         B,   turnSwingRightForward(mRot, mRotPerSec) /&The left wheel rotates forward and the right wheel does not move, so the\n\rrobot pivots around the right wheel as it turns forward. This makes a wider turn.\n\n\rmRot - Number of Rotations to Travel\n\rmRotPerSecond - Numer of Rotations to Travel Per Second
+
+Natural Language,             Setup,        V2,        Z,         B,   robotType(type);      /&Choose which robot you want to write a program for. \nAcceptable robots: Recbot and Swervebot.\n(If you don't use this function at all, it will default to Recbot!)
+Natural Language,             Movement,     V2,        Z,         B,   startMotor(motorPort, speed);      /&Start a motor at a specified speed.\nRange: -127 to 127\nAcceptable Motors: ports 1 through 10,(and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Movement,     V2,        Z,         B,   stopMotor(motorPort);      /&Stops a motor./nAcceptable Motors: ports 1 through 10, (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Movement,     V2,        Z,         B,   setServo(servoPort, position);	/&Rotates a servo to a specified position. \nRange: -127 to 127\nAcceptable Motor Ports: ports 2 through 9,(and your names for them given in Motors and Sensors Setup.)
+Natural Language,         	  Robot Motion,     V2,        Z,         B,   forward(speed);   /&Both wheels rotate forward at the same speed and the robot moves straight forward.\nRange: -127 to 127\n(Forward will always move your robot forward.)
+Natural Language,             Robot Motion,     V2,        Z,         B,   stop();      /&Both wheels do not move, causing the robot to stop.
+Natural Language,             Robot Motion,     V2,        Z,         B,   backward(speed);      /&Both wheels rotate backward at the same speed and the robot moves straight backward.\nRange: -127 to 127\n(Backward will always move your robot backward.)
+Natural Language,             Robot Motion,     V2,        Z,         B,   swingTurn(direction, speed);      /&One wheel rotates while the other does not move, causing the robot to turn around the stopped wheel. This makes a wide turn.\nRange: -127 to 127\n\nThe Directions allowed are: right, left
+Natural Language,             Robot Motion,     V2,        Z,         B,   pointTurn(direction, speed);      /&Both wheels rotate at the same speed but in opposite directions, causing the robot to turn around it's center. This makes a sharp turn in place.\nRange: -127 to 127\n\nThe Directions allowed are: right, left
+Natural Language,             Robot Motion,     V2,        Z,         B,   lineTrackForTime(trackTime, threshold, leftSensorPort, centerSensorPort, rightSensorPort);      /&The robot will track a black line on a white surface for a specified time in seconds.\nThreshold Range: (light) 0 to 4095 (dark)\nAcceptable Sensors: analog ports 1 through 8 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Robot Motion,     V2,        Z,         B,   lineTrackForRotations(rotations, threshold, leftSensorPort, centerSensorPort, rightSensorPort);      /&The robot will track a black line on a white surface for a specified distance in rotations.\nThreshold Range: (light) 0 to 4095 (dark)\nAcceptable Sensors: analog ports 1 through 8 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Robot Motion,     V2,        Z,         B,   tankControl(rightJoystick, leftJoystick);	/&Enables basic "tank" style remote control of a robot. \nAcceptable Joystick Channels: Ch1 through Ch4 \nNote: Command must be placed in a loop to enable continuous control.
+Natural Language,             Robot Motion,     V2,        Z,         B,   arcadeControl(verticalJoystick, horizontalJoystick);	/&Enables "arcade" style remote control of a robot. \nAcceptable Joystick Channels: Ch1 through Ch4 \nNote: Command must be placed in a loop to enable continuous control.
+Natural Language,             Robot Motion,     V2,        Z,         B,   moveStraightForRotations(rotations, rightEncoderPort, leftEncoderPort);	/&Uses feedback from the shaft encoders to self correct forward movements for a specified number of rotations. \nAcceptable Sensors: digital ports 1 through 12 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Robot Motion,     V2,        Z,         B,   moveStraightForTime(seconds, rightEncoderPort, leftEncoderPort)	/&Uses feedback from the shaft encoders to self correct forward movements for a specified number of seconds. \nAcceptable Sensors: digital ports 1 through 12 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Wait,     	V2,        Z,         B,   wait(waitTime);      /&Wait an amount of time measured in seconds.
+Natural Language,             Wait,     	V2,        Z,         B,   waitInMilliseconds(waitTime);      /&Wait an amount of time measured in milliseconds.
+Natural Language,             Until,     	V2,        Z,         B,   untilTouch(sensorPort);      /&The robot does what it was doing until the touch sensor is pressed in.\nAcceptable Sensors: digital ports 1 through 12 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilRelease(sensorPort);      /&The robot does what it was doing until the touch sensor is released.\nAcceptable Sensors: digital ports 1 through 12 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilBump(sensorPort);      /&The robot does what it was doing until the touch sensor is pressed in and then released out.\nAcceptable Sensors: digital ports 1 through 12 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilSonarLessThan(distance, sensorPort);      /&The robot does what it was doing until the sonar sensor reads a value less than a set distance in centimeters.\nRange: 0 to 647 (A value of -1 means it cannot detect anything.) \nAcceptable Sensors: digital ports 1 through 11 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilSonarGreaterThan(distance, sensorPort);      /&The robot does what it was doing until the sonar sensor reads a value greater than a set distance in centimeters.\nRange: 0 to 647 (A value of -1 means it cannot detect anything.) \n Acceptable Sensors: digital ports 1 through 11 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilButtonPress(button);      /&The robot does what it was doing until a button on the LCD is pressed.\nAcceptable Buttons: centerBtnVEX, rightBtnVEX, leftBtnVEX
+Natural Language,             Until,     	V2,        Z,         B,   untilDark(threshold, sensorPort);      /&The robot does what it was doing until the light sensor reads a value darker than the threshold.\nRange: (light) 0 to 4095 (dark) \nAcceptable Sensors: analog ports 1 through 8 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilLight(threshold, sensorPort);      /&The robot does what it was doing until the light sensor reads a value lighter than the threshold.\nRange: (light) 0 to 4095 (dark) \n Acceptable Sensors: analog ports 1 through 8 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilRotations(rotations, sensorPort);      /&The robot does what it was doing until the quadrature encoder rotations match the desired value.\nRange: 0 to >65000 \nAcceptable Sensors: digital ports 1 through 11 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilEncoderCounts(distance, sensorPort);      /&The robot does what it was doing until the encoder counts match the desired value. \nRange: 0 to >65000\nAcceptable Sensors: digital ports 1 through 11 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilPotentiometerLessThan(position, sensorPort);	/&The robot does what it was doing until the potentiometer reads a value less than a set position value.\nRange: 0 to 4095 \n Acceptable Sensors: analog ports 1 through 8 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Until,     	V2,        Z,         B,   untilPotentiometerGreaterThan(position, sensorPort);	/&The robot does what it was doing until the potentiometer reads a value greater than a set position value.\nRange: 0 to 4095 \n Acceptable Sensors: analog ports 1 through 8 (and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Special,      V2,        Z,         B,   turnLEDOn(digitalPort);	/&Turns a LED On in the specified digital sensor port. \nAcceptable Sensor Ports: digital ports 1 through 12,(and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Special,      V2,        Z,         B,   turnLEDOff(digitalPort);	/&Turns a LED Off in the specified digital sensor port. \nAcceptable Sensor Ports: digital ports 1 through 12,(and your names for them given in Motors and Sensors Setup.)
+Natural Language,             Special,      V2,        Z,         B,   turnFlashlightOn(flashlightPort, brightness);	/&Turns on a VEX Flashlight at the specified brightness. \nAcceptable Motor Ports: motor ports 1 through 10,(and your names for them given in Motors and Sensors Setup.) \nNote: Brightness control only available in Motor ports 1 and 10, or 2 through 9 when connected to a VEX Motor Controller 29. \nRange: 0 to 127
+Natural Language,             Special,      V2,        Z,         B,   turnFlashlightOff(flashlightPort);	/&Turns off a VEX Flashlight. \nAcceptable Motor Ports: motor ports 1 through 10,(and your names for them given in Motors and Sensors Setup.)
+
+Debug,                    Intrinsics,   ALL,       B,         I,   ArrayBoundCheck(nRunTimeValue, nRange)/&Internal variables.
+Debug,                    Intrinsics,   ALL,       B,         I,   assert()                 /&Internal variables.
+Debug,                    Intrinsics,   ALL,       B,         A,   ASSERT(assertVar)        /&Macro command used during debugging to catch unexpected/illegal conditions. Causes an exception and program abort when 'assertVar' is true.
+Debug,                    Intrinsics,   NTAV2,     B,         A,   debugPrint(format, parm1, parm2)/&Formats a string and prints it to the debug "stream" window on the PC.
+Debug,                    Intrinsics,   NTAV2,     B,         A,   debugPrintLine(format, parm1, parm2)/&Formats a string and prints it to the debug "stream" window on the PC. Once printed then starts a new line in the window.
+Debug,                    Intrinsics,   NTAV2,     ,          A,   getAvailSpaceInDebugStream()/&No information available
+Debug,                    Intrinsics,   ALL,       B,         I,   Set(nDestinationVariable, nSourceVariable)/&Internal variables.
+Debug,                    Intrinsics,   ALL,       B,         I,   setBreakpoint(breakNumb, memoryIndex, nOffsetInSub) /&Internal variables.
+Debug,                    Intrinsics,   ALL,       B,         A,   VERIFY(assertVar)        /&Macro command used during debugging to catch unexpected/illegal conditions. Causes an exception and program abort when 'assertVar' is true.
+Debug,                    Intrinsics,   NTA,       B,         S,   writeDebugStream(sString) /&This is an advanced feature. It allows writing strings to the NXT's debug stream. The debug stream is polled by the ROBOTC IDE and displayed in a text window in ROBOTC's IDE.
+
+Debug,                    Variables,    ALL,       B,         A,   bFloatConversionErrors   /&When true, this variable will generate an exception if an out of range error occurs when converting a "float" value to an integer. The default value is no exception.\n\n\rROBOTC converts out of range float values to the largest possible integer value.
+Debug,                    Variables,    ALL,       B,         I,   nDebugTaskMode           /&Internal variables.
+
+Display,                  Intrinsics,   V1V2F,     B,         A,   clearLCDLine(nLine)      /&Clears the indicated line of the VEX LCD to blanks
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayFileName(nLine, nSlot) /&Displays the name of the file in file directory at slot 'nSlot'
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayLCDCenteredString(nLine, sString) /&Displays a character string centered on the indicated line of the VEX LCD
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayLCDChar(nLine, nPos, cChar) /&Displays a specific character on the VEX LCD at the specified position
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayLCDNumber(nLine, nPos, nValue, nPrecision) /&Displays a integer on the VEX LCD at the specified position
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayLCDPos(nLine, nPos) /&Sets the next display position on the VEX LCD
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayLCDString(nLine, nPos, sString) /&Displays a character string on the VEX LCD at the specified position
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayNextLCDChar(cChar) /&Displays a specific character on the VEX LCD
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayNextLCDNumber(nValue, nPrecision) /&Displays a integer number on the VEX LCD
+Display,                  Intrinsics,   V1V2F,     B,         A,   displayNextLCDString(sString) /&Displays a character string on the VEX LCD
+Display,                  Intrinsics,   RA,        B,         A,   drawInvertEllipse(Left, Top, Right, Bottom) /&No information available
+Display,                  Intrinsics,   RA,        B,         A,   drawInvertRect(Left, Top, Right, Bottom) /&No information available
+Display,                  Intrinsics,   NTA,       B,         A,   eraseDisplay()           /&Erases the complete NXT LCD display
+Display,                  Intrinsics,   NTA,       B,         A,   nxtClearPixel(xPos, yPos) /&Clears a single pixel on the NXT LCD screen.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayBigStringAt(xPos, yPos, sFormatString, ...) /&Formats  a text string and displays it at any (X,Y) coordinate on the LCD display. Drawing uses a large font that is 16-pixels high.\n\n\r'sFormatString' is the format string to use and 'parm1' and 'parm2' are two optional parameters that can be used within the format string.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayBigStringAt(xPos, yPos, sString) /&Formats  a text string and displays it at any (X,Y) coordinate on the LCD display. Text is displayed using a double height font.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayBigTextLine(nLineNumber, sFormatString, ...) /&Formats  a text string and displays it on two of the 8 possible text lines. The remainder of the line is padded with blanks. Large double height font is used the display is twice the size of normal size font.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayBigTextLine(nLineNumber, sString) /&Displays a text string on two of the 8 possible text lines. The remainder of the line is padded with blanks.Large double height font is used the display is twice the size of normal size font.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayCenteredBigTextLine(nLineNumber, sFormatString, ...) /&Formats  a text string and displays it on two consecutive of the 8 possible text lines. The text is horiztonally centered on the LCD display.\n\n\r'sFormatString' is the format string to use and 'parm1' and 'parm2' are two optional parameters that can be used within the format string. Large double height font is used the display is twice the size of normal size font.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayCenteredBigTextLine(nLineNumber, sString) /&Displays a text string on one of the 8 possible text lines. The text is horiztonally centered on the LCD display. Large double height font is used; the display is twice the size of normal size font
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayCenteredTextLine(nLineNumber, sFormatString, ...) /&Formats  a text string and displays it on one of the 8 possible text lines. The text is horiztonally centered on the LCD display.\n\n\r'sFormatString' is the format string to use and 'parm1' and 'parm2' are two optional parameters that can be used within the format string.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayCenteredTextLine(nLineNumber, sString) /&Displays a text string on one of the 8 possible text lines. The text is horiztonally centered on the LCD display.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayClearTextLine(nLineNumber)/&Erases a line of text. 'nLineNumber' specifies one of the 8 possible text lines.
+Display,                  Intrinsics,   ,          ,          A,   nxtDisplayBigStringAt(xPos, yPos, pChar, ...) /&No information available
+Display,                  Intrinsics,   ,          ,          A,   nxtDisplayBigTextLine(nLineNumber, pChar, ...) /&No information available
+Display,                  Intrinsics,   ,          ,          A,   nxtDisplayCenteredBigTextLine(nLineNumber, pChar, ...) /&No information available
+Display,                  Intrinsics,   ,          ,          A,   nxtDisplayCenteredTextLine(nLineNumber, pChar, ...) /&No information available
+Display,                  Intrinsics,   ,          ,          A,   nxtDisplayString(nLineNumber, pChar, ...) /&No information available
+Display,									Intrinsics,   ,          ,          A,   nxtDisplayStringAt(xPos, yPos, pChar, ...) /&No information available
+Display,                  Intrinsics,   ,          ,          A,   nxtDisplayTextLine(nLineNumber, pChar, ...) /&No information available
+Display,                  Intrinsics,   ,          ,          A,   nxtScrollText(pChar, ...) /&No information available
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayIconFile(xPos, yPos, sFileName) /&Displays a ICON file on the LCD screen at the specified coordinates (xPos, yPos).
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayRICFile(nleft, nBottom, sFileName) /&Display a RIC (i.e. "ICON" or "Picture") file on the NXT display at the specified coordinates.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayString(nLineNumber, sFormatString, ...) /&Formats  a text string and displays it on one of the 8 possible text lines.\n\n\r'sFormatString' is the format string to use and 'parm1' and 'parm2' are two optional parameters that can be used within the format string.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayStringAt(xPos, yPos, sFormatString, ...) /&Formats  a text string and displays it at (xPos, yPos) coordinate on the LCD display.\n\n\r'sFormatString' is the format string to use and 'parm1' and 'parm2' are two optional parameters that can be used within the format string.
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDisplayStringAt(xPos, yPos, sString) /&Displays a text string  at (X,Y) coordinate on the LCD display
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayTextLine(nLineNumber, sFormatString, ...) /&Formats  a text string and displays it on one of the 8 possible text lines. The remainder of the line is padded with blanks.\n\n\r'sFormatString' is the format string to use and 'parm1' and 'parm2' are two optional parameters that can be used within the format string.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDisplayTextLine(nLineNumber, sString) /&Displays a text string on one of the 8 possible text lines. The remainder of the line is padded with blanks.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDrawCircle(Left, Top, Diameter) /&Draws outline of the circle with the specified coordinates.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDrawEllipse(Left, Top, Right, Bottom) /&Draws outline of the ellipse with the specified coordinates.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDrawLine(xPos, yPos, xPosTo, yPosTo) /&Draws a line between two points.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtDrawRect(Left, Top, Right, Bottom) /&Draws outline of the rectangle with the specified coordinates.
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyClearPixel       /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyDrawEllipse      /&Internal Variable
+Display,                  Intrinsics,   NT,        B,         I,   nxtDsplyDrawIconFile     /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyDrawLine         /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyDrawRect         /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyDrawStringAtCoordVarFmtSpec/&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyDrawStringVarFmtSpec/&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyDrawTextLineVarFmtSpec/&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyEraseEllipse     /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyEraseRect        /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyEraseScreen      /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyFillEllipse      /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplyFillRect         /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         I,   nxtDsplySetPixel         /&Internal Variable
+Display,                  Intrinsics,   NTA,       B,         A,   nxtEraseEllipse(Left, Top, Right, Bottom) /&Erases (i.e. clears all pixels) the ellipse with the specified coordinates.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtEraseLine(xPos, yPos, xPosTo, yPosTo) /&Erases (i.e. clears) the pixels for the line between the specified pair of points.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtEraseRect(Left, Top, Right, Bottom) /&Erases (i.e. clears all pixels) the rectangle with the specified coordinates.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtFillEllipse(Left, Top, Right, Bottom) /&Fills (i.e. all pixels black) the ellipse with the specified coordinates.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtFillRect(Left, Top, Right, Bottom) /&Fills (i.e. all pixels black) the rectangle with the specified coordinates.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtInvertLine(xPos, yPos, xPosTo, yPosTo) /&Inverts the pixels for the given line.\n\n\rThis function is very useful for functions like drawing a "clock face", a "compass" or a gauge on the LCD screen when you want to "erase" the previous dial pointer and redraw it at a new position. If you use "invert line" for the original drawing and for the "erase" drawing the two calls will cancel each other out! And it work well if the line overdraws some existing pixels -- e.g. some text o nthe LCD.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtScrollText(sFormatString, ...) /&Shift the LCD image up one line. Thenit  formats  a text string and displays it on the bottom line of the LCD text screen.\n\n\r'sFormatString' is the format string to use and 'parm1' and 'parm2' are two optional parameters that can be used within the format string.
+Display,                  Intrinsics,   NTA,       B,         A,   nxtSetPixel(xPos, yPos)  /&Sets a single pixel on the NXT LCD screen.
+Display,                  Intrinsics,   R,         B,         B,   SetUserDisplay(nVariable, nPrecision) /&Sets the variable to display on the 4-digit RCX display
+
+Display,                  Variables,    V1V2F,     B,         A,   bLCDBacklight            /&Turns the backlight on the VEX LCD on or off.
+Display,                  Variables,    NT,        B,         A,   bNxtLCDStatusDisplay     /&Boolean variable that indicates whether the top status line display on the LCD should be present on user-drawn LCD screens.
+Display,                  Variables,    V1V2FA,    B,         A,   nLCDButtons              /&Bit map containing which of the three buttons on the VEX LCD are depressed.
+Display,                  Variables,    NTA,       B,         A,   nLCDContrast             /&Sets the current contrast level. The setting will be lost when the robot is powered off.\n\n\r'90' is the default value used in the standard NXT-G firmware.
+Display,                  Variables,    NTA,       B,         A,   nLCDContrastDefault      /&Sets the current contrast level and also saves this value in non-volatile flash memory.\n\n\rThie variables shouldn't be written too many times because it writes to flash memory which has a limited (10K to 100K) count on the number of times that it can be written.\n\n\r'90' is the default value used in the standard NXT-G firmware.
+Display,                  Variables,    RA,        B,         I,   nLCDRefreshCycles        /&No information available
+Display,                  Variables,    R,         B,         A,   nLCDRefreshRate          /&Sets the LCD refresh rate. Zero disables LCD refresh. Units are 100-msec ticks.
+Display,                  Variables,    NT,        B,         I,   nOnBrickProgrammingStep  /&Used by RPGReader program to tell UI the current playback position
+Display,                  Variables,    R,         B,         A,   nViewState               /&Sets the mode (timer, sensor1, sensor2, sensor3, motorA, motorB, motorC, user of the 4-digit RCX display.
+Display,                  Variables,    NT,        B,         A,   nViewStateNXT            /&Controls which of the four different predefined LCD screen display formats should be used by running program.
+Display,                  Variables,    R,         B,         A,   nWatchFormat             /&Sets the format of the clock/watch display on the RCX LCDE.
+
+Events,                   Intrinsics,   ,          B,         I,   CalibrateEvent(nEventNumber, lowerThreshold, upperThreshold, hysteresis)/&
+Events,                   Intrinsics,   RNT,       B,         I,   ClearAllEvents()         /&
+Events,                   Intrinsics,   RNT,       B,         I,   ClearEvent(nEventNumber) /&
+Events,                   Intrinsics,   RNT,       B,         I,   DirectEvent(nEventMask)  /&
+Events,                   Intrinsics,   RNT,       B,         I,   EVENT_MASK(nEvent)       /&
+Events,                   Intrinsics,   RNT,       B,         I,   ResetEvent(nEventNumber) /&
+Events,                   Intrinsics,   RNT,       B,         I,   SetEvent(nEvent, nSensor, nType) /&
+Events,                   Intrinsics,   RNT,       B,         I,   SetEvent(nEvent, nTimer, nType) /&
+Events,                   Intrinsics,   RNT,       B,         I,   SetPriority(nTaskNumber, nPriority)/&
+Events,                   Intrinsics,   RNT,       B,         I,   SignalEvent(nEventNumber) /&
+
+Events,                   Variables,    RNT,       B,         I,   EST_SENSOR[]             /&
+Events,                   Variables,    RNT,       B,         I,   eventClicks[]            /&
+Events,                   Variables,    RNT,       B,         I,   eventCounts[]            /&
+Events,                   Variables,    RNT,       B,         I,   eventDuration[]          /&
+Events,                   Variables,    RNT,       B,         I,   eventHysteris[]          /&
+Events,                   Variables,    RNT,       B,         I,   eventLower[]             /&
+Events,                   Variables,    RNT,       B,         I,   eventState[]             /&
+Events,                   Variables,    RNT,       B,         I,   eventType[]              /&
+Events,                   Variables,    RNT,       B,         I,   eventUpper[]             /&
+Events,                   Variables,    RNT,       B,         I,   nAcquirePriority         /&
+Events,                   Variables,    RNT,       B,         I,   taskEvents[]             /&
+
+FRC Digital IO,           Variables,    F,         B,         B,   frcDigitalIODirection[]  /&Sets the direction -- 'input' or 'output' -- for the FRC digital I/O pins.
+FRC Digital IO,           Variables,    F,         B,         B,   frcDigitalIOValue[]      /&Boolean array to read or write the value for the FRC digital I/O pins.
+FRC Digital IO,           Variables,    F,         B,         B,   kNumbOfDigitalIO         /&Constant defining the number (18) of digital I/O ports on the FRC.
+
+FRC Relays,               Variables,    F,         B,         B,   frcRelay16[]             /&Provides individual control for each of the 16 FRC relays. \nRelay can be set ON (true) or OFF (false).
+FRC Relays,               Variables,    F,         B,         B,   frcRelay[]               /&Provides control for each of the 8 pairs FRC relays. \nNormally a pair of relay outputs will be connected to an IFI "Spike" motor control modules. Relays can be set to one of the four states-- 'off', 'forward', 'reverse' and 'brake',
+FRC Relays,               Variables,    F,         B,         B,   kNumbOfFRCRelays         /&Constant defining the number (8) of pairs of relay control available on the FRC.
+FRC Relays,               Variables,    F,         B,         B,   kNumbOfFRCSingleRelays   /&Constant defining the number (16) of individual relay control available on the FRC.
+
+File Access,              Intrinsics,   V1V2F,     B,         A,   bValidFile(nFileIndex)   /&Indicates whether the VEX file directory contains a valid file at the specified slot
+File Access,              Intrinsics,   NT,        B,         A,   Close(hFileHandle, nIoResult) /&Closes the specified file handle.\n\n\rThis should be the last file I/O operation after all reads or write are completed. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         I,   CloseAllHandles(nIoResult) /&Internal function. Closes all handles opened by a program. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   Delete(sFileName, nIoResult) /&Deletes the specified filename from the NXT. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   FindFirstFile(hFileHandle, nIoResult, sSearch, sFileName, nFilesize) /&Begins a search through the files in the NXT. 'nFileHandle' returns a handle to the first file found.
+File Access,              Intrinsics,   NT,        B,         A,   FindNextFile(hFileHandle, nIoResult, sFileName, nFilesize) /&Finds the next file in a previously initiated search.
+File Access,              Intrinsics,   NT,        B,         A,   OpenRead(hFileHandle, nIoResult, sFileName, nFileSize) /&Opens 'sFileName' for reading. 'hFileHandle' is used for subsequent reads to this file. 'nFileSize' is filled with the file length. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   OpenWrite(hFileHandle, nIoResult, sFileName, nFileSize) /&Opens 'sFileName' for writing with specified 'file size'. 'hFileHandle' is used for subsequent writes to this file. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   ReadByte(hFileHandle, nIoResult, nParm) /&Reads a byte variable (8-bit) from the specified file.  'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   ,          B,         I,   ReadByteX(hFileHandle, nIoResult, nParm) /&Internal Variable
+File Access,              Intrinsics,   NT,        B,         A,   ReadFloat(hFileHandle, nIoResult, fParm) /&Reads a float variable from the specified file. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   ReadLong(hFileHandle, nIoResult, nParm) /&Reads a long integer variable (32-bit) from the specified file. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   ReadShort(hFileHandle, nIoResult, nParm) /&Reads a short integer variable (16-bit) from the specified file. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   Rename(sFileName, nIoResult, sOriginalFileName) /&Renames file 'sOriginalFileName' to 'sFileName'.
+File Access,              Intrinsics,   NT,        B,         A,   WriteByte(hFileHandle, nIoResult, nParm) /&Writes a single byte to the specified file. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   WriteFloat(hFileHandle, nIoResult, fParm) /&Writes a float variable to the specified file. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   WriteLong(hFileHandle, nIoResult, nParm) /&Writes a long integer (32-bit) variable to the specified file. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   WriteShort(hFileHandle, nIoResult, nParm) /&Writes a short integer variable (16-bit) to the specified file. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   WriteString(hFileHandle, nIoResult, sParm) /&Writes a string to the specified file includint null terminator. 'nIoResult' is non-zero when error occurs.
+File Access,              Intrinsics,   NT,        B,         A,   WriteText(hFileHandle, nIoResult, sParm) /&Writes a string to the specified file without null terminator. 'nIoResult' is non-zero when error occurs.
+
+File Access,              Variables,    NT,        B,         A,   nAvailFlash              /&The amount of flash memory that is currently unused and available for file storage. Units are 1/10 of 1K (i.e. 100 bytes).
+File Access,              Variables,    ,          B,         I,   TFileHandle              /&Internal Variable
+
+TETRIX Controller,        Variables,    NT,        B,         B,   FTCMotor[]               /&Used to set the power level of the two motors on the FTC servo controller.\n\n\rValues can range from -100 (full reverse) to +100 (full forward).\n\n\rNote: this is temporary definition for prototype hardware. The production hardware will be integrated with the "motor" value used for the three motor ports integrated on the NXT and will also include motor encoders.\n\n\rAn exception will occur if this variable is accessed and the servo controller is not enabled.
+TETRIX Controller,        Variables,    NT,        B,         I,   FTCServoControlEnabled   /&Boolean variable to indicate whether the FTC servo-motor controller is enabled.\n\n\rIn general, users do not need to access this variable because the ROBOTC compiler will automatically enable or disable depending on whether the platform type in the ROBOTC IDE is either "FTC" or otherise.\n\r
+TETRIX Controller,        Variables,    NT,        B,         I,   FTCServoUsePrototype     /&Boolean variable to indicate whether the ROBOTC firmware should use the prototype FTC servo-motor controllerhardware or whether they should use a "software emulation" mode.\n\n\rThe "software emulation" mode is for internal testing and allowed development of the servo controller device driver without actually requiring the hardware to be present.
+TETRIX Controller,        Variables,    NT,        B,         A,   muxBattery               /&Contains the battery level of the battery connected to the FTC servo-motor controller.\n\n\rThe battery level ranges from 0 to 15000 and is measured in millivolts.\n\n\rAn exception will occur if this variable is accessed and the servo controller is not enabled.
+TETRIX Controller,        Variables,    NT,        B,         A,   muxLowBatteryShutdown    /&No information available
+
+High Speed,               Intrinsics,   NT,        B,         S,   nxtGetAvailHSBytes()     /&Returns the number of "raw" input bytes available on the RS-485 high speed serial link available on sensor port 4.
+High Speed,               Intrinsics,   NT,        B,         S,   nxtReadRawHS(pData, nMaxBufferSize)/&Reads "raw" (i.e. low-level, no protocol implemented) bytes from the RS-485 high speed serial link available on sensort port 4.\n\r
+High Speed,               Intrinsics,   NT,        B,         S,   nxtSetHSBaudRate(nBaudRate)/&Sets the baud rate for the high speed RS-485 serial link available on sensor port 4.
+High Speed,               Intrinsics,   NT,        B,         S,   nxtWriteRawHS(pData, nLength, nAddress)/&Writes "raw" (i.e. low-level, no protocol implemented) bytes to the RS-485 high speed serial link available on sensort port 4.
+
+High Speed,               Variables,    NT,        B,         S,   kDefaultBaudRate         /&Default baud rate to use for the HS-485 high speed serial link
+High Speed,               Variables,    NT,        B,         S,   nxtHS_Mode               /&No information available
+High Speed,               Variables,    NT,        B,         S,   nxtHS_Status             /&No information available
+
+IFI Competition Control,  Intrinsics,   V1F,       B,         A,   #pragma autonomousDuration(<nDuration>)/&#pragma' directive used for the IFI platforms to modify the duration used for the autonomous period of a competition. \n'nDuration' is the duration (in seconds) to use.
+IFI Competition Control,  Intrinsics,   V1F,       B,         A,   #pragma competitionControl(<state>)/&#pragma' directive used for the IFI platforms to flag whether a program is being used for competition or autonomous operation. \n'state' indicates one of the following: \n'off' The robot controller will be configured for 'autonomous' operation \n'Competition' The robot controller will be configured for standard competitition. \n'AutonomousTest' The robot controller will be configured for testing the autonomous phase of a competition. The user phase duration will be zero. \n'UserTest' The robot controller will be configured for testing the user control phase of a competition. The autonomous duration will be zero
+IFI Competition Control,  Intrinsics,   V1F,       B,         A,   #pragma userControlDuration(<nDuration>)/&#pragma' directive used for the IFI platforms to modify the duration used for the user control period of a competition. \n'nDuration' is the duration (in seconds) to use.
+
+IFI Competition Control,  Variables,    V1V2F,     B,         B,   bIfiAutonomousMode       /&Boolean variable to indicate whether robot is currently in autonomous or competition mode.\n\n\rIn autonomous mode, the robot can be freely "controlled" by software whether or not the robot's RF channel to base transmitter (VEX) or Operator Interface (FRC) is operational.\n\n\rIn competition mode, the robot software is configured for a  two phase robot competition: an initial autonomous operation phase where joystick values are masked followed by a 'user control' phase where the robot is controlled by the base station joysticks.
+IFI Competition Control,  Variables,    V1V2F,     B,         B,   bIfiAutonomousPhase      /&Boolean variable that to indicate during a robot competition whether robot is in the 'autonomous' or 'user controlled' phase. This variable is only valid when the variable 'bIfiAutonomousMode' is 'false'.
+IFI Competition Control,  Variables,    V1F,       B,         A,   bIfiPwmOverride          /&Boolean flag to override the IFI robot controller PWM controller. Normally the PWM control is disabled (i.e. returns to zero power) when the FR channel link to the controller is lost.
+IFI Competition Control,  Variables,    V1V2F,     B,         I,   bIfiRobotDisabled        /&OBSOLETE Boolean variable to indicate whether robot is currently in disabled competition mode.
+IFI Competition Control,  Variables,    V1V2,      B,         A,   bVexAutonomousMode       /&Backwards compatability with VEX. Replaced by the variable 'bIfiAutonomousMode'
+IFI Competition Control,  Variables,    V1V2F,     B,         B,   nIfiCompetitionState     /&Enum variable to indicate whether robot is 'disabled', 'autonomous' or 'user control'.
+IFI Competition Control,  Variables,    V1F,       B,         I,   nIfiUserCmd              /&Internal use only
+IFI Competition Control,  Variables,    V1V2,      B,         A,   nVEXDurationAutonomous   /&Sets the numeric value (in seconds) of the autonomous phase of a competition. The value can only be set once and will subsequently be "latched".
+IFI Competition Control,  Variables,    V1V2,      B,         A,   nVEXDurationUserControl  /&Sets the numeric value (in seconds) of the user control phase of a competition. The value can only be set once and will subsequently be "latched".
+IFI Competition Control,  Variables,    V1V2F,     B,         A,   nVexRCReceiveState       /&Numeric value containing the current state of the FR transmitter channel.
+
+IFI Remote Control,       Variables,    V1V2,      B,         A,   bVEXNETActive            /&Boolean flag indicating whether VEXNET WiFi or legacy 75 MHZ RF wireless transmission is used.
+IFI Remote Control,       Variables,    F,         B,         B,   frcOIJoystickButtons[]   /&Array that contains the values of the joystick buttons from an FRC OI base transmitter.
+IFI Remote Control,       Variables,    F,         B,         A,   frcOILEDs[]              /&FRC operator Interface "Robot Feedback" LED control
+IFI Remote Control,       Variables,    F,         B,         B,   frcRF[]                  /&Array that contains the values of the analog joysticks from an FRC RF base transmitter.
+IFI Remote Control,       Variables,    F,         B,         S,   kNumbOfFrcRFJoysticks    /&Constant containing the number of analog joystick channels on a FRC operator interface
+IFI Remote Control,       Variables,    F,         B,         S,   kNumbOfOIJoystickButtons /&Constant containing the number of joystick buttons on a FRC OI remote
+IFI Remote Control,       Variables,    F,         B,         S,   kNumbOfOISensors         /&Constant containing the number of analog joystick channels on a FRC OI remote
+IFI Remote Control,       Variables,    V1F,       B,         S,   kNumbOfVexPSJoysticks    /&
+IFI Remote Control,       Variables,    V1V2,      B,         S,   kNumbOfVexRFJoysticks    /&Constant containing the number of analog joystick channels on a VEX RF handheld remote
+IFI Remote Control,       Variables,    V1F,       B,         S,   nIfiSPIMsgCounts         /&Variable counts the number of SPI messages received by the user CPU from the master CPU.
+IFI Remote Control,       Variables,    V1,        B,         S,   nVexSPIMsgCounts         /&Backwards compatability with VEX. Replaced by the variable 'nIfiSPIMsgCounts'
+IFI Remote Control,       Variables,    V1F,       B,         I,   vexPSC[]                 /&Provides access to a playstation controller joysticks and buttons when connected to a VEX.
+IFI Remote Control,       Variables,    V1V2,      B,         B,   vexRT[]                  /&Array that contains the values of the joysticks and buttons from an VEX RF base transmitter.
+
+IO Map Access,            Intrinsics,   NT,        B,         S,   nxtReadIOMap(sIOMapName, nIoResult, nBuffer, nOffset, nNumbOfBytes) /&Reads a module's IOMap into the specified location
+IO Map Access,            Intrinsics,   NT,        B,         S,   nxtWriteIOMap(sIOMapName, nIoResult, nBuffer, nOffset, nNumbOfBytes) /&Writes a module's IOMap into the specified location
+
+Internal,                 Intrinsics,   ,          B,         I,   bHasDatalog              /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   bHasEvents               /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   bHasLCDDisplay           /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   bHasSoundSupport         /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   bMotorMirroring          /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   bMultipleUserPrograms    /&Internal use only
+Internal,                 Intrinsics,   ,          B,         I,   bRelocateMemory          /&Internal use only
+Internal,                 Intrinsics,   ,          B,         I,   bSmartMotors             /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   bUserMessagesAllowed     /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   bUsesFlashStorage        /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   copyOpcodesToRAM         /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   enumWord                 /&Undefined Entries
+Internal,                 Intrinsics,   ,          B,         I,   ExtraArithmeticOpcodes   /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   FloatFloat               /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   FloatLong                /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   FloatShort               /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   FloatString              /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   fParmToReadByte          /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   genericParmArith         /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   INLINE                   /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   IS_LOADER_ERR(LStatus)   /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   LimitDefinitionsViaDefines_H__/&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   LoadBuildOptions__H_     /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   LongFloat                /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   LongLong                 /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   LongShort                /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   LongString               /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   NxtStringOp__H_          /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   ROBOTC                   /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   sgn(inputF)              /&Internal use only
+Internal,                 Intrinsics,   ,          B,         I,   sgn(inputL)              /&Internal use only
+Internal,                 Intrinsics,   ,          B,         A,   ShortFloat               /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   ShortLong                /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   ShortShort               /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   ShortString              /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   StringFloat              /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   StringLong               /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   StringShort              /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   StringString             /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   TFileIODefs__H_          /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         A,   TNxtSynchMotors__H_      /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   TSensorTypes__H_         /&Internal variables.
+Internal,                 Intrinsics,   ,          B,         I,   TSounds__H_              /&Internal variables.
+
+Internal,                 Variables,    ,          B,         A,   constZero                /&No information available
+Internal,                 Variables,    ,          B,         A,   kConstantPoolSize        /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kDefaultTaskStackSizeInEntries/&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kFirmwareVersion         /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kMaxFlashBreakpoints     /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfBasicGlobalVariables/&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfBreakpoints       /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfEventCounters     /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfEvents            /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfEventSensorTypes  /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfGlobalVariables   /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfOpCodeParmTypes   /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfPrograms          /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfSubroutines       /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfTasks             /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfTaskVariables     /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kNumbOfTimers            /&Internal variables.
+Internal,                 Variables,    NT,        B,         S,   kSizeOfBrickName         /&Internal variables.
+Internal,                 Variables,    NT,        B,         S,   kSizeOfBtAddr            /&Internal variables.
+Internal,                 Variables,    NT,        B,         S,   kSizeOfBtName            /&Internal variables.
+Internal,                 Variables,    NT,        B,         S,   kSizeOfBtPincode         /&Internal variables.
+Internal,                 Variables,    NT,        B,         S,   kSizeOfClassOfDevice     /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kSizeOfSystemParameters  /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kStringSize              /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kTaskVariablesStart      /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   kTotalNumbOfSubroutines  /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   neartype                 /&Internal variables.
+Internal,                 Variables,    ,          B,         I,   no_init                  /&Undefined Entries
+Internal,                 Variables,    ,          B,         A,   noinit                   /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   nResult                  /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   nSize                    /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   nThisTaskEvents          /&Internal variables.
+Internal,                 Variables,    ALL,       B,         A,   opcdBAD                  /&Internal variables.
+Internal,                 Variables,    ,          B,         I,   opcdSourceBadUndefined   /&Undefined Entries
+Internal,                 Variables,    ,          B,         I,   opcdSourceMaskForConditionalBr/&Undefined Entries
+Internal,                 Variables,    ,          B,         A,   opEnumType               /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   ramfunc                  /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   rcxBad                   /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   rcxFirst                 /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   rcxLast                  /&Internal variables.
+Internal,                 Variables,    ,          B,         A,   romtype                  /&Internal variables.
+Internal,                 Variables,    V1F,       B,         I,   vexInterruptPorts[]      /&Internal variables.
+
+Math,                     Intrinsics,   NTV2FA,    B,         A,   abs(input)               /&Returns the absolute value of the input
+Math,                     Intrinsics,   NTV2FA,    B,         A,   acos(Cosine)             /&Returns the arc cost value of the input
+Math,                     Intrinsics,   NTV2FA,    B,         A,   asin(Sine)               /&Returns the arc sine value of the input
+Math,                     Intrinsics,   NTV2FA,    B,         A,   atan(Tangent)            /&Returns the arc tan value of the input
+Math,                     Intrinsics,   NTV2FA,    B,         A,   cos(fRadians)            /&Returns the cosine of the input (radians)
+Math,                     Intrinsics,   NTV2FA,    B,         A,   cosDegrees(degrees)      /&Returns the cosine of the input (degrees)
+Math,                     Intrinsics,   NTV2FA,    B,         A,   degreesToRadians(Degrees)/&Converts degrees to radians
+Math,                     Intrinsics,   NTV2FA,    B,         A,   exp(input)               /&Returns the exponential value of the input
+Math,                     Intrinsics,   NTV2FA,    B,         A,   log(input)               /&Returns the natural logarithm of the input value.
+Math,                     Intrinsics,   NTV2FA,    B,         A,   log10(input)             /&Returns the base 10 logarithm of the input value.
+Math,                     Intrinsics,   NTV2FA,    B,         A,   radiansToDegrees(fRadians)/&Converts radians to degrees
+Math,                     Intrinsics,   NTV2FA,    B,         A,   sgn(input)               /&Returns -1, 0, +1 depending on whether the input is negative, zero or positive value
+Math,                     Intrinsics,   NTV2FA,    B,         A,   sin(fRadians)            /&Returns the sine of the input (radians)
+Math,                     Intrinsics,   NTV2FA,    B,         A,   sinDegrees(degrees)      /&Returns the sine of the input (degrees)
+Math,                     Intrinsics,   NTV2FA,    B,         I,   sinDegreesX(fResult, degrees)/&Internal Entries
+Math,                     Intrinsics,   NTV2FA,    B,         I,   sinDegreesX(fResult, fRadians)/&Internal Entries
+Math,                     Intrinsics,   NTV2FA,    B,         A,   sqrt(input)              /&Returns the square root of te input
+Math,                     Intrinsics,   ALL,       B,         A,   srand(seed)              /&Sets the random number generator seed to 'seed'
+Math,                     Intrinsics,   ALL,       B,         A,   ceil(input)              /&Returns the "ceil" value (i.e. next largest integer) of the input
+Math,                     Intrinsics,   ALL,       B,         A,   floor(input)             /&Returns the "floo" value (i.e. next smallest integer) of the input
+
+Math,                     Variables,    NTV2FA,    B,         A,   PI                       /&Returns the value of PI
+Math,                     Variables,    ALL,       B,         B,   random(range)            /&Returns a random number in the postive range zero to "range - 1".
+Math,                     Variables,    ALL,       B,         B,   random[]                 /&Returns a random number in the postive range zero to "range - 1".
+
+Messaging,                Intrinsics,   NT,        B,         B,   bQueuedMsgAvailable()    /&Boolean function that indicates whether a unprocessed message is available in the NXT's received message queue.
+Messaging,                Intrinsics,   NT,        B,         B,   ClearMessage()           /&Clears the current message. The next time the "message" variable is accessed, the firmware will attempt to obtain the first message from the queue of messages received by the NXT.
+Messaging,                Intrinsics,   R,         B,         B,   ClearMessage()           /&Clears the current message. New messages can now be accepted over the infrared signaling link by the RCX firmware.
+Messaging,                Intrinsics,   NT,        B,         B,   sendMessage(nMessageID)  /&Sends a single 16-bit word message. 'nMessageID' should range in value form -32767 to +32767. Message value 0 is invalid and should not be used. It is a special value  to indicate "no message" received when using the "message" variable. The message is sent over BT.\n\rDo not send messages faster than about 1 message per 30 milliseconds or it is possible for some messages to be lost.
+Messaging,                Intrinsics,   R,         B,         B,   sendMessage(nMessageID)  /&Sends a single word (value -32767 to + 32767) message. Message value 0 is invalid as it is special value to indicate "no message" received when using the "message" variable. The message is sent over the RCX infrared link.
+Messaging,                Intrinsics,   NT,        B,         B,   sendMessageWithParm(nMessageID, nParm1, nParm2) /&Identical in function to the "sendMessage" opcode except that the message is three 16-bit values. This is useful in easily sending separate items of information in a single message.\n\rDo not use a value of zero for 'nMessageID'.
+Messaging,                Intrinsics,   R,         B,         B,   sendMessageWithParm(nMessageID, nParm1, nParm2) /&Sends a three word message.
+Messaging,                Intrinsics,   R,         B,         I,   SendSerial(first, count) /&
+Messaging,                Intrinsics,   RNT,       B,         I,   setMessage(nMessage)     /&
+Messaging,                Intrinsics,   RNT,       B,         I,   setMessage1()            /&
+Messaging,                Intrinsics,   RNT,       B,         I,   setMessage2WordParm(nMessage, nParm1, nParm2)/&
+Messaging,                Intrinsics,   RNT,       B,         I,   setMessage3WordParm(nMessage, nParm1, nParm2, nParm3)/&/&Sends a multi-byte message over the RCX infrared channel.
+Messaging,                Intrinsics,   RNT,       B,         I,   setMessageByteParm(nMessage, nParm)/&
+Messaging,                Intrinsics,   RNT,       B,         I,   setMessageWithParm(nMessage, nParm)/&
+Messaging,                Intrinsics,   RNT,       B,         I,   setMessageWordParm(nMessage, nParm)/&
+
+Messaging,                Variables,    R,         B,         A,   bLongRangeTransmitter    /&Controls whether high power (long range) or low power (short range) should be used on the IR transmitter.
+Messaging,                Variables,    R,         B,         I,   bSerialLinkCustomizable  /&Advanced feature.
+Messaging,                Variables,    NT,        B,         B,   message                  /&Contains the value (value -32767 to + 32767) of the last message received over the bluetooth channel. Many messages can be queued at the receiving NXT. See the sample programs for technique to skip all but the last queued message.\n\n\rA value of '0' indicates that no message has been received of that the last received message has been processed by the user's program. The next time 'message' variable is accessed, it will get the next message, if available, from the queue of received messages stored by the NXT firmware.\n\n\rCall the "ClearMessage()" function to indicate that processing of the current message is complete.
+Messaging,                Variables,    R,         B,         B,   message                  /&Contains the value (value -32767 to + 32767) of the last message received over the RCX infrared channel. There is no queueing of messages. A new message will be discarded if the current message has not been completed by calling the "ClearMessage" function.
+Messaging,                Variables,    RNT,       B,         B,   messageParm[]            /&Contains optional message parms (up to 3 16-bit words) for messages received over the RCX infrared channel. 'messageParm[0]' is the same as the variable 'message'.
+Messaging,                Variables,    R,         B,         I,   nCommErrorsChecksum      /&Advanced feature. Error peg count.
+Messaging,                Variables,    R,         B,         I,   nCommErrorsFraming       /&Advanced feature. Error peg count.
+Messaging,                Variables,    R,         B,         I,   nCommErrorsInvalidOp     /&Advanced feature. Error peg count.
+Messaging,                Variables,    R,         B,         I,   nCommErrorsMsgOverrun    /&Advanced feature. Error peg count.
+Messaging,                Variables,    R,         B,         I,   nCommErrorsOverrun       /&Advanced feature. Error peg count.
+Messaging,                Variables,    R,         B,         I,   nCommErrorsParity        /&Advanced feature. Error peg count.
+Messaging,                Variables,    R,         B,         I,   nCommErrorsParityFirst   /&Advanced feature. Error peg count.
+Messaging,                Variables,    R,         B,         I,   nCommErrorsTimeout       /&Advanced feature. Error peg count.
+Messaging,                Variables,    R,         B,         A,   nInfraredReceiveMode     /&
+Messaging,                Variables,    R,         B,         I,   nInterCharTimeout        /&Advanced features. Sets the maximum time between received characters before resetting the message reception state machine.
+Messaging,                Variables,    R,         B,         I,   nNormalBaudRateFlags     /&
+Messaging,                Variables,    R,         B,         I,   nNormalHeaderFlags       /&
+Messaging,                Variables,    R,         B,         A,   nPreambleSize            /&Advanced feature. Sets the number of preamble or header bytes on outgoing message.
+Messaging,                Variables,    R,         B,         I,   nSerialConfiguration     /&
+Messaging,                Variables,    R,         B,         A,   nSerialLinkStatus        /&
+Messaging,                Variables,    R,         B,         I,   optionalInfraredStatistics/&
+Messaging,                Variables,    R,         B,         A,   SerialData[]             /&Advanced feature.
+Messaging,                Variables,    R,         B,         I,   serialDataBytes[]        /&
+Messaging,                Variables,    R,         B,         I,   UserBaudRateFlags        /&Advanced feature.
+Messaging,                Variables,    R,         B,         I,   UserHeaderFlags          /&Advanced feature.
+
+Miscellaneous,            Intrinsics,   ALL,       B,         I,   clearAll(nCommandFlags)  /&Internal command used by debugger.
+Miscellaneous,            Intrinsics,   NT,        B,         S,   getFirmwareDate(sDate)   /&Gets string containing date and time of firmware load build.
+Miscellaneous,            Intrinsics,   NTV1V2FA,  B,         A,   memcpy(pToBuffer, pFromBuffer, nNumbOfBytes) /&Function copies characters from 'pFromBuffer' to 'pToBuffer'. ‘nBytesToCopy’ is the number of bytes to copy.\n\n\rIdentical to the function found in conventional C 'string.h' library.
+Miscellaneous,            Intrinsics,   NTV1V2FA,  B,         A,   memset(pToBuffer, nValue, nNumbOfBytes) /&Sets a block of memory at ‘pBuffer’ to the value ‘nValue’. ‘nBytesToSet’ is the number of bytes to set.\n\n\rThis is a useful function for initializing the value of an array to all zeros.\n\n\rIdentical to the function found in conventional C 'string.h' library.\n\n\r
+
+Miscellaneous,            Variables,    RNT,       B,         S,   bRobolab                 /&Used to indicate that firmware is operating in Robolab mode.
+Miscellaneous,            Variables,    V1,        B,         A,   bVexBlackEye             /&Boolean flag to turn the VEX yellow LED "eye" off. Normally the eye flashes when their is program activity on the VEX.
+Miscellaneous,            Variables,    RNT,       B,         I,   counters[]               /&Internal
+Miscellaneous,            Variables,    ALL,       B,         I,   false                    /&
+Miscellaneous,            Variables,    ,          B,         I,   fResult                  /&Internal
+Miscellaneous,            Variables,    ALL,       B,         I,   globalVars[]             /&Internal
+Miscellaneous,            Variables,    ,          B,         I,   lResult                  /&Internal
+Miscellaneous,            Variables,    V1F,       B,         S,   nIfiSPIMsgCounts         /&Numeric count of the number of messages received from the SPI channel to the master processor
+Miscellaneous,            Variables,    V1V2F,     B,         S,   nVexMasterVersion        /&Variable contains the firmware version for the VEX master CPU
+Miscellaneous,            Variables,    ALL,       B,         I,   true                     /&
+Miscellaneous,            Variables,    ALL,       B,         S,   version                  /&Contains the firmware version number.
+
+Motors,                   Intrinsics,   RNT,       B,         S,   motorOnOff(theMotors, control) /&Robolab emulation only. Turns motor on / off (brake) / off (float)
+Motors,                   Intrinsics,   RNT,       B,         S,   setMotorDirection(theMotors, direction) /&Robolab emulation only. Sets motor direction.
+Motors,                   Intrinsics,   RNT,       B,         S,   setMotorPower(theMotors, powerLevel) /&Robolab emulation only. Sets motor power level without turning motor on.
+
+Motors,                   Variables,    ALL,       B,         A,   bFloatDuringInactiveMotorPWM/&Boolean variable. True 'coasts' ('floats') the motor when power is not applied. False brakes the motor. \n\n\rFalse is best choice.
+Motors,                   Variables,    NTV1V2FA,  B,         B,   bMotorReflected[]        /&Boolean array. Used to indicate that the direction of a motor should be reflected 180 degrees. Useful when mechanical design results in a logical "reversed" condition of a motor.
+Motors,                   Variables,    R,         B,         I,   globalMotorState         /&Internal.
+Motors,                   Variables,    V1V2FA,    B,         B,   motor[]                  /&Contains the motor power or speed level (-127 to +127). Negative values are reverse; positive formward. Zero is stopped.
+Motors,                   Variables,    RNT,       B,         B,   motor[]                  /&Contains the motor power or speed level (-100 to +100). Negative values are reverse; positive formward. Zero is stopped.
+Motors,                   Variables,    ,          B,         I,   motorPowerSigned         /&Same as 'motor' value.
+Motors,                   Variables,    RNT,       B,         S,   motorPWMLevel[]          /&No information available
+Motors,                   Variables,    RNT,       B,         I,   motorState[]             /&Internal.
+Motors,                   Variables,    V1F,       B,         S,   nIfiPwmOwner             /&Bitmap with one entry for each motor. Indicates whether motor PWM is generated by user CPU or by master CPU. An advanced programming feature.
+Motors,                   Variables,    NT,        B,         A,   nMaxRegulatedSpeed       /&Specifies the maximum speed, in encoder counts per secont, that should be used for speed regulation.
+Motors,                   Variables,    RNT,       B,         S,   nMaxRegulatedSpeed12V    /&No information available
+Motors,                   Variables,    RNT,       B,         S,   nMaxRegulatedSpeedNxt    /&No information available
+Motors,                   Variables,    NT,        B,         B,   nMotorEncoder[]          /&Current value of the motor encoder.\n\n\rIn earlier versions of ROBOTC this was a "short" variable (-32K to +32K) it was possible to wraparound when the value grew larger than 16 bits. It is now a 32-bit long variable.\n\n\rWriting any value to the encoder will reset it to zero. You cannot write an arbitrary value to it.
+Motors,                   Variables,    NT,        B,         A,   nMotorEncoderTarget[]    /&Sets the incremental encoder counts that a motor should move before system puts motor back in idle or stopped state. Zero means run forever.
+Motors,                   Variables,    NT,        B,         A,   nMotorPIDSpeedCtrl[]     /&Speed regulation type (non, speed, dual sync motor) for a motor.
+Motors,                   Variables,    NT,        B,         A,   nMotorRunState[]         /&Array containing the internal state (idle, ramping up or down, steady state speed, holding stopped positin) of a NXT motor. Useful in checking when a motor movement "command" has finished.
+Motors,                   Variables,    NT,        B,         A,   nPidUpdateInterval       /&Interval (in milliseconds to use for NXT motor PID updates. Default is 25.
+Motors,                   Variables,    NT,        B,         S,   nPidUpdateInterval12V    /&Interval (in milliseconds to use for 12V motor PID updates. Default is 25.
+Motors,                   Variables,    NT,        B,         A,   nRegulatedSpeed          /&Maximum motor speed that should be used for regulated motor control. Default is 1000 counts/second which can only be achieved with fully charged alkaline/lithium batteries.
+Motors,                   Variables,    NT,        B,         A,   nSyncedMotors            /&Used to specify synchronization of two NXT motors so they operate in 'lock step' at the same speed turn ratio.
+Motors,                   Variables,    NT,        B,         A,   nSyncedTurnRatio         /&Turn ratio to use for a motor that is 'slaved' to another motor. +100 is same as primary motor. Zero is stopped. -100 is same movement as primary but in opposite directon. In between variables are proportional to primary motor.
+Motors,                   Variables,    V1V2,      B,         A,   nVexPwmOwner             /&Backwards compatability for VEX. Replaced by variable 'nIfiPwmOwner'.
+Motors,                   Variables,    NT,        B,         I,   nVirtualMotorChanges     /&Internal variable. Used in motor multiplexer applications.
+
+Preprocessor Defines,     Variables,    ALL,       B,         I,   _CUSTOM                  /&Preprocessor Variable. Contains the type of compilation.
+Preprocessor Defines,     Variables,    ALL,       B,         I,   _DEBUG                   /&Preprocessor Variable. Contains the type of compilation.
+Preprocessor Defines,     Variables,    ALL,       B,         I,   _RELEASE                 /&Preprocessor Variable. Contains the type of compilation.
+Preprocessor Defines,     Variables,    A,         B,         A,   Ard                      /&Preprocessor Variable. Contains the platform type for the current compilation
+Preprocessor Defines,     Variables,    F,         B,         A,   FRC                      /&Preprocessor Variable. Contains the platform type for the current compilation
+Preprocessor Defines,     Variables,    NT,        B,         A,   FTC                      /&Preprocessor Variable. Contains the platform type for the current compilation
+Preprocessor Defines,     Variables,    ALL,       B,         I,   kNumbOfRealMotors        /&Internal variables.
+Preprocessor Defines,     Variables,    ALL,       B,         I,   kNumbOfRealSensors       /&Internal variables.
+Preprocessor Defines,     Variables,    ALL,       B,         I,   kNumbOfTotalMotors       /&Internal variables.
+Preprocessor Defines,     Variables,    ALL,       B,         I,   kNumbOfTotalSensors      /&Internal variables.
+Preprocessor Defines,     Variables,    ALL,       B,         I,   kNumbOfVirtualMotors     /&Internal variables.
+Preprocessor Defines,     Variables,    ALL,       B,         I,   kNumbOfVirtualSensors    /&Internal variables.
+Preprocessor Defines,     Variables,    NT,        B,         I,   NOT_A_HANDLE             /&Preprocessor Variable. Contains the platform type for the current compilation
+Preprocessor Defines,     Variables,    NT,        B,         A,   NXT                      /&Preprocessor Variable. Contains the platform type for the current compilation
+Preprocessor Defines,     Variables,    ,          B,         A,   optionalBreakpoints      /&Internal variables.
+Preprocessor Defines,     Variables,    ,          B,         A,   optionalDebugSupport     /&Internal variables.
+Preprocessor Defines,     Variables,    ,          B,         A,   optionalExceptions       /&Internal variables.
+Preprocessor Defines,     Variables,    ,          B,         A,   optionalSwitchOpcodes    /&Internal variables.
+Preprocessor Defines,     Variables,    ,          B,         A,   optionalTrinaryOpcodes   /&Internal variables.
+Preprocessor Defines,     Variables,    ,          B,         A,   optionalUploadSupport    /&Internal variables.
+Preprocessor Defines,     Variables,    P,         B,         A,   PIC24                    /&Preprocessor Variable. Contains the platform type for the current compilation
+Preprocessor Defines,     Variables,    R,         B,         A,   RCX                      /&Preprocessor Variable. Contains the platform type for the current compilation
+Preprocessor Defines,     Variables,    ,          B,         A,   useFloats                /&Internal variables.
+Preprocessor Defines,     Variables,    ,          B,         A,   useFloatsOrLongs         /&Internal variables.
+Preprocessor Defines,     Variables,    ,          B,         A,   useLongs                 /&Internal variables.
+Preprocessor Defines,     Variables,    ,          B,         A,   useParmForCurrOpPtr      /&Internal variables.
+Preprocessor Defines,     Variables,    V1V2,      B,         A,   VEX                      /&Preprocessor Variable. Contains the platform type for the current compilation
+
+Sensors,                  Intrinsics,   ALL,       B,         I,   ClearSensorValue(nSensor)/&Obsolete function. Do not use.
+Sensors,                  Intrinsics,   RA,        B,         I,   getSensorRawADValue(nPort)/&No information available
+Sensors,                  Intrinsics,   RNT,       B,         I,   SetSensorMode(nSensor, mode) /&Sets the mode (Raw, percentage, ...) of a sensor. Default mode is usually percentage and sensor will have a value range of 0 to 100.
+Sensors,                  Intrinsics,   ,          B,         I,   SetSensorType(nSensor, type) /&Sets the type (touch, light, sound, sonar, wtc) of a sensor
+Sensors,                  Intrinsics,   ,          B,         S,   getColorSensorData(nPort, nDataType, pData) /&No information available
+Sensors,                  Intrinsics,   ,          B,         S,   getColorSensorPegCounts(nPort, pData) /&No information available
+Sensors,                  Intrinsics,   ,          B,         S,   validColorSensor(nPort)  /&No information available
+
+Sensors,                  Variables,    ALL,       B,         A,   getSensorRawADValue[]    /&No information available
+Sensors,                  Variables,    V1F,       B,         A,   ifiInterruptPorts[]      /&This array is used by the "sensor and motor setup" wizard to map a regular "sensor" port with an interrupt port. This is only used for the two types of sensors (sonar sensors and quadrature encoders) that are interrupt based. All the other sensors are non-interrupt based. Both of these sensors use two digital I/O pins; one of which must be a interrupt pin.\n\n\r
+Sensors,                  Variables,    ,          B,         I,   kLastBuiltinNxtSensor    /&
+Sensors,                  Variables,    NTV1F,     B,         I,   kNumbOfPSJoysticks       /&Constant. Number of buttons and joystick variables from Playstation 3rd party SOny PlaystationController interface.
+Sensors,                  Variables,    V1V2,      B,         A,   nAnalogChannelCount      /&Contains the number of analog channels on a VEX. The remaining channels will be treated as digital sensors.
+Sensors,                  Variables,    R,         B,         I,   nMissedSensorAtoDConversions/&Undefined Entries
+Sensors,                  Variables,    V1F,       B,         I,   nPSControl[]             /&Used for optional 3rd party Sony Playstation wireless controller interface. Value of joysticks and buttons
+Sensors,                  Variables,    NT,        B,         A,   nPSControl[]             /&Used for optional 3rd party Sony Playstation wireless controller interface. Value of joysticks and buttons
+Sensors,                  Variables,    R,         B,         A,   nSensorDelayCycles       /&Advanced User only
+Sensors,                  Variables,    R,         B,         A,   nSensorRefreshRate       /&Advanced User only
+Sensors,                  Variables,    R,         B,         I,   nSensorRefreshState      /&Internal use only
+Sensors,                  Variables,    R,         B,         I,   nSensorRotationErrorsCount/&Internal use only
+Sensors,                  Variables,    R,         B,         I,   nSensorScanCount         /&Internal use only
+Sensors,                  Variables,    R,         B,         A,   nSensorStartUpDelay      /&Internal use only
+Sensors,                  Variables,    NT,        B,         I,   nVirtualSensorModeChanges/&
+Sensors,                  Variables,    NT,        B,         I,   nVirtualSensorTypeChanges/&
+Sensors,                  Variables,    V1V2FA,    B,         A,   SensorBias[]             /&This field is used by the gyro and accelerometer sensors to calculate the "steady state" raw analog value when the sensor is not moving. When the sensor is first initialized, the ROBOTC firmware spends a few seconds continuously reading the sensor value. The average of these values is the "bias" value. This calculation allows ROBOTC to calibrate the firmware to the variations in readings that may occur with different battery levels, different temperatures and among different sensors.\n\n\rThe ROBOTC firmware will use this value in calculating future sensor readings. The instantaneous value of the sensor is the current raw analog value minus the calculated bias value.
+Sensors,                  Variables,    ALL,       B,         I,   SensorBoolean[]          /&Boolean value of a sensor. Depending on sensor type, value may not make sense.
+Sensors,                  Variables,    V1V2FA,    B,         A,   SensorDeadBand[]         /&This variable is used with the gyro sensor to eliminate the effect of minor noise.\n\n\rThe gyro sensor hardware provides an analog reading of instantaneous angular rate of change. The ROBOTC firmware integrates this value (i.e. keeps a cumulative sum of all the instantaneous values) to turn this into an angle. This value is then adjusted and scaled to present it into a value useful to end user (e.g. scale might be 0 to 3599 to represent 0.0 to 359.9 degrees of angle).\n\n\rThe 'SensorDeadBand' value is used to screen out very small values from the integration. Values less than the dead band are ignored and not used for the calculation.
+Sensors,                  Variables,    V1V2FA,    B,         A,   SensorFullCount[]        /&This value is used on the gyro sensor to indicate the "full count' of the sensor.\n\n\rFor example, the gyro might have a scale of 00 to 3599 reprenting values of 0.0 to 359.9 degrees of angle. In this case the "sensorFullCount" value is 3600 and represent the upper range for the calculated value. The sensor value is calculated by reporting the calculated value modulo the "SensorFullCount" value.
+Sensors,                  Variables,    RNT,       B,         A,   SensorMode[]             /&Mode of a sensor. Raw, percentage, wrc
+Sensors,                  Variables,    ALL,       B,         A,   SensorRaw[]              /&Raw (un-normalized) value of a sensor. Usually this is the raw Analog value with range 0 to 1023.
+Sensors,                  Variables,    V1V2FA,    B,         A,   SensorScale[]            /&This value is used on the gyro and accelerometer sensor to adjust the sensor to a scaled range.\n\n\rFor example, you might want to use a scale of 0000 to 3599 for the gyro reprenting values of 0.0 to 359.9 degrees of angle.The "SensorScale" value has been set as a divisor used on the internal calculated value to adjust to this scale. The value is made user visible so that you can adjust to fine tune for your particular sensor.
+Sensors,                  Variables,    NT,        B,         S,   SensorSubType[]          /&Sensor sub-type. Used for 3rd party sensors. May be obsolete.
+Sensors,                  Variables,    ALL,       B,         A,   SensorType[]             /&The type of a sensor (touch, light, sonar, etc)
+Sensors,                  Variables,    ALL,       B,         B,   SensorValue()            /&Value of a sensor
+Sensors,                  Variables,    ALL,       B,         B,   SensorValue[]            /&Value of a sensor
+
+Sensors Digital,          Intrinsics,   NT,        B,         S,   getI2CSensorData(nSensorIndex, nNumbOfBytes, nBuffer) /&ROBOTC firmware automatically polls data from I2C sensor types (i.e. LEGO, HiTechnic and Mindsensors) that are known to the firmware relieving user programs from this task. The data is polled in background on a periodic basis.\n\n\rThis function is used to copy the last polled data into a buffer in a user program.
+Sensors Digital,          Intrinsics,   NT,        B,         A,   readI2CReply(nPort, replyBytes, nBytesToRead) /&Retrieves the reply bytes from the previous I2C message.
+Sensors Digital,          Intrinsics,   NT,        B,         A,   sendI2CMsg(nPort, sendMsg, nReplySize) /&Send an I2C message on the specified sensor port.
+
+Sensors Digital,          Variables,    NT,        B,         A,   nI2CBytesReady[]         /&Number of queued bytes ready for access from the previous I2C read request.
+Sensors Digital,          Variables,    NT,        B,         A,   nI2CRetries              /&The number of re-transmission attempts that should be made for I2C message.
+Sensors Digital,          Variables,    NT,        B,         A,   nI2CStatus[]             /&Currents status of an sensor I2C link.
+Sensors Digital,          Variables,    NT,				 B,         A,   bI2CCheckAcks            /&No information available
+Sensors Digital,          Variables,    NT,        B,         S,   bI2CCHeckACKs            /&Boolean variable to indicate whether ROBOTC firmware should check for ACK (acknowledgement) after every byte sent to a digital sensor via the I2C messaging protocol. This is the default value and should not need to be changed.\n\n\rThe standard LEGO firmware only checks for ACKs after the first byte transmitted. This field is provided for compatibility in case some sensors do not properly generate ACKs. This variable is for debugging only.
+
+Serial Link,              Intrinsics,   V2A,			 B,         A,   bXmitComplete(nPort)     /&Boolean return valuje indicates whether transmission is complete on the selected serial port
+Serial Link,              Intrinsics,   V2A,			 B,         A,   sendChar(nPort, nChar)   /&Adds a single character to the transmit buffer for the selected serial port
+Serial Link,              Intrinsics,   V2A,		 	 B,         A,   setBaudRate(nPort, nBaudRate) /&Sets the baud rate for the selected serial port
+Serial Link,              Intrinsics,   V2A,	     B,         A,   setSerialPortMode(nPort, nMode) /&Sets the operational mode of the selected serial port
+Serial Link,              Intrinsics,   V2A,		   B,         A,   getChar(nPort)           /&Gets a single character from the selected serial port. 0x100 indicates no character.
+
+Servos,                   Variables,    NT,        B,         I,   kNumbOfServos            /&No information available
+Servos,                   Variables,    NT,        B,         A,   muxUpdateInterval        /&Used to set the update interval in milliseconds for the NXT firmware to send servo and motor updates to the servo controller.\n\n\rThe NXT firmware is continuously updating the servo positions and motor speeds for the controller. This variable specifies how frequently the updates should be sent.\n\n\rIn general, users should not need to change this value. The default is 20 millseconds.
+Servos,                   Variables,    NT,        F,         B,   servo[]                  /&Used to set the position of the servos on a sensor port Servo MUX controller. Values can range from 0 to 255.\n\n\rThe firmware will automatically move the servo to this poisition over the next few update intervals.\n\n\rAn exception will occur if this variable is accessed and the servo controller is not configured.
+Servos,                   Variables,    NT,        B,         A,   servoChangeRate[]        /&Specifies the rate at which an individual servo value is changed. A value of zero inidcates servo will move at maximum speed.\n\n\rThe change rate is a useful variable for "smoothing" the movement of the servos and preventing jerky motion from software calculated rapd and wide changes in the servo value.\n\n\rThe default value is a change rate of 10 positions on every servo update which occurs, by default, every 20 milliseconds.
+Servos,                   Variables,    NT,        B,         S,   servoMaxPos[]            /&Specifies the upper limit for servo movement.\n\n\rNOTE: Not yet implemented.
+Servos,                   Variables,    NT,        B,         S,   servoMinPos[]            /&Specifies the lower limt for servo movement.\n\n\rNOTE: Not yet implemented.
+Servos,                   Variables,    NT,        B,         I,   servoTarget[]            /&Deprecated. Used to set the position of the servos on a sensor port Servo MUX controller. Values can range from 0 to 255.\n\n\rThe firmware will automatically move the servo to this poisition over the next few update intervals.\n\n\rAn exception will occur if this variable is accessed and the servo controller is not configured.
+Servos,                   Variables,    NT,        B,         B,   ServoValue[]             /&Used to read the current position of the servos on a sensor port Servo MUX controller. Values can range from 0 to 255.\n\n\rNOTE: The value returned in this variable is the last position that the firmware has told the servo to move to. This may not be the actual position because the servo may not have finished the movement or the mechanical design may block the servo from fully reaching this position.\n\n\rTo set the position of a servo, use the "servo" variable. The firmware will automatically move the servo to this poisition over the next few update intervals.\n\n\rA run-time exception will occur if this variable is accessed and the servo controller is not configured.
+
+Sound,                    Intrinsics,   RNTV1V2FA, B,         B,   ClearSounds()            /&Clears all existing and buffered sound commands
+Sound,                    Intrinsics,   ALL,       B,         A,   MuteSound()              /&Mutes all subsequent sound commands.
+Sound,                    Intrinsics,   ALL,       B,         A,   PlayImmediateTone(frequency, durationIn10MsecTicks) /&Immediately play tone at frequency & duration ahead of queued requests.
+Sound,                    Intrinsics,   RNTV1V2FA, B,         A,   PlaySound(sound)         /&Play one of the system predefined sounds (buzz, beep, click, ...
+Sound,                    Intrinsics,   NTV2,      B,         B,   PlaySoundFile(sFileName) /&Plays a sound file from the NXT file system. File must be present on the NXT. RobotC will automatically download required files with user program.
+Sound,                    Intrinsics,   RNTV1V2FA, B,         A,   PlayTone(frequency, durationIn10MsecTicks) /&Plays a constant tone at the specified frequency and duration
+Sound,                    Intrinsics,   ALL,       B,         A,   UnmuteSound()            /&Restores sound playback volume.
+
+Sound,                    Variables,    V1V2F,     B,         A,   bHasSoundDriver          /&Boolean variable indicates whether a speaker is connected to the first motor port.
+Sound,                    Variables,    V1V2F,     B,         S,   bIFISoundTicks           /&Boolean variable indicating whether a short 'blip' sound should be played every second.
+Sound,                    Variables,    RNTV1V2FA, B,         A,   bPlaySounds              /&Boolean flag. Indicates whether new sound requests should be accepted or discarded.
+Sound,                    Variables,    RNTV1V2FA, B,         A,   bSoundActive             /&Boolean flag. If true indicates sound system is actively playing sound.
+Sound,                    Variables,    ALL,       B,         A,   bSoundQueueAvailable     /&Boolean flag. Indicates whether there is space available in the sound queue for another item.
+Sound,                    Variables,    NT,        B,         I,   kMaxVolumeLevel          /&
+Sound,                    Variables,    NT,        B,         B,   nVolume                  /&Sound volume. Range 0 to 4 (loudest).
+
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strcat(pToBuffer, pFromBuffer) /&Function concatenates 'pFromBuffer' onto end of 'pToBuffer'. The variables are arrays of bytes terminated with z aero character. It is user responsibility to ensure that the 'To' array is large enough to hold the result. ROBOTC is not able to do any range checking!\n\n\rIdentical to the function found in conventional C 'string.h' library.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strcmp(pString1, pString2)/&Function compares 'pString1' with 'pString2'. Returns negative value if less than, 0 if equal and positive value if greater than. The variables are arrays of bytes terminated with a zero char.\n\n\rIdentical to the function found in conventional C 'string.h' library.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strcpy(pToBuffer, pFromBuffer) /&Function copies 'pFromBuffer' to 'pToBuffer'. The variables are arrays of bytes terminated with a zero character. It is user responsibility to ensure that the 'To' array is large enough to hold the result. ROBOTC is not able to do any range checking!\n\n\rIdentical to the function found in conventional C 'string.h' library.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strIndex(sString, nIndex)/&No information available
+Strings,                  Intrinsics,   NTV2A,     B,         I,   StringAssign(sDest, nSrce) /&Internal -- used by compiler code generator
+Strings,                  Intrinsics,   NTV2A,     B,         I,   StringAssign(sDest, sSrce) /&Internal -- used by compiler code generator
+Strings,                  Intrinsics,   NTV2A,     B,         I,   StringConcatenate(sDest, nSrce) /&Internal -- used by compiler code generator
+Strings,                  Intrinsics,   NTV2A,     B,         I,   StringConcatenate(sDest, sSrce) /&Internal -- used by compiler code generator
+Strings,                  Intrinsics,   NTV2A,     B,         A,   StringDelete(sDest, nIndex, nSize) /&Deletes a substring from a string
+Strings,                  Intrinsics,   NTV2A,     B,         A,   StringFind(sSrce, sSearch)/&Finds the position in a string of the selected substring
+Strings,                  Intrinsics,   NTV2FA,		 B,         A,   StringFormat(sDest, sFormatString, ...) /&Formats a string
+Strings,                  Intrinsics,   NTV2A,     B,         A,   StringFromChars(sToString, FromChars) /&Converts an array of bytes to a string value.
+Strings,                  Intrinsics,   NTV2A,     B,         I,   StringSize(sString, nSize) /&Obtains the size of a string
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strlen(sString)          /&Functions returns the size of a string
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strncat(pToBuffer, pFromBuffer, nMaxBufferSize) /&Function concatenates 'pFromBuffer' onto end of 'pToBuffer'. The variables are arrays of bytes terminated with a zero character. nMaxBufferSize is the maximum size of ‘pFromBuffer’ and is usually created with a ‘sizeof(..)’ function call.\n\n\rIdentical to the function found in conventional C 'string.h' library file.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strncmp(pString1, pString2, nMaxBufferSize)/&Function compares 'pString1' with 'pString2'. Returns negative value if less than, 0 if equal and positive value if greater than. The variables are arrays of bytes terminated with a zero char. ‘nMaxBufferSize’ is the maximum number of bytes to compare and is usually created with a ‘sizeof(..)’ function call.\n\n\rIdentical to the function found in conventional C 'string.h' library.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strncpy(pToBuffer, pFromBuffer, nMaxBufferSize) /&Functions copies 'pFromBuffer' to 'pToBuffer'. The variables are arrays of bytes and not 'string' variables. 'nMaxBufferSize' is the maximum length of the result. Identical to the function found in conventional C 'string.h' library.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strTrim(pString)         /&Trims leading and trailing whilespace (blanks, tab characters) from a string.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strTrim(sString)         /&Trims leading and trailing whilespace (blanks, tab characters) from a string.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   strTrimN(pString, nMaxBufferSize)/&Trims leading and trailing whilespace (blanks, tab characters) from a string.
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   snprintf(ppDest, nDestLength, sFormatString, ...)/&No information available
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   sprintf(pDest, sFmtSpec, ...)/&No information available
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   sprintf(ppDest, sFormatString, ...)/&No information available
+Strings,                  Intrinsics,   NTV2FA,    B,         A,   sprintf(sString, sFormatString, ...)/&No information available
+
+
+Task Control,             Intrinsics,   ALL,       B,         A,   abortTimeslice()         /&Stops the current task timeslice and switches execution to another task.\n\n\rTasks are given CPU execution time so that highest priority tasks get all the CPU time. If there are multiple tasks with the same highest priority then they are given "slices" of CPU time in a round robin fashion. This function will immediately end the current timeslice.
+Task Control,             Intrinsics,   ALL,       B,         I,   callSub(number)          /&Internal.
+Task Control,             Intrinsics,   R,         B,         I,   deleteAllSubroutines()   /&Internal use only
+Task Control,             Intrinsics,   R,         B,         I,   deleteAllTasks()         /&Internal use only
+Task Control,             Intrinsics,   R,         B,         I,   deleteSubroutine(subroutine) /&Internal use only
+Task Control,             Intrinsics,   R,         B,         I,   deleteTask(Task)         /&Internal use only
+Task Control,             Intrinsics,   NTV2A,     B,         A,   EndTimeSlice()           /&Ends the current task timeslice and allows another task to be rescheduled.
+Task Control,             Intrinsics,   RA,        B,         A,   getFileName(nFileIndex, sFileName) /&No information available
+Task Control,             Intrinsics,   RA,        B,         A,   getFileType(nFileIndex)  /&No information available
+Task Control,             Intrinsics,   ALL,       B,         I,   getTaskPriority(TaskID)  /&No information available
+Task Control,             Intrinsics,   ALL,       B,         I,   getTaskState(TaskID)     /&No information available
+Task Control,             Intrinsics,   ALL,       B,         A,   hogCPU()                 /&Commits all avaiable CPU time to the current task. No other task will run as long as this task is running (and not waiting).\n\n\rCondition is removed with a call to "releaseCPU()" or "abortTimeslice()".
+Task Control,             Intrinsics,   ALL,       B,         A,   releaseCPU()             /&Cancels, if activated, the "hogCPU()" function.
+Task Control,             Intrinsics,   ALL,       B,         I,   resumeTask(TaskID)       /&No information available
+Task Control,             Intrinsics,   R,         B,         I,   setProgramNumber(number) /&Internal use only
+Task Control,             Intrinsics,   ALL,       B,         I,   setTaskPriority(TaskID, nTaskPriority) /&No information available
+Task Control,             Intrinsics,   ALL,       B,         A,   StartTask(TaskID)        /&Starts or restarts execution of the specified task. 'TaskID' is the name of the task to start.
+Task Control,             Intrinsics,   ALL,       B,         A,   StartTask(TaskID, nTaskPriority) /&Starts or restarts execution of the specified task. 'TaskID' is the name of the task to start.
+Task Control,             Intrinsics,   ALL,       B,         A,   StopAllTasks()           /&Stops execution of the current program.
+Task Control,             Intrinsics,   ALL,       B,         A,   StopTask(TaskID)         /&Stops execution of a single task. 'TaskID' is the name of the task to stop.
+Task Control,             Intrinsics,   ALL,       B,         I,   suspendTask(TaskID)      /&No information available
+
+Task Control,             Variables,    R,         B,         I,   bClearVariablesOnPgmStart/&No information available
+Task Control,             Variables,    ALL,       B,         A,   kDefaultPriority         /&Constant. The default priority assigned to a task.
+Task Control,             Variables,    ALL,       B,         A,   kDefaultTaskPriority     /&Constant. The default priority assigned to a task.
+Task Control,             Variables,    ALL,       B,         A,   kHighPriority            /&Constant. Highest priority that can be assigned to a task.
+Task Control,             Variables,    ALL,       B,         A,   kLowPriority             /&Constant. Lowest priority that can be assigned to a task.
+Task Control,             Variables,    ALL,       B,         I,   nCurrentTask             /&the numerical index of the current task.
+Task Control,             Variables,    NT,        B,         I,   nDefaultStackSize        /&Internal variable.
+Task Control,             Variables,    ALL,       B,         S,   nExceptionReports        /&Internal variable.
+Task Control,             Variables,    ALL,       B,         I,   nMemoryMapAddress        /&Internal variable.
+Task Control,             Variables,    NTV2FA,    B,         I,   nMemoryMapAddressHigh    /&Internal variable.
+Task Control,             Variables,    ALL,       B,         S,   nOpcodesPerTimeslice     /&Used to specify the size of a execution timeslice before switching to another task. User should not normally have to modify this variable.
+Task Control,             Variables,    ALL,       B,         A,   nSchedulePriority        /&The CPU scheduler priority for the current task.\n\n\rROBOTC shares CPU execution time among various tasks by giving each task a “time slice” where it will execute a group of instructions.\n\n\rEach task can be assigned a priority from 0 to 255. The NXT scheduler gives execution time to the highest priority task that is waiting to run. A round robin scheduling scheme is used when there are multiple tasks ready to run all with the highest priority. Lower priority tasks will not execute until there are no tasks of higher priority that are ready to run.\n\r
+Task Control,             Variables,    ALL,       B,         I,   nStackSize[]             /&Internal variable.
+Task Control,             Variables,    R,         B,         S,   programNumber            /&Advanced user
+Task Control,             Variables,    NTV2FA,    B,         I,   pStartOfFlashFileHdr     /&No information available
+
+Timing,                   Intrinsics,   ALL,       B,         B,   ClearTimer(theTimer)     /&Resets the value of the specified timer to zero. There are four timers that you can use.
+Timing,                   Intrinsics,   ALL,       B,         A,   setClockTime(hours, minutes) /&Set internal clock hours and minutes. Clock value is lost when controller is powered off.
+Timing,                   Intrinsics,   ALL,       B,         B,   wait10Msec(nTenMSec)     /&Program execution will wait for the specified number of 10-msec ticks.\n\n\rThere are separate functios for performing 1-msec and 10-msec "waits" because some ROBOTC platforms only support 16-bit signed numbers. The maximum positive value for this is 32767 and there are cases when you may want to wait longer than this. In this case you can use the "wait10Msec" function for very long delays.
+Timing,                   Intrinsics,   ALL,       B,         B,   wait1Msec(nMSec)         /&Program execution will wait for the specified number of 1-milliesecond ticks.
+
+Timing,                   Variables,    ALL,       B,         A,   nClockMinutes            /&Returns the number of minutes on the system clock
+Timing,                   Variables,    ALL,       B,         B,   nPgmTime                 /&Value of the user program elapsed timer in 1-millisecond ticks (wraps around).\n\n\rThis timer is different from the "nSysTime" variable in that it does not increment when single stepping program execution via the debugger.
+Timing,                   Variables,    ALL,       B,         B,   nSysTime                 /&Value of the system timer in 1-millisecond ticks (wraps around)
+Timing,                   Variables,    ALL,       B,         B,   time100[]                /&Value of the specified timer in 100-millisecond ticks (max 3276.7 seconds). There are four timers that you can use.
+Timing,                   Variables,    ALL,       B,         B,   time10[]                 /&Value of the specified timer in 10-millisecond ticks (max 327.67 seconds). There are four timers that you can use.\n\n\rOn ROBOTC platforms that do not support 'long' variable types, the maximum value of a timer  is 32,767 ticks or 327.67 seconds. This is the largest positive value that can be stored in a 16-bit signed integer.
+Timing,                   Variables,    ALL,       B,         B,   time1[]                  /&Value of the specified timer in 1-millisecond ticks. There are four timers that you can use.\n\n\rOn ROBOTC platforms that do not support 'long' variable types, the maximum value of a timer  is 32,767 ticks or milliseconds. This is the largest positive value that can be stored in a 16-bit signed integer. On these platforms, you can use "time10" and "time100" built-in variables to manage larger time durations.
+
+_Pragmas,                 Intrinsics,   ALL,       B,         A,   #pragma camera(<platform list>)/&Pragma command used to setup CMUCAM camera operation
+_Pragmas,                 Intrinsics,   NT,        B,         A,   #pragma fileExtension(<extension>)/&'#pragma' directive used to modify the file extension for an executable file on the NXT. Users do not normally modify the default file extension of ("RXE") which indicates to the NXT that this is a user program. \nA file type of "RTM" is used to indicate a "Try Me" program. The file would then show up in the "Try Me" rather than "User" menu on the NXT. \nAnd a file type of "SYS" is used for on the program that executes "On Brick Programs"
+_Pragmas,                 Intrinsics,   ALL,       B,         I,   #pragma noProlog         /&Normally, ROBOTC compiler automatically generates initialization code that executes at the beginning of task 0. The "#pragma noProlog"  directive is an internal debugging aid to disable generation of all automatic initialization code.
+_Pragmas,                 Intrinsics,   ALL,       B,         A,   #pragma platform(<platform list>)/&Pragma command used to indicate the valid platforms that a source file will execute on. A ROBOTC source program may take advantage of platform specific functions and this is a method to flag the platform type in the source file so that it is not inadvertently compiled for the wrong platform
+
+Undefined Entries,        Variables,    NTV1V2PAGS, ,          A,   kNumbOfVexRFIndices      /&No information available
