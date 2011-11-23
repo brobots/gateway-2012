@@ -1,0 +1,28 @@
+Steps for starting from scratch:
+
+1. Install ROBOTC, activate license
+2. Install VEX Programming Driver, Prolific USB-Serial driver, and then reinstall both in that order
+3. Restart. 
+4. Connect USB stuff with ROBOTC closed, wait for windows to detect it
+5. open robotc
+6. set communications port to usb wired cable #1, set platform to vex cortex 2.0
+7. connect battery, turn on
+8. master cpu firmware download
+9. restart robotc, cortex
+10. select port "com6"
+11. transfer robotc firmware
+12. compile & download prototypevexnet.c - it will ask for power cycling
+13. power cycle cortex
+14. compile & download
+15. connect joystick to computer, detect communication ports, set communication port to usb wired cable #1, click ok in detailed preferences window, transfer vexnet firmware (joystick is off this whole time) - this should fail. then turn joystick on, trasnfer vexnet firmware again - this should work.
+16. pair joystick and cortex
+	connect with USB cable
+	turn on joystick
+	then turn on cortex
+	then turn off in reverse order, disconnect
+17. compile and download robotc vex default code - with download method set to usb&vexnet this time
+18. stuff should work.
+19. the battery died here, so we called it a day.
+
+????
+PROFIT!
