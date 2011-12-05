@@ -343,7 +343,14 @@ if (vexRT[Btn8L] == 1 || vexRT[Btn8R] == 1 || vexRT[Btn8U] == 1 || vexRT[Btn8D] 
 
    else // pre-competition or testing mode: two stick layout is enabled
    {
-	twoStickLayout();
+	if(isOneStickLayout == true)
+	{
+		oneStickLayout();
+	}
+	else
+	{
+		twoStickLayout();
+	}
    }
   }
 }
