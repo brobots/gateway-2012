@@ -207,19 +207,47 @@ void twoStickLayout()
 
 }
 
+
+// This returns true if a switch was made, or false if no switch made. Thus, it can be executed whenever with no consequences.
+bool handleLayoutSwitch(leftButton, upButton) // Btn7L: one stick; Btn7U: two stick;
+{
+ 	if(leftButton == 1) //if((vexRT[Btn7L] == 1))
+		{
+				isOneStickLayout = true;
+				return true;
+					wait1Msec(20);
+		}
+
+		else if (upButton == 1) // ((vexRT[Btn7U] == 1))
+	  {
+		isOneStickLayout =false;
+		return true;
+		wait1Msec(20);
+	}
+	else
+	{
+	 // Neither button pressed, so no changes.
+	  return false;
+	}
+}
+
 void blueAIFree()
 {
-while(true)
-{
-if(false) // combination to switch to a layout
-{
-break;
+  while(true)
+  {
+    if(handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout
+    {
+      // one of those buttons was pressed, so we switched to a controller layout and now we deactivate AI.
+      break; // exit AI, proceed to user-controlled mode
+    }
+
+    // Do AI stuff
+      motor[leftMotor] = 127;
+      motor[rightMotor] = 127;
+
+   }
 }
 
-// AI stuff
-
-}
-}
 void redAIFree()
 {
 while(true)
@@ -260,15 +288,6 @@ break;
 
 }
 }
-
-
-
-/* void doAI()
-{
-  motor[leftMotor] = 127;
-  motor[rightMotor] = 127;
-} */
-
 
 
 void startBot(left, right, up, down) // passed by value, so after startBot is called, these variables don't change during the execution of the method. Thus, subsequent button presses or releases have no effect on what AI is being currently used, except for the button presses that switch to one or two stick layout, which end the AI prematurely.
