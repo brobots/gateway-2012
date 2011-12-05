@@ -3,7 +3,9 @@
 #pragma config(Motor,  port9,			lateralMotor,	  tmotorNormal, openLoop)
 #pragma config(Motor,  port7,			elevatorOneMotor,	  tmotorNormal, openLoop)
 #pragma config(Motor,  port8,			elevatorTwoMotor,	  tmotorNormal, openLoop, reversed)
-#pragma config(Sensor, dgtl6,  solenoid,			sensorDigitalOut)
+#pragma config(Sensor, dgtl1,  solenoid1,           sensorDigitalOut)
+#pragma config(Sensor, dgtl2,  solenoid2,           sensorDigitalOut)
+
 
 // Prototype bot: VEXNet movement tester
 
@@ -116,7 +118,7 @@ void oneStickLayout()
 	motor[elevatorTwoMotor]=0;
   }
 
-	// A pneumatic test
+	/* A pneumatic test
 
 	if ((vexRT[Btn6D] ==1))
 	{
@@ -125,15 +127,10 @@ void oneStickLayout()
 	else if ((vexRT[Btn6U]==1))
 	{
 		SensorValue[solenoid] = 1;
-	}
+	} */
 
 }
 
-void doAI()
-{
-  motor[leftMotor] = 127;
-  motor[rightMotor] = 127;
-}
 
 void twoStickLayout()
 {
@@ -173,6 +170,16 @@ void twoStickLayout()
   {
 	motor[lateralMotor]=0;
   }
+   if (vexRT[Btn5U] == 1)
+    {
+    SensorValue[solenoid1] = 1;
+    SensorValue[solenoid2] = 1;
+    }
+    if (vexRT[Btn5D] == 1)
+    {
+    SensorValue[solenoid1] = 0;
+    SensorValue[solenoid2] = 0;
+    }
 
 
   // Elevator
@@ -198,24 +205,76 @@ void twoStickLayout()
 	motor[elevatorTwoMotor]=0;
   }
 
-	// A pneumatic test
+}
 
-	if ((vexRT[Btn6D] ==1))
-	{
-		SensorValue[solenoid] = 0;
-	}
-	else if ((vexRT[Btn6U]==1))
-	{
-		SensorValue[solenoid] = 1;
-	}
+void blueAIFree()
+{
+while(true)
+{
+if(false) // combination to switch to a layout
+{
+break;
+}
+
+// AI stuff
 
 }
-void startBot()
+}
+void redAIFree()
+{
+while(true)
+{
+if(false) // combination to switch to a layout
+{
+break;
+}
+
+// AI stuff
+
+}
+}
+
+void blueAITrapped()
+{
+while(true)
+{
+if(false) // combination to switch to a layout
+{
+break;
+}
+
+// AI stuff
+
+}
+}
+void redAITrapped()
+{
+while(true)
+{
+if(false) // combination to switch to a layout
+{
+break;
+}
+
+// AI stuff
+
+}
+}
+
+
+
+/* void doAI()
+{
+  motor[leftMotor] = 127;
+  motor[rightMotor] = 127;
+} */
+
+void startBot(aiMethod)
 {
   ClearTimer(T1);
   while(time10[T1] < 2000)
 	{
-	doAI();
+	aiMethod();
 	continue;
 	}
 
@@ -254,16 +313,33 @@ task main ()
 {
   while(true)
   {
-   if(vexRT[Btn7R] == 1)
+if (vexRT[Btn8L] == 1)
    {
-	startBot();
-	break;
+   startBot(redAITrapped);
+   break;
    }
+else if (vexRT[Btn8R] == 1)
+   {
+   startBot(blueAITrapped);
+   break;
+   }
+else if (vexRT[Btn8U] == 1)
+   {
+   startBot(redAIFree);
+   break;
+   }
+else if (vexRT[Btn8D] == 1)
+   {
+   startBot(blueAIFree);
+   break;
+   }
+
    else
    {
 	twoStickLayout(); // before we start competition mode, two stick layout is enabled
    }
   }
 }
+
 
 //++++++++++++++++++++++++
