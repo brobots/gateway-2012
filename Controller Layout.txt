@@ -1,0 +1,75 @@
+==CH   where it is==
+
+1:Rjoy horizontal
+
+2:Rjoy vertical
+
+3:Ljoy vertical
+
+4:Ljoy horizontal
+
+5:Lbumper (U/D)
+
+6:Rbumper (U/d)
+
+7:LDpad
+
+8:RDpad
+
+==Mappings==
+
+1
+
+2
+
+3
+
+4
+
+[Universal]
+5
+-U  -bevel gear up
+-D  -bevel gear down
+
+6
+-U  -elevator up
+-D  -elevator down
+
+7
+-L  -stop ai and go to two stick
+-U  -stop ai and go to one stick
+-D  -stop ai and do this []
+-R  -stop ai and do this []
+
+8
+-L  -activate traped red ai
+-U  -activate free red ai
+-D  -activate free blue ai
+-R  -activate trapped blue ai
+
+
+zone setup
+____________________________
+|                          |
+|                          |
+|   free            free   |
+|    red            blue   |
+|                          |
+|                          |
+|                          |
+|-------------|------------|
+|             |            |
+|             |            |
+|             |            |
+|   trapped   |  trapped   |
+|      red    |   blue     |
+|             |            |
+|             |            |
+|_____________|____________|
+
+
+
+
+
+
+
