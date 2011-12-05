@@ -269,16 +269,38 @@ break;
   motor[rightMotor] = 127;
 } */
 
-void startBot(aiMethod)
+
+
+void startBot(left, right, up, down) // passed by value, so after startBot is called, these variables don't change during the execution of the method. Thus, subsequent button presses or releases have no effect on what AI is being currently used, except for the button presses that switch to one or two stick layout, which end the AI prematurely.
 {
   ClearTimer(T1);
   while(time10[T1] < 2000)
 	{
-	aiMethod();
+if (left == 1)
+{
+ redAITrapped();
+}
+else if (right == 1)
+{
+ blueAITrapped();
+}
+else if (up == 1)
+{
+ redAIFree();
+}
+else if (down == 1)
+{
+ blueAIFree();
+}
+else
+{
+  // awkward
+ break; // back to user control, since our AI stuff didn't work.
+}
 	continue;
 	}
 
-
+// Time to go back to user control.
 
 
   while(true) // while(1==1)
@@ -313,30 +335,15 @@ task main ()
 {
   while(true)
   {
-if (vexRT[Btn8L] == 1)
+if (vexRT[Btn8L] == 1 || vexRT[Btn8R] == 1 || vexRT[Btn8U] == 1 || vexRT[Btn8D] == 1)
    {
-   startBot(redAITrapped);
-   break;
-   }
-else if (vexRT[Btn8R] == 1)
-   {
-   startBot(blueAITrapped);
-   break;
-   }
-else if (vexRT[Btn8U] == 1)
-   {
-   startBot(redAIFree);
-   break;
-   }
-else if (vexRT[Btn8D] == 1)
-   {
-   startBot(blueAIFree);
-   break;
+     startBot(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D]);
+     break; // bot has been "started" (competition mode), and now the execution loop takes place in startBot()
    }
 
-   else
+   else // pre-competition or testing mode: two stick layout is enabled
    {
-	twoStickLayout(); // before we start competition mode, two stick layout is enabled
+	twoStickLayout();
    }
   }
 }
