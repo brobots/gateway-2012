@@ -250,104 +250,106 @@ void blueAIFree()
 
 void redAIFree()
 {
-while(true)
-{
-if(false) // combination to switch to a layout
-{
-break;
-}
+  while(true)
+  {
+    if(handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout
+    {
+      // one of those buttons was pressed, so we switched to a controller layout and now we deactivate AI.
+      break; // exit AI, proceed to user-controlled mode
+    }
 
-// AI stuff
+    // Do AI stuff
+      motor[leftMotor] = 127;
+      motor[rightMotor] = 127;
 
-}
+   }
 }
 
 void blueAITrapped()
 {
-while(true)
-{
-if(false) // combination to switch to a layout
-{
-break;
+  while(true)
+  {
+    if(handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout
+    {
+      // one of those buttons was pressed, so we switched to a controller layout and now we deactivate AI.
+      break; // exit AI, proceed to user-controlled mode
+    }
+
+    // Do AI stuff
+      motor[leftMotor] = 127;
+      motor[rightMotor] = 127;
+
+   }
 }
 
-// AI stuff
-
-}
-}
 void redAITrapped()
 {
-while(true)
-{
-if(false) // combination to switch to a layout
-{
-break;
-}
+  while(true)
+  {
+    if(handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout
+    {
+      // one of those buttons was pressed, so we switched to a controller layout and now we deactivate AI.
+      break; // exit AI, proceed to user-controlled mode
+    }
 
-// AI stuff
+    // Do AI stuff
+      motor[leftMotor] = 127;
+      motor[rightMotor] = 127;
 
+   }
 }
-}
-
 
 void startBot(left, right, up, down) // passed by value, so after startBot is called, these variables don't change during the execution of the method. Thus, subsequent button presses or releases have no effect on what AI is being currently used, except for the button presses that switch to one or two stick layout, which end the AI prematurely.
 {
   ClearTimer(T1);
   while(time10[T1] < 2000)
 	{
-if (left == 1)
-{
- redAITrapped();
-}
-else if (right == 1)
-{
- blueAITrapped();
-}
-else if (up == 1)
-{
- redAIFree();
-}
-else if (down == 1)
-{
- blueAIFree();
-}
-else
-{
-  // awkward
- break; // back to user control, since our AI stuff didn't work.
-}
-	continue;
-	}
+    if (left == 1)
+    {
+     redAITrapped();
+    }
+    else if (right == 1)
+    {
+     blueAITrapped();
+    }
+    else if (up == 1)
+    {
+     redAIFree();
+    }
+    else if (down == 1)
+    {
+     blueAIFree();
+    }
 
-// Time to go back to user control.
+    else
+    {
+      // awkward
+      break; // back to user control, since our AI stuff didn't work.
+    }
 
+    continue;
+  } // end AI loop
+
+  // Time to go back to user control.
 
   while(true) // while(1==1)
   {
-		  if((vexRT[Btn7L] == 1))
-		{
-				isOneStickLayout = true;
-					wait1Msec(20);
-		}
 
-		if ((vexRT[Btn7U] == 1))
+    if(handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout, if necessary
+    {
+      wait1Msec(20); // short reset time
+    }
+
+  	if(isOneStickLayout == true)
 	  {
-		isOneStickLayout =false;
-		wait1Msec(20);
-	}
+  		oneStickLayout();
+  	}
+  	else
+  	{
+  		twoStickLayout();
+  	}
+  } // end while - user-control loop
 
-
-
-
-	if(isOneStickLayout == true)
-	{
-		oneStickLayout();
-	}
-	else
-	{
-		twoStickLayout();
-	}
-} // end while
 } // end function
 
 task main ()
