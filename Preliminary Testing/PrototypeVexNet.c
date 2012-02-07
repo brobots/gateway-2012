@@ -1,5 +1,5 @@
-#pragma config(Motor, port10, rightMotor, tmotorNormal, openLoop, reversed) // Define motors here: port numbers, isReversed
-#pragma config(Motor, port1, leftMotor, tmotorNormal, openLoop)
+#pragma config(Motor, port10, rightMotor, tmotorNormal, openLoop) // Define motors here: port numbers, isReversed
+#pragma config(Motor, port1, leftMotor, tmotorNormal, openLoop, reversed)
 #pragma config(Motor, port9, lateralMotor, tmotorNormal, openLoop)
 #pragma config(Motor, port7, elevatorOneMotor, tmotorNormal, openLoop)
 #pragma config(Motor, port8, elevatorTwoMotor, tmotorNormal, openLoop, reversed)
