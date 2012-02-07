@@ -31,6 +31,8 @@ int rjoy_x; // This is the X value of the RIGHT analog stick.
 int rjoy_y; // This is the Y value of the RIGHT analog stick.
 int threshold = 12.7;
 
+/* Region: Stick Layouts */
+
 void oneStickLayout()
 {
 /* This is for the joystick layout where the left analog stick controls robot movement and the right one controls the elevator.
@@ -134,7 +136,6 @@ void oneStickLayout()
 
 }
 
-
 void twoStickLayout()
 {
 
@@ -207,6 +208,18 @@ void twoStickLayout()
 	}
 
 }
+
+/* Region: Toggles */
+
+
+/* Region: Control Flow */
+
+/* Region: Main Task */
+
+
+
+
+
 
 
 // This returns true if a switch was made, or false if no switch made. Thus, it can be executed whenever with no consequences.
