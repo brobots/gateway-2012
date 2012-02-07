@@ -8,6 +8,17 @@
 
 
 // Prototype bot: VEXNet movement tester
+
+/* Edit settings: */
+
+bool allowDebugToggling = true; // if false, strict competition mode and no overrides
+bool isOneStickLayout = false; // is default layout one-stick (true) or two-stick (false)?
+// other settings go here
+
+
+/* Do not edit below this line! */
+
+
 /*										  ROBOT CONFIGURATION										  *|
 |*	  NOTES:																						  *|
 |*	  1)  Ch1 is the X axis and Ch2 is the Y axis for the RIGHT joystick.							  *|
@@ -19,7 +30,6 @@ int ljoy_y; // This is the Y value of the LEFT analog stick.
 int rjoy_x; // This is the X value of the RIGHT analog stick.
 int rjoy_y; // This is the Y value of the RIGHT analog stick.
 int threshold = 12.7;
-bool isOneStickLayout = false; // Very hacky toggling (because we don't know if RobotC has support for enums and delegates)
 
 void oneStickLayout()
 {
