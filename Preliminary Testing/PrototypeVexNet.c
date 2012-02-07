@@ -340,6 +340,13 @@ void startBot(left, right, up, down) // passed by value, so after startBot is ca
 			wait1Msec(20); // short reset time
 		}
 
+		// Nasty hack for checking if AI buttons have been pressed, and if so, switching back to AI mode/starting over.
+		if (vexRT[Btn8L] == 1 || vexRT[Btn8R] == 1 || vexRT[Btn8U] == 1 || vexRT[Btn8D] == 1)
+		{
+			startBot(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D]);
+			break; // bot has been "started" (competition mode), and now the execution loop takes place in startBot()
+		}
+
 		if (isOneStickLayout == true)
 		{
 			oneStickLayout();
