@@ -350,6 +350,10 @@ task main()
 
 		else // pre-competition or testing mode: two stick layout is enabled
 		{
+			if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout, if necessary
+			{
+				wait1Msec(20); // short reset time
+			}
 			if (isOneStickLayout == true)
 			{
 				oneStickLayout();
