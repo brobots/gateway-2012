@@ -7,7 +7,7 @@
 #pragma config(Sensor, dgtl2, solenoid2, sensorDigitalOut)
 
 
-// Prototype bot: VEXNet movement tester
+/* BroBots - The Bishop's School 2011 - 2012 Robotics Club Senior Bot */
 
 /* Edit settings: */
 
@@ -209,18 +209,8 @@ void twoStickLayout()
 
 }
 
-/* Region: Toggles */
 
-
-/* Region: Control Flow */
-
-/* Region: Main Task */
-
-
-
-
-
-
+/* Region: Stick Layout Toggles */
 
 // This returns true if a switch was made, or false if no switch made. Thus, it can be executed whenever with no consequences.
 bool handleLayoutSwitch(leftButton, upButton) // Btn7L: one stick; Btn7U: two stick;
@@ -243,6 +233,8 @@ bool handleLayoutSwitch(leftButton, upButton) // Btn7L: one stick; Btn7U: two st
 		return false;
 	}
 }
+
+/* Region: AIs */
 
 bool blueAIFree()
 {
@@ -311,6 +303,22 @@ bool redAITrapped()
 
 	}
 }
+
+
+/* Region: AI Toggles */
+
+/* Region: Control Flow */
+
+void userControl()
+{
+
+}
+void aiControl()
+{
+
+}
+
+/* Region: Main Task */
 
 void startBot(left, right, up, down) // passed by value, so after startBot is called, these variables don't change during the execution of the method. Thus, subsequent button presses or releases have no effect on what AI is being currently used, except for the button presses that switch to one or two stick layout, which end the AI prematurely.
 {
@@ -400,6 +408,3 @@ task main()
 		}
 	}
 }
-
-
-//++++++++++++++++++++++++
