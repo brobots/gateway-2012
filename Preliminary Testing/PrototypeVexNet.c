@@ -309,10 +309,11 @@ bool redAITrapped()
 
 /* Region: Control Flow */
 
-void userControl()
+bool userControl()
 {
 	if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout, if necessary
 	{
+		return false;
 		wait1Msec(20); // short reset time
 	}
 
@@ -324,6 +325,8 @@ void userControl()
 	{
 		twoStickLayout();
 	}
+
+	return true; // keep going
 }
 
 void userControlLooped()
@@ -372,6 +375,8 @@ bool aiControl(left, right, up, down)
 		// awkward
 		return false; // back to user control, since our AI stuff didn't work.
 	}
+
+	return true; // keep going
 }
 
 void aiControlTimed(left, right, up, down)
@@ -387,65 +392,11 @@ void aiControlTimed(left, right, up, down)
 
 void startBot(left, right, up, down) // passed by value, so after startBot is called, these variables don't change during the execution of the method. Thus, subsequent button presses or releases have no effect on what AI is being currently used, except for the button presses that switch to one or two stick layout, which end the AI prematurely.
 {
-	ClearTimer(T1);
-	while (time10[T1] < 2000)
-	{
-		if (left == 1)
-		{
-			if(!redAITrapped())
-			{
-				break;
-			}
-		}
-		else if (right == 1)
-		{
-			if(!blueAITrapped())
-			{
-				break;
-			}
-		}
-		else if (up == 1)
-		{
-			if(!redAIFree())
-			{
-				break;
-			}
-		}
-		else if (down == 1)
-		{
-			if(!blueAIFree())
-			{
-				break;
-			}
-		}
-
-		else
-		{
-			// awkward
-			break; // back to user control, since our AI stuff didn't work.
-		}
-
-		continue;
-	} // end AI loop
+	aiControlTimed(left, right, up, down);
 	// Time to go back to user control.
-	while (true) // while(1==1)
-	{
-
-		if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout, if necessary
-		{
-			wait1Msec(20); // short reset time
-		}
-
-		if (isOneStickLayout == true)
-		{
-			oneStickLayout();
-		}
-		else
-		{
-			twoStickLayout();
-		}
-	} // end while - user-control loop
+	userControlLooped();
 } // end function
+
 task main()
 {
 	while (true)
