@@ -221,14 +221,14 @@ bool handleLayoutSwitch(leftButton, upButton) // Btn7L: one stick; Btn7U: two st
 	}
 }
 
-void blueAIFree()
+bool blueAIFree()
 {
 	while (true)
 	{
 		if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout
 		{
 			// one of those buttons was pressed, so we switched to a controller layout and now we deactivate AI.
-			break; // exit AI, proceed to user-controlled mode
+			return false; break; // exit AI, proceed to user-controlled mode
 		}
 
 		// Do AI stuff
@@ -238,14 +238,14 @@ void blueAIFree()
 	}
 }
 
-void redAIFree()
+bool redAIFree()
 {
 	while (true)
 	{
 		if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout
 		{
 			// one of those buttons was pressed, so we switched to a controller layout and now we deactivate AI.
-			break; // exit AI, proceed to user-controlled mode
+			return false; break; // exit AI, proceed to user-controlled mode
 		}
 
 		// Do AI stuff
@@ -255,14 +255,14 @@ void redAIFree()
 	}
 }
 
-void blueAITrapped()
+bool blueAITrapped()
 {
 	while (true)
 	{
 		if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout
 		{
 			// one of those buttons was pressed, so we switched to a controller layout and now we deactivate AI.
-			break; // exit AI, proceed to user-controlled mode
+			return false; break; // exit AI, proceed to user-controlled mode
 		}
 
 		// Do AI stuff
@@ -272,14 +272,14 @@ void blueAITrapped()
 	}
 }
 
-void redAITrapped()
+bool redAITrapped()
 {
 	while (true)
 	{
 		if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout
 		{
 			// one of those buttons was pressed, so we switched to a controller layout and now we deactivate AI.
-			break; // exit AI, proceed to user-controlled mode
+			return false; break; // exit AI, proceed to user-controlled mode
 		}
 
 		// Do AI stuff
@@ -296,19 +296,31 @@ void startBot(left, right, up, down) // passed by value, so after startBot is ca
 	{
 		if (left == 1)
 		{
-			redAITrapped();
+			if(!redAITrapped())
+			{
+				break;
+			}
 		}
 		else if (right == 1)
 		{
-			blueAITrapped();
+			if(!blueAITrapped())
+			{
+				break;
+			}
 		}
 		else if (up == 1)
 		{
-			redAIFree();
+			if(!redAIFree())
+			{
+				break;
+			}
 		}
 		else if (down == 1)
 		{
-			blueAIFree();
+			if(!blueAIFree())
+			{
+				break;
+			}
 		}
 
 		else
