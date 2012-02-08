@@ -7,9 +7,21 @@
 #pragma config(Sensor, dgtl2, solenoid2, sensorDigitalOut)
 
 
-/* BroBots - The Bishop's School 2011 - 2012 Robotics Club Senior Bot */
+/* BroBots - The Bishop's School 2011-2012 Robotics Club Senior Bot */
 
 #include "settings/settings.c"
+
+/*										  ROBOT CONFIGURATION										  *|
+|*	  NOTES:																						  *|
+|*	  1)  Ch1 is the X axis and Ch2 is the Y axis for the RIGHT joystick.							  *|
+|*	  2)  Ch3 is the Y axis and Ch4 is the X axis for the LEFT joystick.							  *|
+|*	  3)  'abs(z)' is the ABSOLUTE VALUE of 'z'.													  */
+
+int ljoy_x; // This is the X value of the LEFT analog stick.
+int ljoy_y; // This is the Y value of the LEFT analog stick.
+int rjoy_x; // This is the X value of the RIGHT analog stick.
+int rjoy_y; // This is the Y value of the RIGHT analog stick.
+int threshold = 12.7;
 
 #include "logic/sticklayouts.c"
 #include "logic/sticktoggles.c"
