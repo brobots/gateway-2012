@@ -23,11 +23,11 @@ int rjoy_x; // This is the X value of the RIGHT analog stick.
 int rjoy_y; // This is the Y value of the RIGHT analog stick.
 int threshold = 12.7;
 
+#include "logic/aitoggles.c"
 #include "logic/sticklayouts.c"
 #include "logic/sticktoggles.c"
 
 #include "logic/ai.c"
-#include "logic/aitoggles.c"
 
 #include "logic/controlflow.c"
 
@@ -35,16 +35,23 @@ int threshold = 12.7;
 
 void startBot(left, right, up, down) // passed by value, so after startBot is called, these variables don't change during the execution of the method. Thus, subsequent button presses or releases have no effect on what AI is being currently used, except for the button presses that switch to one or two stick layout, which end the AI prematurely.
 {
-	aiControlTimed(left, right, up, down);
-	// Time to go back to user control.
-	userControlLooped();
+	while(true)
+	{
+		aiControlTimed(left, right, up, down);
+		// Time to go back to user control.
+		userControlLooped();
+
+		// if we break out of user control, that means AI was activated or something weird happened...
+		continue;
+	}
+
 } // end function
 
 task main()
 {
 	while (true)
 	{
-		if (vexRT[Btn8L] == 1 || vexRT[Btn8R] == 1 || vexRT[Btn8U] == 1 || vexRT[Btn8D] == 1)
+		if (handleAISwitch(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D]))
 		{
 			startBot(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D]);
 			break; // bot has been "started" (competition mode), and now the execution loop takes place in startBot()

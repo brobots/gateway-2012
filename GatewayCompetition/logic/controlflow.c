@@ -10,11 +10,17 @@ bool userControl()
 
 	if (isOneStickLayout == true)
 	{
-		oneStickLayout();
+		if(!oneStickLayout())
+		{
+			return false;
+		}
 	}
 	else
 	{
-		twoStickLayout();
+		if(!twoStickLayout())
+		{
+			return false;
+		}
 	}
 
 	return true; // keep going
@@ -75,6 +81,9 @@ void aiControlTimed(left, right, up, down)
 	ClearTimer(T1);
 	while (time10[T1] < 2000)
 	{
-		aiControl(left, right, up, down);
+		if(!(aiControl(left, right, up, down)))
+		{
+			break; return;
+		}
 	}
 }

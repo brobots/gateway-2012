@@ -1,7 +1,14 @@
 /* Region: Stick Layouts */
 
-void oneStickLayout()
+bool oneStickLayout() // false return = stop looping, check AI; true return = continue looping.
 {
+	if (handleAISwitch(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D])) // combination to switch to an AI
+	{
+		// one of those buttons was pressed, so we switched to an AI and now we deactivate manual control.
+		return false; // exit AI, proceed to user-controlled mode
+	}
+
+
 /* This is for the joystick layout where the left analog stick controls robot movement and the right one controls the elevator.
 * Controls:
 
@@ -101,10 +108,17 @@ void oneStickLayout()
 		SensorValue[solenoid] = 1;
 	} */
 
+	return true; // continue looping
+
 }
 
-void twoStickLayout()
+bool twoStickLayout() // false return = stop looping, check AI; true return = continue looping.
 {
+	if (handleAISwitch(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D])) // combination to switch to an AI
+	{
+		// one of those buttons was pressed, so we switched to an AI and now we deactivate manual control.
+		return false; // exit AI, proceed to user-controlled mode
+	}
 
 	// Main wheels
 	if (abs(vexRT[Ch3]) > threshold) // If the left joystick is greater than or less than the threshold:
@@ -173,5 +187,7 @@ void twoStickLayout()
 		motor[elevatorOneMotor] = 0;
 		motor[elevatorTwoMotor] = 0;
 	}
+
+	return true; // continue looping
 
 }
