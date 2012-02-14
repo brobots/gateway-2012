@@ -1,6 +1,6 @@
 /* Region: Control Flow */
 
-bool userControl()
+ bool userControl()
 {
 	if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout, if necessary
 	{

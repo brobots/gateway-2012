@@ -1,15 +1,19 @@
 #pragma config(Motor, port10, rightMotor, tmotorNormal, openLoop) // Define motors here: port numbers, isReversed
 #pragma config(Motor, port1, leftMotor, tmotorNormal, openLoop, reversed)
 #pragma config(Motor, port9, lateralMotor, tmotorNormal, openLoop)
-#pragma config(Motor, port7, elevatorOneMotor, tmotorNormal, openLoop)
+#pragma config(Motor, port2, elevatorOneMotor, tmotorNormal, openLoop)
 #pragma config(Motor, port8, elevatorTwoMotor, tmotorNormal, openLoop, reversed)
 #pragma config(Sensor, dgtl1, solenoid1, sensorDigitalOut)
 #pragma config(Sensor, dgtl2, solenoid2, sensorDigitalOut)
+//#pragma config(Sensor, dgtl3, sugarshaft, sensorDigitalOut)
 
 
 /* BroBots - The Bishop's School 2011-2012 Robotics Club Senior Bot */
 
 #include "settings/settings.c"
+
+
+
 
 /*										  ROBOT CONFIGURATION										  *|
 |*	  NOTES:																						  *|
@@ -37,6 +41,8 @@ void startBot(left, right, up, down) // passed by value, so after startBot is ca
 {
 	while(true)
 	{
+	//  if(SensorValue(dgtl3)<100)
+	//  {}
 		aiControlTimed(left, right, up, down);
 		// Time to go back to user control.
 		userControlLooped();
