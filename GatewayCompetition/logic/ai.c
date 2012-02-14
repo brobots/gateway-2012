@@ -1,6 +1,6 @@
 /* Region: AIs */
 
- /* bool blueAIFree()
+bool blueAIFree()
 {
 	while (true)
 	{
@@ -51,7 +51,7 @@ bool blueAITrapped()
 	}
 }
 
- bool redAITrapped()
+bool redAITrapped()
 {
 	while (true)
 	{
@@ -64,4 +64,6 @@ bool blueAITrapped()
 		// Do AI stuff
 		motor[leftMotor] = 127;
 		motor[rightMotor] = 127;
-*/
+
+	}
+}
