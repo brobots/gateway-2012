@@ -75,38 +75,58 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
 	}
 
 
-	// Elevator
-	if ((vexRT[Btn5D] == 1) && (vexRT[Btn5U] == 1))
+	// Elevator Motors 1 and 2
+	if ((vexRT[Btn6D] == 1) && (vexRT[Btn6U] == 1)) // going up and down at the same time = nope
 	{
 		motor[elevatorOneMotor] = 0;
 		motor[elevatorTwoMotor] = 0;
 	}
-	else if (vexRT[Btn5U] == 1)
+	else if (vexRT[Btn6U] == 1)
 	{
 		motor[elevatorOneMotor] = 81;
 		motor[elevatorTwoMotor] = 90;
 	}
-	else if (vexRT[Btn5D] == 1)
+	else if (vexRT[Btn6D] == 1)
 	{
 		motor[elevatorOneMotor] = -127;
 		motor[elevatorTwoMotor] = -127;
 	}
-	else if ((vexRT[Btn5D] == 0) && (vexRT[Btn5U] == 0))
+	else if ((vexRT[Btn6D] == 0) && (vexRT[Btn6U] == 0))
 	{
 		motor[elevatorOneMotor] = 0;
 		motor[elevatorTwoMotor] = 0;
 	}
 
-/* A pneumatic test
-
-	if ((vexRT[Btn6D] ==1))
+	// Elevator Motors 3 and 4
+	if ((vexRT[Btn5D] == 1) && (vexRT[Btn5U] == 1)) // going up and down at the same time = nope
 	{
-		SensorValue[solenoid] = 0;
+		motor[elevatorThreeMotor] = 0;
+		motor[elevatorFourMotor] = 0;
 	}
-	else if ((vexRT[Btn6U]==1))
+	else if (vexRT[Btn5U] == 1)
 	{
-		SensorValue[solenoid] = 1;
-	} */
+		motor[elevatorThreeMotor] = 127;
+		motor[elevatorFourMotor] = 127;
+	}
+	else if (vexRT[Btn5D] == 1)
+	{
+		motor[elevatorThreeMotor] = -127;
+		motor[elevatorFourMotor] = -127;
+	}
+	else if ((vexRT[Btn5D] == 0) && (vexRT[Btn5U] == 0))
+	{
+		motor[elevatorThreeMotor] = 0;
+		motor[elevatorFourMotor] = 0;
+	}
+
+	if(vexRT[Btn7D] == 1)
+	{
+		SensorValue[solenoid1] = 0;
+	}
+	else
+	{
+		SensorValue[solenoid1] = 1;
+	}
 
 	return true; // continue looping
 
@@ -154,38 +174,58 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
 	{
 		motor[lateralMotor] = 0;
 	}
-	if (vexRT[Btn5U] == 1)
-	{
-		SensorValue[solenoid1] = 1;
-		SensorValue[solenoid2] = 1;
-	}
-	if (vexRT[Btn5D] == 1)
-	{
-		SensorValue[solenoid1] = 0;
-		SensorValue[solenoid2] = 0;
-	}
 
-
-	// Elevator
-	if ((vexRT[Btn5D] == 1) && (vexRT[Btn5U] == 1))
+	// Elevator Motors 1 and 2
+	if ((vexRT[Btn6D] == 1) && (vexRT[Btn6U] == 1)) // going up and down at the same time = nope
 	{
 		motor[elevatorOneMotor] = 0;
 		motor[elevatorTwoMotor] = 0;
 	}
-	else if (vexRT[Btn5U] == 1)
+	else if (vexRT[Btn6U] == 1)
 	{
-		motor[elevatorOneMotor] = 127;
-		motor[elevatorTwoMotor] = 127;
+		motor[elevatorOneMotor] = 81;
+		motor[elevatorTwoMotor] = 90;
 	}
-	else if (vexRT[Btn5D] == 1)
+	else if (vexRT[Btn6D] == 1)
 	{
 		motor[elevatorOneMotor] = -127;
 		motor[elevatorTwoMotor] = -127;
 	}
-	else if ((vexRT[Btn5D] == 0) && (vexRT[Btn5U] == 0))
+	else if ((vexRT[Btn6D] == 0) && (vexRT[Btn6U] == 0))
 	{
 		motor[elevatorOneMotor] = 0;
 		motor[elevatorTwoMotor] = 0;
+	}
+
+	// Elevator Motors 3 and 4
+	if ((vexRT[Btn5D] == 1) && (vexRT[Btn5U] == 1)) // going up and down at the same time = nope
+	{
+		motor[elevatorThreeMotor] = 0;
+		motor[elevatorFourMotor] = 0;
+	}
+	else if (vexRT[Btn5U] == 1)
+	{
+		motor[elevatorThreeMotor] = 127;
+		motor[elevatorFourMotor] = 127;
+	}
+	else if (vexRT[Btn5D] == 1)
+	{
+		motor[elevatorThreeMotor] = -127;
+		motor[elevatorFourMotor] = -127;
+	}
+	else if ((vexRT[Btn5D] == 0) && (vexRT[Btn5U] == 0))
+	{
+		motor[elevatorThreeMotor] = 0;
+		motor[elevatorFourMotor] = 0;
+	}
+
+	if(vexRT[Btn7D] == 1)
+	{
+		SensorValue[solenoid1] = 0;
+	}
+	else
+	{
+		SensorValue[solenoid1] = 1;
 	}
 
 	return true; // continue looping
