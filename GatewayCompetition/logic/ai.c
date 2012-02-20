@@ -1,5 +1,8 @@
 /* Region: AIs */
 
+float boxLength = 20; // TODO: measure length of each box (I think sonar uses inches?)
+float sonarThreshold = 5;
+
 bool rotate(angle)
 {
 	// TODO: rotate by that angle
@@ -10,9 +13,14 @@ bool SeeBlock()
 	// TODO: read sonar to detect a block; return true if block visible; return false if no block.
 	return false;
 }
-bool IsWall()
+bool IsWall(distance)
 {
 	// TODO: see how close sonar is
+	float x = SensorValue(sonarSensor);
+	if(x <= distance + sonarThreshold || x >= distance - sonarThreshold)
+	{
+		return true;
+	}
 	return false;
 }
 
@@ -110,9 +118,7 @@ bool captureWithSonar()
 
 	// looks like we failed to eat it.
 	// go back, restart
-	motor[rightMotor] = -127;
-	motor[leftMotor] = -127;
-	wait10Msec(50);
+	rotate(180);
 	return false;
 
 }
@@ -151,32 +157,39 @@ bool randomAttacksUsingSonar()
 
 void launchCompetitionAI()
 {
-	if(rotate(-90) && isWall())
+	if(rotate(-90) && isWall() && rotate(90)) // redAITrapped
 	{
-		rotate(90); // face forward again
-		// todo: set X and Y
+		// TODO: set X and Y
 		currentX = 0;
 		currentY = 0;
 		redAITrapped();
 	}
-	else if(rotate(180) && isWall())
+	else if(rotate(90) && isWall(0) && rotate(-90)) // blueAITrapped
 	{
-		rotate(-90); // face forward again
-		// todo: set X and Y
+		// TODO: set X and Y
 		currentX = 0;
 		currentY = 0;
 		blueAITrapped();
 	}
-	else if(true)
+	else if(rotate(90) && isWall(boxLength) && rotate(-90)) // redAIFree
 	{
-
+		// TODO: set X and Y
+		currentX = 0;
+		currentY = 0;
+		redAIFree();
 	}
-	else if(true)
+	else if(rotate(-90) && isWall(boxLength) && rotate(90)) // blueAIFree
 	{
-
+		// TODO: set X and Y
+		currentX = 0;
+		currentY = 0;
+		blueAIFree();
 	}
-	else
+	else // couldn't detect which region we're in
 	{
+		// TODO: set X and Y
+		currentX = 0;
+		currentY = 0;
 		randomAttacksUsingSonar();
 	}
 }
