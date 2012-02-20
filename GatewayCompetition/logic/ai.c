@@ -54,12 +54,30 @@ Stuff to pick up:
 
 */
 
-float boxLength = 20; // TODO: measure length of each box (I think sonar uses inches?)
+float boxLength = 36; // in inches
 float sonarThreshold = 5;
+float wheelDiameter = 5; // in inches // TODO: measure this
 
 
 /* Region: Movement methods */
 
+// Conversions
+float boxesToInches(boxes)
+{
+	return boxes *	3 * 12; // each box = 3 ft = 12 * 3 in.
+}
+float inchesToBoxes(inches)
+{
+	return inches / 12 / 3; // each box = 3 ft = 12 * 3 in.
+}
+float numRotations(distance) // distance is in inches
+{
+	// TODO: is this correct?
+	// (360n) * (pi) * wheelDiameter = distance
+	return distance / wheelDiameter / PI;
+}
+
+// Movement
 bool rotate(angle)
 {
 	// TODO: rotate robot by that angle
