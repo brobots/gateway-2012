@@ -36,6 +36,7 @@ int threshold = 12.7;
 
 float currentX;
 float currentY;
+float currentAngle;
 
 #include "logic/aitoggles.c"
 #include "logic/sticklayouts.c"

@@ -3,7 +3,10 @@
 /* Field details:
 
 12ft by 12ft, divided into 4 boxes by 4 boxes. Each region = 2 boxes by 2 boxes. Thus, each box = 3ft by 3ft = 36in. by 36in.
-Locations:
+
+Angles: starting from (0,0), going clockwise. (1, 0) is 90 degrees.
+
+Locations (measured always in terms of boxes):
 
 Corners:
 	(0,0): corner of red-free region
@@ -54,25 +57,54 @@ Stuff to pick up:
 float boxLength = 20; // TODO: measure length of each box (I think sonar uses inches?)
 float sonarThreshold = 5;
 
-bool rotate(angle)
+bool capture()
 {
-	// TODO: rotate by that angle
+	// TODO: we currently have a thing in our grasp. now, we slide it into our robot and capture it.
+
 	return true;
 }
-bool SeeBlock()
+bool goVector(changeX, changeY)
 {
-	// TODO: read sonar to detect a block; return true if block visible; return false if no block.
+	// TODO: move by a vector
+
+		motor[leftMotor] = 127;
+		motor[rightMotor] = 127;
+	return true;
+}
+bool goToCoordinates(destinationX, destinationY)
+{
+	return goVector(destinationX - currentX, destinationY - currentY);
+}
+bool rotate(angle)
+{
+	// TODO: rotate robot by that angle
+	currentAngle += angle;
+	return true;
+}
+bool SeeBlock(distance)
+{
+	// read sonar to detect a block; return true if block visible; return false if no block.
+	float x = SensorValue(sonarSensor);
+	if(distance >= 0)
+	{
+		if(x <= distance + sonarThreshold || x >= distance - sonarThreshold)
+		{
+			return true;
+		}
+	}
+	else // if -1, any distance
+	{
+		if(x != -1 && x >= sonarThreshold)
+		{
+			return true;
+		}
+	}
 	return false;
 }
 bool IsWall(distance)
 {
-	// TODO: see how close sonar is
-	float x = SensorValue(sonarSensor);
-	if(x <= distance + sonarThreshold || x >= distance - sonarThreshold)
-	{
-		return true;
-	}
-	return false;
+	// TODO: bump sensor would be better for this.
+	return SeeBlock(distance);
 }
 
 bool blueAIFree()
@@ -85,7 +117,7 @@ bool blueAIFree()
 			return false; break; // exit AI, proceed to user-controlled mode
 		}
 
-		// Do AI stuff
+		// TODO: Do AI stuff
 		motor[leftMotor] = 127;
 		motor[rightMotor] = 127;
 
@@ -102,7 +134,7 @@ bool redAIFree()
 			return false; break; // exit AI, proceed to user-controlled mode
 		}
 
-		// Do AI stuff
+		// TODO: Do AI stuff
 		motor[leftMotor] = 127;
 		motor[rightMotor] = 127;
 
@@ -119,9 +151,16 @@ bool blueAITrapped()
 			return false; break; // exit AI, proceed to user-controlled mode
 		}
 
-		// Do AI stuff
-		motor[leftMotor] = 127;
-		motor[rightMotor] = 127;
+		// Do AI stuff: capture all barrels
+		goToCoordinates(3 + 2/3, 3 + 1/3);
+		capture();
+		goToCoordinates(3 + 1/3, 3 + 2/3);
+		capture();
+		goToCoordinates(3, 3);
+		capture();
+		goToCoordinates(3 - 1/3, 3 + 2/3); // xval = 2 + 2/3
+		capture();
+		goToCoordinates(3 - 2/3, 3 + 1/3); // xval = 2 + 1/3
 
 	}
 }
@@ -136,9 +175,16 @@ bool redAITrapped()
 			return false; break; // exit AI, proceed to user-controlled mode
 		}
 
-		// Do AI stuff
-		motor[leftMotor] = 127;
-		motor[rightMotor] = 127;
+		// Do AI stuff: capture all barrels
+		goToCoordinates(3 + 2/3, 1 + 2/3);
+		capture();
+		goToCoordinates(3 + 1/3, 1 + 1/3);
+		capture();
+		goToCoordinates(3, 1);
+		capture();
+		goToCoordinates(3 - 1/3, 1 + 1/3); // xval = 2 + 2/3
+		capture();
+		goToCoordinates(3 - 2/3, 1 + 2/3); // xval = 2 + 1/3
 
 	}
 }
@@ -183,24 +229,14 @@ bool randomAttacksUsingSonar()
 			float x = SensorValue(sonarSensor);
 			if(x != -1)
 			{
-				wait1Msec(10);
+				// something was found
+				wait1Msec(10); // pause, rescan to see if object moves
 				if(SensorValue(sonarSensor) == x) // if object hasn't moved, it's probably a block
 				{
 					captureWithSonar();
 				}
 			}
 		}
-		while(SensorValue(sonarSensor) > 20  || SensorValue(sonarSensor) == -1)		// Loop while robot's Ultrasonic sensor is further than 20 inches away from an object
-		{                                                                         // || (or) it is '-1'.  (-1 is the value returned when nothing is in it's visable range)
-			motor[rightMotor] = 63;			// Motor on port2 is run at half (63) power forward
-			motor[leftMotor]  = 63;			// Motor on port3 is run at half (63) power forward
-		}
-		// something was found
-
-		// scan sonar
-		// if found
-		// pause, rescan
-		// if still sonar, capture()
 	}
 
 	return true;
@@ -208,39 +244,41 @@ bool randomAttacksUsingSonar()
 
 void launchCompetitionAI()
 {
-	if(rotate(-90) && isWall() && rotate(90)) // redAITrapped
+	if(rotate(-90) && isWall(0) && rotate(90)) // redAITrapped
 	{
-		// TODO: set X and Y
-		currentX = 0;
+		currentX = 8/3;
 		currentY = 0;
+		currentAngle = 0;
 		redAITrapped();
 	}
 	else if(rotate(90) && isWall(0) && rotate(-90)) // blueAITrapped
 	{
-		// TODO: set X and Y
-		currentX = 0;
-		currentY = 0;
+		currentX = 8/3;
+		currentY = 4;
+		currentAngle = 180;
 		blueAITrapped();
 	}
 	else if(rotate(90) && isWall(boxLength) && rotate(-90)) // redAIFree
 	{
-		// TODO: set X and Y
 		currentX = 0;
-		currentY = 0;
+		currentY = 1;
+		currentAngle = 90;
 		redAIFree();
 	}
 	else if(rotate(-90) && isWall(boxLength) && rotate(90)) // blueAIFree
 	{
-		// TODO: set X and Y
 		currentX = 0;
-		currentY = 0;
+		currentY = 3;
+		currentAngle = 90;
 		blueAIFree();
 	}
 	else // couldn't detect which region we're in
 	{
-		// TODO: set X and Y
+		// "default" X and Y
 		currentX = 0;
 		currentY = 0;
+		currentAngle = 0;
+		// TODO: drive out a bit to middle or something before calling randomAttacksUsingSonar()
 		randomAttacksUsingSonar();
 	}
 }
