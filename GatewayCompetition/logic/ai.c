@@ -60,6 +60,13 @@ float sonarThreshold = 5;
 
 /* Region: Movement methods */
 
+bool rotate(angle)
+{
+	// TODO: rotate robot by that angle
+
+	currentAngle += angle;
+	return true;
+}
 bool goVector(changeX, changeY, changeAngle)
 {
 	rotate(changeAngle);
@@ -79,13 +86,6 @@ bool goToCoordinates(destinationX, destinationY)
 	float changeAngle = currentAngle;
 
 	return goVector(changeX, changeY, changeAngle);
-}
-bool rotate(angle)
-{
-	// TODO: rotate robot by that angle
-
-	currentAngle += angle;
-	return true;
 }
 bool SeeBlock(distance)
 {
