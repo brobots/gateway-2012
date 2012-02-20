@@ -204,6 +204,7 @@ bool captureWithSonar()
 	while(numberReps < 1000)
 	{
 		y = SensorValue(sonarSensor);
+		capture();
 		if(y > x)
 		{
 			// we've eaten it successfully
