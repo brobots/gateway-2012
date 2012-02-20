@@ -57,18 +57,15 @@ Stuff to pick up:
 float boxLength = 20; // TODO: measure length of each box (I think sonar uses inches?)
 float sonarThreshold = 5;
 
-bool capture()
-{
-	// TODO: we currently have a thing in our grasp. now, we slide it into our robot and capture it.
 
-	return true;
-}
+/* Region: Movement methods */
+
 bool goVector(changeX, changeY)
 {
 	// TODO: move by a vector
 
-		motor[leftMotor] = 127;
-		motor[rightMotor] = 127;
+	motor[leftMotor] = 127;
+	motor[rightMotor] = 127;
 	return true;
 }
 bool goToCoordinates(destinationX, destinationY)
@@ -78,6 +75,7 @@ bool goToCoordinates(destinationX, destinationY)
 bool rotate(angle)
 {
 	// TODO: rotate robot by that angle
+
 	currentAngle += angle;
 	return true;
 }
@@ -106,6 +104,45 @@ bool IsWall(distance)
 	// TODO: bump sensor would be better for this.
 	return SeeBlock(distance);
 }
+bool capture()
+{
+	// TODO: we currently have a thing in our grasp. now, we slide it into our robot and capture it.
+
+	return true;
+}
+bool captureWithSonar()
+{
+	float x;
+	while((x = SensorValue(sonarSensor)) > 5) // advance to it
+	{
+		motor[rightMotor] = 127;
+		motor[leftMotor]  = 127;
+		wait1Msec(100); // Take 10 readings per second.
+	}
+	// now, make sure y becomes greater than that x after we "eat" the block
+	float y;
+	int numberReps = 0;
+	while(numberReps < 1000)
+	{
+		y = SensorValue(sonarSensor);
+		capture();
+		if(y > x)
+		{
+			// we've eaten it successfully
+			return true;
+		}
+		numberReps++;
+		wait1Msec(100);
+	}
+
+	// looks like we failed to eat it.
+	// go back, restart
+	rotate(180);
+	return false;
+
+}
+
+/* Region: strategy methods */
 
 bool blueAIFree()
 {
@@ -189,37 +226,7 @@ bool redAITrapped()
 	}
 }
 
-bool captureWithSonar()
-{
-	float x;
-	while((x = SensorValue(sonarSensor)) > 5) // advance to it
-	{
-		motor[rightMotor] = 127;
-		motor[leftMotor]  = 127;
-		wait1Msec(100); // Take 10 readings per second.
-	}
-	// now, make sure y becomes greater than that x after we "eat" the block
-	float y;
-	int numberReps = 0;
-	while(numberReps < 1000)
-	{
-		y = SensorValue(sonarSensor);
-		capture();
-		if(y > x)
-		{
-			// we've eaten it successfully
-			return true;
-		}
-		numberReps++;
-		wait1Msec(100);
-	}
 
-	// looks like we failed to eat it.
-	// go back, restart
-	rotate(180);
-	return false;
-
-}
 bool randomAttacksUsingSonar()
 {
 	// peaceful mode
@@ -242,6 +249,8 @@ bool randomAttacksUsingSonar()
 
 	return true;
 }
+
+/* Region: control flow */
 
 void launchCompetitionAI()
 {
