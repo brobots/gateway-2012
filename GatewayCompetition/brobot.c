@@ -15,10 +15,9 @@
 #pragma competitionControl(Competition)
 #pragma autonomousDuration(20)
 #pragma userControlDuration(120)
-
-/* BroBots - The Bishop's School 2011-2012 Robotics Club Senior Bot */
-
 #include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
+
+/* BroBots - The Bishop's School 2011-2012 Robotics Team Varsity Bot */
 
 #include "settings/settings.c"
 
