@@ -62,6 +62,8 @@ float sonarThreshold = 5;
 
 bool goVector(changeX, changeY, changeAngle)
 {
+	rotate(changeAngle);
+
 	// TODO: move by a vector
 
 	motor[leftMotor] = 127;
