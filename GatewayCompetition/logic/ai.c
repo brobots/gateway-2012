@@ -1,5 +1,56 @@
 /* Region: AIs */
 
+/* Field details:
+
+12ft by 12ft, divided into 4 boxes by 4 boxes. Each region = 2 boxes by 2 boxes. Thus, each box = 3ft by 3ft = 36in. by 36in.
+Locations:
+
+Corners:
+	(0,0): corner of red-free region
+	(2,0) to (2,2): red dividing wall
+	(2,2) to (2,4): blue dividing wall
+	(0,4): corner of blue-free region
+	(4,0): corner of red-trapped region
+	(4,4): corner of blue-trapped region
+
+Starting positions:
+	red free:
+		(0, 1): back
+		(2/3, 1): front
+	blue free:
+		(0, 3): back
+		(2/3, 3): front
+	red trapped:
+		(8/3, 0): back
+		(8/3, 2/3): front
+	blue trapped:
+		(8/3, 4): back
+		(8/3, 10/3): front
+
+
+Stuff to pick up:
+	red trap:
+		(3, 1)
+		(2 + 1/3, 1 + 2/3)
+		(2 + 2/3, 1 + 1/3)
+		(3 + 1/3, 1 + 1/3)
+		(3 + 2/3, 1 + 2/3)
+	blue trap:
+		(3, 3)
+		(2 + 1/3, 3 + 1/3)
+		(2 + 2/3, 3 + 2/3)
+		(3 + 1/3, 3 + 2/3)
+		(3 + 2/3, 3 + 1/3)
+	free:
+		(1 - 3/6, 2): blue barrel bottom, red ball top
+		(1 - 2/6, 2): red barrel bottom, blue barrel middle, red ball top
+		(1 - 1/6, 2): blue barrel bottom, red barrel middle bottom, blue barrel middle top, red ball top
+		(1 + 1/6, 2): red barrel bottom, blue barrel middle bottom, red barrel middle top, blue ball top
+		(1 + 2/6, 2): blue barrel bottom, red barrel middle, blue ball top
+		(1 + 3/6, 2): red barrel bottom, blue ball top
+
+*/
+
 float boxLength = 20; // TODO: measure length of each box (I think sonar uses inches?)
 float sonarThreshold = 5;
 
