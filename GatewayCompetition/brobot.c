@@ -1,4 +1,5 @@
-#pragma config(Sensor, dgtl11, solenoid1,      sensorDigitalOut)
+#pragma config(Sensor, dgtl1, solenoid1,      sensorDigitalOut)
+#pragma config(Sensor, dgtl2, sonarSensor,      sensorDigitalOut)
 #pragma config(Motor,  port1,           leftMotor,     tmotorNormal, openLoop, reversed)
 #pragma config(Motor,  port2,           elclawo,       tmotorServoStandard, openLoop)
 #pragma config(Motor,  port4,           elevatorThreeMotor, tmotorNormal, openLoop, reversed)
@@ -33,6 +34,9 @@ int rjoy_x; // This is the X value of the RIGHT analog stick.
 int rjoy_y; // This is the Y value of the RIGHT analog stick.
 int threshold = 12.7;
 
+float currentX;
+float currentY;
+
 #include "logic/aitoggles.c"
 #include "logic/sticklayouts.c"
 #include "logic/sticktoggles.c"
@@ -43,8 +47,6 @@ int threshold = 12.7;
 
 /* Region: Competition Code */
 
-float currentX;
-float currentY;
 
 void pre_auton()
 {
