@@ -72,8 +72,13 @@ bool goVector(changeX, changeY, changeAngle)
 }
 bool goToCoordinates(destinationX, destinationY)
 {
+	float changeX = destinationX - currentX;
+	float changeY = destinationY - currentY;
+
 	// TODO: calculate angle change
-	return goVector(destinationX - currentX, destinationY - currentY, currentAngle);
+	float changeAngle = currentAngle;
+
+	return goVector(changeX, changeY, changeAngle);
 }
 bool rotate(angle)
 {
