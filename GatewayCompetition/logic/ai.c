@@ -60,7 +60,7 @@ float sonarThreshold = 5;
 
 /* Region: Movement methods */
 
-bool goVector(changeX, changeY)
+bool goVector(changeX, changeY, changeAngle)
 {
 	// TODO: move by a vector
 
@@ -70,7 +70,8 @@ bool goVector(changeX, changeY)
 }
 bool goToCoordinates(destinationX, destinationY)
 {
-	return goVector(destinationX - currentX, destinationY - currentY);
+	// TODO: calculate angle change
+	return goVector(destinationX - currentX, destinationY - currentY, currentAngle);
 }
 bool rotate(angle)
 {
