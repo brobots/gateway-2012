@@ -67,3 +67,8 @@ bool redAITrapped()
 
 	}
 }
+
+void launchCompetitionAI()
+{
+
+}
