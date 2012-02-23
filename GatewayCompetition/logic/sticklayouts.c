@@ -122,15 +122,6 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
 		motor[elevatorFourMotor] = 0;
 	}
 
-	if(vexRT[Btn7D] == 1)
-	{
-		SensorValue[solenoid1] = 0;
-	}
-	else
-	{
-		SensorValue[solenoid1] = 1;
-	}
-
 	if(vexRT[Btn7R] == 1)
 	{
     if(isClawUp)
@@ -247,14 +238,6 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
 		motor[elevatorFourMotor] = 0;
 	}
 
-	if(vexRT[Btn7D] == 1)
-	{
-		SensorValue[solenoid1] = 0;
-	}
-	else
-	{
-		SensorValue[solenoid1] = 1;
-	}
 	if(vexRT[Btn7R] == 1)
 	{
     if(isClawUp)

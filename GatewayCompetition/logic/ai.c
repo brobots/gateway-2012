@@ -80,9 +80,19 @@ float numRotations(distance) // distance is in inches
 // Movement
 bool rotate(angle)
 {
-	// TODO: rotate robot by that angle
+	// TODO: optical shaft encoder
+  if(angle < 0) // turn left
+  {
+    motor[leftMotor] = 127;
+    motor[rightMotor] = -127;
+  }
+  else // turn right
+  {
+    motor[leftMotor] = -127;
+    motor[rightMotor] = 127;
+  }
 
-	currentAngle += angle;
+  currentAngle += angle;
 	return true;
 }
 bool goVector(changeX, changeY, changeAngle)
