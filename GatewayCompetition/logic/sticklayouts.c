@@ -131,6 +131,31 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
 		SensorValue[solenoid1] = 1;
 	}
 
+	if(vexRT[Btn7R] == 1)
+	{
+    if(isClawUp)
+    {
+      motor[elclawo] = -127;
+      wasChangingClaw = true;
+    }
+    else
+    {
+      motor[elclawo] = 127;
+      wasChangingClaw = true;
+    }
+    wait1Msec(10);
+  }
+  else
+  {
+    motor[elclawo] = 0; // deactivate claw motor
+    // if we were just changing claw position and then let go, we need to change isClawUp.
+    if(wasChangingClaw)
+    {
+      isClawUp = !isClawUp; // toggle isClawUp
+      wasChangingClaw = false;
+    }
+  }
+
 	return true; // continue looping
 
 }
