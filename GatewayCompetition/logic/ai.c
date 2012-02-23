@@ -56,7 +56,7 @@ Stuff to pick up:
 
 float boxLength = 36; // in inches
 float sonarThreshold = 5;
-float wheelDiameter = 5; // in inches // TODO: measure this
+float wheelDiameter = 4; // in inches // TODO: measure this
 
 
 /* Region: Movement methods */
