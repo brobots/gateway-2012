@@ -1,5 +1,8 @@
 /* Region: Stick Layouts */
 
+bool isClawUp = false;
+bool wasChangingClaw = false;
+
 bool oneStickLayout() // false return = stop looping, check AI; true return = continue looping.
 {
 	if (handleAISwitch(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D])) // combination to switch to an AI
@@ -83,7 +86,7 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
 	}
 	else if (vexRT[Btn6U] == 1)
 	{
-		motor[elevatorOneMotor] = 81;
+		motor[elevatorOneMotor] = 90;
 		motor[elevatorTwoMotor] = 90;
 	}
 	else if (vexRT[Btn6D] == 1)
@@ -183,7 +186,7 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
 	}
 	else if (vexRT[Btn6U] == 1)
 	{
-		motor[elevatorOneMotor] = 85;
+		motor[elevatorOneMotor] = 90;
 		motor[elevatorTwoMotor] = 90;
 	}
 	else if (vexRT[Btn6D] == 1)
@@ -227,10 +230,30 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
 	{
 		SensorValue[solenoid1] = 1;
 	}
-	if(vexRT[Btn7R] == 0)
-  motor[elclawo] = 127;
+	if(vexRT[Btn7R] == 1)
+	{
+    if(isClawUp)
+    {
+      motor[elclawo] = -127;
+      wasChangingClaw = true;
+    }
+    else
+    {
+      motor[elclawo] = 127;
+      wasChangingClaw = true;
+    }
+    wait1Msec(10);
+  }
   else
-  motor[elclawo] = -127;
+  {
+    motor[elclawo] = 0; // deactivate claw motor
+    // if we were just changing claw position and then let go, we need to change isClawUp.
+    if(wasChangingClaw)
+    {
+      isClawUp = !isClawUp; // toggle isClawUp
+      wasChangingClaw = false;
+    }
+  }
 
 	return true; // continue looping
 
