@@ -83,8 +83,8 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
 	}
 	else if (vexRT[Btn6U] == 1)
 	{
-		motor[elevatorOneMotor] = 81;
-		motor[elevatorTwoMotor] = 90;
+		motor[elevatorOneMotor] = 119;
+		motor[elevatorTwoMotor] = 127;
 	}
 	else if (vexRT[Btn6D] == 1)
 	{
