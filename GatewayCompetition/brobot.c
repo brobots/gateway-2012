@@ -40,6 +40,13 @@ float currentX;
 float currentY;
 float currentAngle;
 
+void resetEncoders()
+{
+	// Clear Encoders
+  	SensorValue[rightEncoder] = 0;
+  	SensorValue[leftEncoder] = 0;
+}
+
 #include "logic/aitoggles.c"
 #include "logic/sticklayouts.c"
 #include "logic/sticktoggles.c"
@@ -57,6 +64,9 @@ void pre_auton()
 	// Example: clearing encoders, setting servo positions, ...
 	currentX = 0;
 	currentY = 0;
+	currentAngle = 0;
+
+	resetEncoders();
 }
 task autonomous()
 {

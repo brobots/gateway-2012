@@ -80,7 +80,11 @@ float numRotations(distance) // distance is in inches
 // Movement
 bool rotate(angle)
 {
-	// TODO: optical shaft encoder
+	resetEncoders();
+	while(SensorValue[leftEncoder] < 1800)  // While less than 5 rotations on the leftEncoder... // TODO: figure out # rotations
+  {
+
+
   if(angle < 0) // turn left
   {
     motor[leftMotor] = 127;
@@ -91,6 +95,9 @@ bool rotate(angle)
     motor[leftMotor] = -127;
     motor[rightMotor] = 127;
   }
+}
+
+resetEncoders();
 
   currentAngle += angle;
 	return true;
