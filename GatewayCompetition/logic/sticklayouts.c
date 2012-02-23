@@ -150,6 +150,31 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
     }
   }
 
+  if(vexRT[Btn7D] == 1)
+	{
+    if(isBasketUp)
+    {
+      motor[basketMotor] = -127;
+      wasChangingBasket = true;
+    }
+    else
+    {
+      motor[basketMotor] = 127;
+      wasChangingBasket = true;
+    }
+    wait1Msec(10);
+  }
+  else
+  {
+    motor[basketMotor] = 0; // deactivate basket motor
+    // if we were just changing basket position and then let go, we need to change isBasketUp.
+    if(wasChangingBasket)
+    {
+      isBasketUp = !isBasketUp; // toggle isBasketUp
+      wasChangingBasket = false;
+    }
+  }
+
 	return true; // continue looping
 
 }
