@@ -2,8 +2,7 @@
 #pragma config(Sensor, dgtl2, opticalTwo,      sensorDigitalOut)
 #pragma config(Sensor, dgtl3, opticalThree,      sensorDigitalOut)
 #pragma config(Sensor, dgtl4, opticalFour,      sensorDigitalOut)
-#pragma config(Sensor, dgtl11, sonarSensor,      sensorDigitalOut)
-#pragma config(Sensor, dgtl12, sonarSensorTwo,      sensorDigitalOut)
+#pragma config(Sensor, dgtl11,  sonarSensor,         sensorSONAR_in) /* output from sonar, measured in inches. the input wire to sonar is in dgtl 12 */
 #pragma config(Motor,  port1,           leftMotor,     tmotorNormal, openLoop, reversed)
 #pragma config(Motor,  port2,           elclawo,       tmotorServoStandard, openLoop)
 #pragma config(Motor,  port4,           elevatorThreeMotor, tmotorNormal, openLoop, reversed)
