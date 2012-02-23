@@ -86,8 +86,8 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
 	}
 	else if (vexRT[Btn6U] == 1)
 	{
-		motor[elevatorOneMotor] = 90;
-		motor[elevatorTwoMotor] = 90;
+		motor[elevatorOneMotor] = 127;
+		motor[elevatorTwoMotor] = 127;
 	}
 	else if (vexRT[Btn6D] == 1)
 	{
@@ -108,12 +108,12 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
 	}
 	else if (vexRT[Btn5U] == 1)
 	{
-		motor[elevatorThreeMotor] = 110;
+		motor[elevatorThreeMotor] = 127;
 		motor[elevatorFourMotor] = 127;
 	}
 	else if (vexRT[Btn5D] == 1)
 	{
-		motor[elevatorThreeMotor] = -110;
+		motor[elevatorThreeMotor] = -127;
 		motor[elevatorFourMotor] = -127;
 	}
 	else if ((vexRT[Btn5D] == 0) && (vexRT[Btn5U] == 0))
@@ -202,8 +202,8 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
 	}
 	else if (vexRT[Btn6U] == 1)
 	{
-		motor[elevatorOneMotor] = 90;
-		motor[elevatorTwoMotor] = 90;
+		motor[elevatorOneMotor] = 127;
+		motor[elevatorTwoMotor] = 127;
 	}
 	else if (vexRT[Btn6D] == 1)
 	{
@@ -224,12 +224,12 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
 	}
 	else if (vexRT[Btn5U] == 1)
 	{
-		motor[elevatorThreeMotor] = 110;
+		motor[elevatorThreeMotor] = 127;
 		motor[elevatorFourMotor] = 127;
 	}
 	else if (vexRT[Btn5D] == 1)
 	{
-		motor[elevatorThreeMotor] = -110;
+		motor[elevatorThreeMotor] = -127;
 		motor[elevatorFourMotor] = -127;
 	}
 	else if ((vexRT[Btn5D] == 0) && (vexRT[Btn5U] == 0))
