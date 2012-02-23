@@ -3,6 +3,9 @@
 bool isClawUp = false;
 bool wasChangingClaw = false;
 
+bool isBasketUp = false;
+bool wasChangingBasket = false;
+
 bool oneStickLayout() // false return = stop looping, check AI; true return = continue looping.
 {
 	if (handleAISwitch(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D])) // combination to switch to an AI
@@ -260,6 +263,31 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
     {
       isClawUp = !isClawUp; // toggle isClawUp
       wasChangingClaw = false;
+    }
+  }
+
+  if(vexRT[Btn7D] == 1)
+	{
+    if(isBasketUp)
+    {
+      motor[basketMotor] = -127;
+      wasChangingBasket = true;
+    }
+    else
+    {
+      motor[basketMotor] = 127;
+      wasChangingBasket = true;
+    }
+    wait1Msec(10);
+  }
+  else
+  {
+    motor[basketMotor] = 0; // deactivate basket motor
+    // if we were just changing basket position and then let go, we need to change isBasketUp.
+    if(wasChangingBasket)
+    {
+      isBasketUp = !isBasketUp; // toggle isBasketUp
+      wasChangingBasket = false;
     }
   }
 
