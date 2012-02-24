@@ -55,20 +55,21 @@ void ManualControl()
 
 /* Control flow */
 
-void pre_auton()
-{
-	// All activities that occur before the competition starts
-	// Example: clearing encoders, setting servo positions, ...
 
-}
-task autonomous()
+void startAutonomousFunctions()
 {
   // .....................................................................................
   // Insert user code here.
   // .....................................................................................
 	AI();
 }
-task usercontrol()
+
+task autonomous()
+{
+	startAutonomousFunctions(); // so we don't have to deal with multitasking weirdness
+}
+
+void startManualMode()
 {
 	// User control code here, inside the loop
 
@@ -103,4 +104,30 @@ task usercontrol()
   }
 	  ManualControl();
 	}
+}
+task usercontrol()
+{
+	startManualMode(); // so we don't have to deal with multitasking weirdness
+}
+
+void debugMain()
+{
+	startAutonomousFunctions();
+	startManualMode();
+}
+
+void pre_auton()
+{
+	// All activities that occur before the competition starts
+	// Example: clearing encoders, setting servo positions, ...
+
+	while(true) // loop for detecting debug keypress
+	{
+		if(vexRT[Btn7U])
+		{
+			debugMain();
+			break;
+		}
+	}
+
 }

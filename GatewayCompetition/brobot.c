@@ -58,16 +58,6 @@ void resetEncoders()
 /* Region: Competition Code */
 
 
-void pre_auton()
-{
-	// All activities that occur before the competition starts
-	// Example: clearing encoders, setting servo positions, ...
-	currentX = 0;
-	currentY = 0;
-	currentAngle = 0;
-
-	resetEncoders();
-}
 task autonomous()
 {
   // .....................................................................................
@@ -132,6 +122,26 @@ void debugMain()
 			{
 				twoStickLayout();
 			}
+		}
+	}
+}
+
+void pre_auton()
+{
+	// All activities that occur before the competition starts
+	// Example: clearing encoders, setting servo positions, ...
+	currentX = 0;
+	currentY = 0;
+	currentAngle = 0;
+
+	resetEncoders();
+
+	while(true) // loop for detecting debug keypress
+	{
+		if(vexRT[Btn7U])
+		{
+			debugMain();
+			break;
 		}
 	}
 }
