@@ -25,9 +25,30 @@ void ManualControl()
 {
   while (true)
   {
+     motor[leftwheel] = 0;
+     motor[rightwheel] = 0;
+     motor[clawmidright] = 0;
+     motor[clawmidleft] = 0;
+
+     //try
+ //{
+     if(vexRT[Btn5D] == 1)
+     {
+    	motor[leftwheel] = 127;
+    	motor[rightwheel] = 127;
+    	motor[clawmidright] = 127;
+    	motor[clawmidleft] = 127;
+     	return;
+ 	}
+
+//}
+//catch
+//{
+//	continue;
+//}
   //Base Wheels
   //Left Base Wheel
-  if (abs(vexRT[Ch3]) > threshold)
+  /*if (abs(vexRT[Ch3]) > threshold)
   {
     motor[leftwheel] = (vexRT[Ch3]);//Left joystick Y value
   }
@@ -46,6 +67,8 @@ void ManualControl()
   }
   return;
   }
+  */
+	}
 }
 
 /* Control flow */
@@ -68,7 +91,7 @@ void startManualMode()
 {
 	// User control code here, inside the loop
 
-	while (true)
+	while (1)
 	{
   //Base Wheels
   //Left Base Wheel
@@ -107,8 +130,7 @@ task usercontrol()
 
 task main()
 {
-	startAutonomousFunctions();
-	startManualMode();
+	ManualControl();
 }
 
 void pre_auton()
