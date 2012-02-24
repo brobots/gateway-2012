@@ -8,11 +8,6 @@
 
 #pragma platform(VEX)
 
-//Competition Control and Duration Settings
-#pragma competitionControl(Competition)
-#pragma autonomousDuration(20)
-#pragma userControlDuration(120)
-#include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
 
 /* BroBots - The Bishop's School 2011-2012 Robotics Team JV Bot */
 
@@ -110,7 +105,7 @@ task usercontrol()
 	startManualMode(); // so we don't have to deal with multitasking weirdness
 }
 
-void debugMain()
+task main()
 {
 	startAutonomousFunctions();
 	startManualMode();
@@ -125,7 +120,7 @@ void pre_auton()
 	{
 		if(vexRT[Btn7U])
 		{
-			debugMain();
+			startTask(main);
 			break;
 		}
 	}
