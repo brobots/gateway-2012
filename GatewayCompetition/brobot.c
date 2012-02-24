@@ -138,7 +138,11 @@ void pre_auton()
 
 	while(true) // loop for detecting debug keypress
 	{
-		if(vexRT[Btn7U])
+		if(bIfiRobotDisabled || !bVEXNETActive)
+		{
+			continue;
+		}
+		if(vexRT[Btn7U] == 1)
 		{
 			debugMain();
 			break;
