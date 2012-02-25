@@ -1,4 +1,4 @@
-#pragma config(Motor,  port1,           clawbaseleft,  tmotorNormal, openLoop, reversed)
+#pragma config(Motor,  port1,           clawbaseleft,  tmotorNormal, openLoop)
 #pragma config(Motor,  port3,           leftwheel,     tmotorNormal, openLoop, reversed)
 #pragma config(Motor,  port4,           rightwheel,    tmotorNormal, openLoop)
 #pragma config(Motor,  port5,           clawmidleft,   tmotorNormal, openLoop, reversed)
@@ -20,6 +20,7 @@
 */
 
 int threshold = 12.7;
+bool RaiseIsActivated = false;
 
 /* Strategy methods */
 
@@ -28,73 +29,6 @@ void AI()
 	return;
 }
 
-
-void ManualControl()
-{
-  while (true)
-  {
-  //Base Wheels
-  //Left Base Wheel
-  if (vexRT[Btn5U] == 1)
-  {
-  motor[clawbaseleft] = 127;
-  motor[clawbaseright] = 127;
-  }
-  else if (vexRT[Btn5U] == 0)
-  {
-  motor[clawbaseleft] = 0;
-  motor[clawbaseright] = 0;
-  }
-  if (vexRT[Btn5D] == 1)
-  {
-  motor[clawbaseleft] = -127;
-  motor[clawbaseright] = -127;
-  }
-  else if (vexRT[Btn5D] == 0)
-  {
-  motor[clawbaseleft] = 0;
-  motor[clawbaseright] = 0;
-  }
-  if (vexRT[Btn6U] == 1)
-  {
-   motor[clawmidleft] = 127;
-   motor[clawmidright] = 127;
-  }
-  else if (vexRT[Btn6U] == 0)
-  {
-   motor[clawmidleft] = 0;
-   motor[clawmidright] = 0;
-  }
-  if (vexRT[Btn6D] == 1)
-  {
-   motor[clawmidleft] = -127;
-   motor[clawmidright] = -127;
-  }
-  else if (vexRT[Btn6D] == 0)
-  {
-   motor[clawmidleft] = 0;
-   motor[clawmidright] = 0;
-  }
-  if (abs(vexRT[Ch3]) > threshold)
-  {
-    motor[leftwheel] = (vexRT[Ch3]);//Left joystick Y value
-  }
-  if (abs(vexRT[Ch3]) < threshold)
-  {
-    motor[leftwheel] = 0;//Stop the left motor
-  }
-  //Right Base Wheel
-  if (abs(vexRT[Ch2]) > threshold)
-  {
-    motor[rightwheel] = (vexRT[Ch2]);//Right joystick Y value
-  }
-  if (abs(vexRT[Ch2]) < threshold)
-  {
-    motor[rightwheel] = 0;//Stop the right motor
-  }
-  return;
-  }
-}
 
 /* Control flow */
 
@@ -145,18 +79,61 @@ void startManualMode()
   {
   motor[clawwheel] = 0;
   }
-	  ManualControl();
-	}
+	   //Base Wheels
+  //Left Base Wheel
+  if (vexRT[Btn5U] == 1)
+  {
+  motor[clawbaseleft] = 127;
+  motor[clawbaseright] = 127;
+  }
+  if (vexRT[Btn5U] == 0)
+  {
+  motor[clawbaseleft] = 0;
+  motor[clawbaseright] = 0;
+  }
+  if (vexRT[Btn5D] == 1)
+  {
+  motor[clawbaseleft] = -127;
+  motor[clawbaseright] = -127;
+  }
+  if (vexRT[Btn5D] == 0)
+  {
+  motor[clawbaseleft] = 0;
+  motor[clawbaseright] = 0;
+  }
+  if (vexRT[Btn6U] == 1)
+  {
+   motor[clawmidleft] = 127;
+   motor[clawmidright] = 127;
+  }
+  if (vexRT[Btn6U] == 0)
+  {
+   motor[clawmidleft] = 0;
+   motor[clawmidright] = 0;
+  }
+  if (vexRT[Btn6D] == 1)
+  {
+   motor[clawmidleft] = -127;
+   motor[clawmidright] = -127;
+  }
+  if (vexRT[Btn6D] == 0)
+  {
+   motor[clawmidleft] = 0;
+   motor[clawmidright] = 0;
+  }
+
+ }
 }
 task usercontrol()
 {
-	startManualMode(); // so we don't have to deal with multitasking weirdness
+	//startManualMode(); // so we don't have to deal with multitasking weirdness
 }
 
 task main()
 {
 	startAutonomousFunctions();
 	startManualMode();
+
 }
 
 void pre_auton()
