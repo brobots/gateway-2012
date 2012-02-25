@@ -2,7 +2,7 @@
 
 bool userControl()
 {
-	if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout, if necessary
+	if (handleLayoutSwitch(0, vexRT[Btn7U])) // combination to switch to a layout, if necessary // HACK: 0 is instead of a 7D return, so that we never go into one-stick
 	{
 		return false;
 		wait1Msec(20); // short reset time
