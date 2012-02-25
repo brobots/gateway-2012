@@ -165,7 +165,6 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
   }
   else
   {
-    motor[basketMotor] = 0; // deactivate basket motor
     // if we were just changing basket position and then let go, we need to change isBasketUp.
     if(wasChangingBasket)
     {
@@ -305,7 +304,6 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
   }
   else
   {
-    motor[basketMotor] = 0; // deactivate basket motor
     // if we were just changing basket position and then let go, we need to change isBasketUp.
     if(wasChangingBasket)
     {
