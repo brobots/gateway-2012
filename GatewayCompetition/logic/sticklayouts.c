@@ -6,6 +6,31 @@ bool wasChangingClaw = false;
 bool isBasketUp = false;
 bool wasChangingBasket = false;
 
+void Straighten()
+{
+ while(SensorValue[elevatorOneEncoder] < SensorValue[elevatorTwoEncoder])
+ {
+    motor[elevatorOneMotor] = 90;
+  }
+ while(SensorValue[elevatorOneEncoder] > SensorValue[elevatorTwoEncoder])
+ {
+    motor[elevatorTwoMotor] = 90;
+  }
+
+  // stop right
+}
+
+void buttonPress()
+{
+  if(SensorValue[elevatorOneEncoder] != SensorValue[elevatorTwoEncoder])
+  {
+    Straighten();
+  }
+
+  SensorValue[elevatorOneEncoder] = 0;
+  SensorValue[elevatorTwoEncoder] = 0;
+}
+
 bool oneStickLayout() // false return = stop looping, check AI; true return = continue looping.
 {
 	if (handleAISwitch(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D])) // combination to switch to an AI
@@ -205,15 +230,15 @@ bool twoStickLayout() // false return = stop looping, check AI; true return = co
 	}
 	if ((abs(vexRT[Ch4]) > threshold) && (abs(vexRT[Ch1]) < threshold)) //&& (abs(ljoy_y) < threshold)) // Analog stick is pointing right or left(abs(X) is above the threshold, abs(Y) is below the threshold)
 	{
-		motor[lateralMotor] = -vexRT[Ch4] / 2;
+		motor[lateralMotor] = -vexRT[Ch4];
 	}
 	if ((abs(vexRT[Ch1]) > threshold) && (abs(vexRT[Ch4]) < threshold)) // Analog stick is pointing right or left(abs(X) is above the threshold, abs(Y) is below the threshold)
 	{
-		motor[lateralMotor] = -vexRT[Ch1] / 2;
+		motor[lateralMotor] = -vexRT[Ch1] ;
 	}
 	if ((abs(vexRT[Ch4]) > threshold) && (abs(vexRT[Ch1]) > threshold))
 	{
-		motor[lateralMotor] = -(vexRT[Ch4] + vexRT[Ch1]) / 2;
+		motor[lateralMotor] = -(vexRT[Ch4] + vexRT[Ch1]);
 	}
 	if ((abs(vexRT[Ch4]) < threshold) && (abs(vexRT[Ch1]) < threshold))
 	{
