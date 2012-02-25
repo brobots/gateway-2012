@@ -21,3 +21,4 @@ bool handleLayoutSwitch(leftButton, upButton) // Btn7L: one stick; Btn7U: two st
 		return false;
 	}
 }
+ // HACK: 0 is currently used in calls of this function instead of a 7D return, so that we never go into one-stick

@@ -7,7 +7,7 @@
 #pragma config(Motor,  port2,           elclawo,       tmotorServoStandard, openLoop)
 #pragma config(Motor,  port4,           elevatorThreeMotor, tmotorNormal, openLoop, reversed) /* left */
 #pragma config(Motor,  port5,           elevatorFourMotor, tmotorNormal, openLoop) /* right */
-#pragma config(Motor,  port6,           basketMotor, tmotorNormal, openLoop) /* flips the basket */
+#pragma config(Motor,  port3,           basketMotor, tmotorNormal, openLoop) /* flips the basket */
 #pragma config(Motor,  port7,           elevatorOneMotor, tmotorNormal, openLoop) /* left */
 #pragma config(Motor,  port8,           elevatorTwoMotor, tmotorNormal, openLoop, reversed) /* right */
 #pragma config(Motor,  port9,           lateralMotor,  tmotorNormal, openLoop)
@@ -111,7 +111,7 @@ task main()
 
 		else // pre-competition or testing mode: two stick layout is enabled
 		{
-			if (handleLayoutSwitch(vexRT[Btn7L], vexRT[Btn7U])) // combination to switch to a layout, if necessary
+			if (handleLayoutSwitch(0, vexRT[Btn7U])) // combination to switch to a layout, if necessary // HACK: 0 is instead of a 7D return, so that we never go into one-stick
 			{
 				wait1Msec(20); // short reset time
 			}
