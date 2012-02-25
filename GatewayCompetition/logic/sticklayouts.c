@@ -8,23 +8,25 @@ bool wasChangingBasket = false;
 
 void Straighten()
 {
- while(SensorValue[elevatorOneEncoder] < SensorValue[elevatorTwoEncoder])
+ if(leftelevatorencoder < rightelevatorencoder)
  {
     motor[elevatorOneMotor] = 90;
   }
- while(SensorValue[elevatorOneEncoder] > SensorValue[elevatorTwoEncoder])
+ if(leftelevatorencoder > rightelevatorencoder)
  {
     motor[elevatorTwoMotor] = 90;
   }
-
+ else
+ {
   // stop motors
   motor[elevatorOneMotor] = 0;
   motor[elevatorTwoMotor] = 0;
+ }
 }
 
 void straightenButtonPress()
 {
-  if(SensorValue[elevatorOneEncoder] != SensorValue[elevatorTwoEncoder])
+  if(leftelevatorencoder != rightelevatorencoder)
   {
     Straighten();
   }
