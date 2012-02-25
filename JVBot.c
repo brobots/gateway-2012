@@ -40,21 +40,40 @@ void ManualControl()
   motor[clawbaseleft] = 127;
   motor[clawbaseright] = 127;
   }
+  else if (vexRT[Btn5U] == 0)
+  {
+  motor[clawbaseleft] = 0;
+  motor[clawbaseright] = 0;
+  }
   if (vexRT[Btn5D] == 1)
   {
   motor[clawbaseleft] = -127;
   motor[clawbaseright] = -127;
-
+  }
+  else if (vexRT[Btn5D] == 0)
+  {
+  motor[clawbaseleft] = 0;
+  motor[clawbaseright] = 0;
   }
   if (vexRT[Btn6U] == 1)
   {
    motor[clawmidleft] = 127;
    motor[clawmidright] = 127;
   }
+  else if (vexRT[Btn6U] == 0)
+  {
+   motor[clawmidleft] = 0;
+   motor[clawmidright] = 0;
+  }
   if (vexRT[Btn6D] == 1)
   {
    motor[clawmidleft] = -127;
    motor[clawmidright] = -127;
+  }
+  else if (vexRT[Btn6D] == 0)
+  {
+   motor[clawmidleft] = 0;
+   motor[clawmidright] = 0;
   }
   if (abs(vexRT[Ch3]) > threshold)
   {
