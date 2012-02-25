@@ -7,7 +7,7 @@
 #pragma config(Motor,  port2,           elclawo,       tmotorServoStandard, openLoop)
 #pragma config(Motor,  port4,           elevatorThreeMotor, tmotorNormal, openLoop, reversed) /* left */
 #pragma config(Motor,  port5,           elevatorFourMotor, tmotorNormal, openLoop) /* right */
-#pragma config(Motor,  port6,           basketMotor, tmotorNormal, openLoop) /* flips the basket */
+#pragma config(Motor,  port3,           basketMotor, tmotorNormal, openLoop) /* flips the basket */
 #pragma config(Motor,  port7,           elevatorOneMotor, tmotorNormal, openLoop) /* left */
 #pragma config(Motor,  port8,           elevatorTwoMotor, tmotorNormal, openLoop, reversed) /* right */
 #pragma config(Motor,  port9,           lateralMotor,  tmotorNormal, openLoop)
