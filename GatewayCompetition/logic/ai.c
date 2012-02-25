@@ -105,12 +105,15 @@ resetEncoders();
 bool goVector(changeX, changeY, changeAngle)
 {
 	rotate(changeAngle);
-
-	// TODO: move by a vector
-
-	distance/(4*pi);
+rotate(atan(changeX/changeY));
+float distance = sqrt(changeX^2 + changeY^2);
+while(abs(SensorValue[leftEncoder]) < abs(distance/(4*pi))
+{
 	motor[leftMotor] = 127;
 	motor[rightMotor] = 127;
+}
+motor[leftMotor] = 0;
+motor[rightMotor] = 0;
 	return true;
 }
 bool goToCoordinates(destinationX, destinationY)
