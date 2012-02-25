@@ -17,10 +17,12 @@ void Straighten()
     motor[elevatorTwoMotor] = 90;
   }
 
-  // stop right
+  // stop motors
+  motor[elevatorOneMotor] = 0;
+  motor[elevatorTwoMotor] = 0;
 }
 
-void buttonPress()
+void straightenButtonPress()
 {
   if(SensorValue[elevatorOneEncoder] != SensorValue[elevatorTwoEncoder])
   {
@@ -204,6 +206,12 @@ bool oneStickLayout() // false return = stop looping, check AI; true return = co
 
 bool twoStickLayout() // false return = stop looping, check AI; true return = continue looping.
 {
+  if(vexRT[Btn7L] == 1)
+  {
+    straightenButtonPress();
+    return true;
+  }
+
 	if (handleAISwitch(vexRT[Btn8L], vexRT[Btn8R], vexRT[Btn8U], vexRT[Btn8D])) // combination to switch to an AI
 	{
 		// one of those buttons was pressed, so we switched to an AI and now we deactivate manual control.
