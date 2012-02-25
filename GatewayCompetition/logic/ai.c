@@ -81,7 +81,7 @@ float numRotations(distance) // distance is in inches
 bool rotate(angle)
 {
 	resetEncoders();
-	while(SensorValue[leftEncoder] < 1800)  // While less than 5 rotations on the leftEncoder... // TODO: figure out # rotations
+	while(SensorValue[leftEncoder] < (angle*4))  // While haven't rotated by that whole angle yet
   {
 
 
@@ -108,6 +108,7 @@ bool goVector(changeX, changeY, changeAngle)
 
 	// TODO: move by a vector
 
+	distance/(4*pi);
 	motor[leftMotor] = 127;
 	motor[rightMotor] = 127;
 	return true;
