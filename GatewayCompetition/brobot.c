@@ -1,6 +1,8 @@
 #pragma config(Sensor, dgtl1,  leftEncoder,        sensorQuadEncoder) /* dgtl 2 is also for this encoder */
 #pragma config(Sensor, dgtl3,  rightEncoder,         sensorQuadEncoder) /* dgtl 4 is also for this encoder */
-#pragma config(Sensor, dgtl11, sonarSensor,         sensorSONAR_inch) /* dgtl 12 is also for this encoder. 11: output; 12: input. */
+#pragma config(Sensor, dgtl9, sonarSensor,         sensorSONAR_inch) /* dgtl 10 is also for this encoder. 9: output; 10: input. */
+#pragma config(Sensor, dgtl11,  elevatorOneEncoder,         sensorQuadEncoder)
+#pragma config(Sensor, dgtl12,  elevatorTwoEncoder,         sensorQuadEncoder)
 #pragma config(Motor,  port1,           leftMotor,     tmotorNormal, openLoop, reversed)
 #pragma config(Motor,  port2,           elclawo,       tmotorServoStandard, openLoop)
 #pragma config(Motor,  port4,           elevatorThreeMotor, tmotorNormal, openLoop, reversed) /* left */
